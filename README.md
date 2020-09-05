@@ -1,5 +1,10 @@
 # java-ee-project
 
+##### 项目文档
+[jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
+
+[整理文档](./doc/tutorial/Java%20EE%201%20简介.md)
+
 ##### 项目配置
 web.xml web应用配置
 
