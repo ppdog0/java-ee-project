@@ -10,7 +10,7 @@ web.xml web应用配置
 
 persistence.xml 数据库配置
 
-glassfish-{web/resources}.xml 数据库资源配置
+glassfish-{web/resources}.xml 服务器资源配置
 
 faces-config.xml JSF配置
 
