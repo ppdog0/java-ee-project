@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:outputLabel value="Hello, world"/>
+</f:view>
+    <h:head>hello, JSF</h:head>
+<h:body>
+    <h:form>
+        <h:graphicImage url="#{resource['images:duke.waving.gif']}"
+                        alt="Duke waving his hand"/>
+        <h:graphicImage value="resources/images/duke.waving.gif"/>
+        <h2>Hello, my name is Duke. What's yours?</h2>
+        <h:inputText id="username"
+                     title="My name is: "
+                     value="#{hello.name}"
+                     required="true"
+                     requiredMessage="Error: A name is required."
+                     maxlength="25" />
+        <p></p>
+        <h:commandButton id="submit" value="Submit"
+                         action="response" />
+        <h:commandButton id="reset" value="Reset" type="reset" />
+    </h:form>
+    <div class="messagecolor">
+        <h:messages showSummary="true"
+                    showDetail="false"
+                    errorStyle="color: #d20005"
+                    infoStyle="color: blue"/>
+    </div>
+</h:body>
+</html>
