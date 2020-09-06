@@ -22,9 +22,9 @@ public class RequestBean {
         try {
             User user = new User(password,
                     username);
-            logger.log(Level.INFO, "Created user {0}--{1}", new Object[]{id, username});
+            logger.log(Level.INFO, "Created user {0}--{1}", new Object[]{username, password});
             em.persist(user);
-            logger.log(Level.INFO, "Persisted user {0}--{1}", new Object[]{id, username});
+            logger.log(Level.INFO, "Persisted user {0}--{1}", new Object[]{username, password});
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
@@ -34,4 +34,18 @@ public class RequestBean {
         List<User> users = (List<User>) em.createNamedQuery("findAllUsers").getResultList();
         return users;
     }
+
+    public void createNotice() {}
+    public void findAllNotice() {}
+    public void createMessage() {}
+    public void updateMessage() {}
+    public void deleteMessage() {}
+    public void findAllMessages() {}
+    public void createOrders() {}
+    public void getOrderPrice() {}
+    public void createBills() {}
+    public void updateBills() {}
+    public void createComplaints() {}
+    public void createHealth() {}
+    public void updateHealth() {}
 }
