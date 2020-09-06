@@ -3,12 +3,13 @@
 ### 项目文档
 
 ##### 项目建模
-[需求文档]()
+[需求文档](doc/tutorial/需求分析.md)
 
 [数据库建模]()
 
 [前端原型]()
 
+###### 项目架构
 ![项目架构](./doc/images/jave-ee-architect.png)
 
 ##### 参考文档
@@ -27,3 +28,8 @@ persistence.xml 数据库配置
 glassfish-{web/resources}.xml 服务器资源配置
 
 faces-config.xml JSF配置
+
+##### 项目日志
+- 09/06/2020
+
+分析项目需求，完成项目架构、数据库建模、前端原型
