@@ -1,19 +1,18 @@
-# java-ee-project
+java-ee-project:
+前端:
+后端:
 
-### 项目文档
 
-##### 项目建模
+[TOC]
+
+
+
+####  项目结构
+
+###### 需求文档
 [需求文档](doc/tutorial/需求分析.md)
 
-！[前端原型]()
-
-##### 数据库建模
-![数据库建模](doc/images/database.png)
-
-###### 项目架构
-![项目架构](./doc/images/jave-ee-architect.png)
-
-##### 代码结构
+###### 代码结构
 ```
 root:project
 |--.gitignore
@@ -43,7 +42,36 @@ root:project
 |--target:目标文件
 ```
 
-##### 参考文档
+###### 项目架构
+![项目架构](./doc/images/jave-ee-architect.png)
+
+
+#### 项目建模
+
+##### 前端
+
+###### 前端原型设计
+[前端原型]()
+
+##### 数据库
+
+###### 数据库说明
+[文档](doc/model/model.md)
+
+###### 数据库建模
+
+![数据库建模](doc/images/database.png)
+
+###### 项目配置
+`web.xml web`应用配置
+
+`persistence.xml` 数据库配置
+
+`glassfish-{web/resources}.xml` 服务器资源配置
+
+`faces-config.xml` JSF配置
+
+#### 参考文档
 
 [jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
 
@@ -51,16 +79,7 @@ root:project
 
 [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
 
-##### 项目配置
-web.xml web应用配置
-
-persistence.xml 数据库配置
-
-glassfish-{web/resources}.xml 服务器资源配置
-
-faces-config.xml JSF配置
-
-##### 项目日志
+#### 开发日志
 - 09/06/2020
 
 分析项目需求，完成项目架构、数据库建模、前端原型
