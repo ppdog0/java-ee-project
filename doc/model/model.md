@@ -16,7 +16,7 @@
 
 属性：
 * 密码 password
-* 用户名 name（👴就用name）
+* 用户名 username（👴就用name）
 * 社区ID communityid
 
 ### Community
