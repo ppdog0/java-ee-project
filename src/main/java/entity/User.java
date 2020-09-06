@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.GenerationType;
 import javax.persistence.CascadeType;
 import java.util.Collection;
