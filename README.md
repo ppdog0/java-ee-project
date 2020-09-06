@@ -1,8 +1,8 @@
 # java-ee-project
 
-##### 项目文档
+### 项目文档
 
-#### 项目分析
+##### 项目建模
 [需求文档]()
 
 [数据库建模]()
@@ -11,7 +11,7 @@
 
 ![项目架构](./doc/images/jave-ee-architect.png)
 
-###### 参考文档
+##### 参考文档
 
 [jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
 
