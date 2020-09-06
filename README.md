@@ -12,6 +12,36 @@
 ###### 项目架构
 ![项目架构](./doc/images/jave-ee-architect.png)
 
+##### 代码结构
+```
+root:project
+|--.gitignore
+|--.iml
+|--pom.xml
+|--README.md
+|--doc:文档
+|   |--images
+|   |--tutorial:整理文档
+|--src:源文件
+|   |--main
+|   |    |--java:源文件
+|   |    |   |--web:业务逻辑
+|   |    |   |--ejb:数据库操作
+|   |    |   |--entity:实体
+|   |    |--resources:资源文件
+|   |    |   |--META-INF
+|   |    |   |   |--beans.xml
+|   |    |   |   |--persistence.xml:数据库配置
+|   |    |--webapp:web应用
+|   |    |   |--resources
+|   |    |   |--WEB-INF
+|   |    |   |   |--web.xml:web应用配置
+|   |    |   |   |--face-config.xml:JSF配置
+|   |    |   |--index.xhtml
+|   |--test:测试文件
+|--target:目标文件
+```
+
 ##### 参考文档
 
 [jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
