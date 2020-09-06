@@ -5,9 +5,10 @@
 ##### 项目建模
 [需求文档](doc/tutorial/需求分析.md)
 
-[数据库建模]()
+！[前端原型]()
 
-[前端原型]()
+##### 数据库建模
+![数据库建模](doc/images/database.png)
 
 ###### 项目架构
 ![项目架构](./doc/images/jave-ee-architect.png)
