@@ -58,7 +58,7 @@
 
 主键：
 
-* complaintID（数据库自增）
+* complaintid（数据库自增）
 
 外键：
 
@@ -69,7 +69,7 @@
 
 * 标题 title
 * 正文 detail
-* 日期 complainttime
+* 日期 date
 
 ### Fare
 
