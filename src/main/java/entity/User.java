@@ -21,7 +21,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
         name="findUserByIdUser",
         query=
         "SELECT u FROM User u " +
-        "WHERE u.userid = :userid "
+        "WHERE u.id = :id "
 ),
 @NamedQuery(
         name="findAllUsers",
