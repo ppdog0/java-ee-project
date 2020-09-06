@@ -1055,35 +1055,702 @@ Ajax  = JS & XML & 其它技术
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 复合组件: 高级主题和示例
+
+复合组件是一种特殊类型的 JSF 模板
+
+### 调用托管 Bean 的方式
+
+* 将托管 bean 的引用传递给复合组件
+* 直接使用托管 bean 的属性
+
+### 验证复合组件值
+
+
 
 ## 创建自定义 UI 组件和其他自定义对象
 
+3 者配合：
+
+* 自定义组件
+* 自定义渲染器：用于渲染自定义组件
+* 自定义标记：用于在页面里引用自定义组件
+
+### 何时使用自定义组件？
+
+* 需要向标准组件添加新的行为
+* 在对组件的值进行请求处理时，您需要采取不同于任何现有标准组件中可用的操作
+* 想要利用你的目标浏览器提供的 HTML 功能，但是没有一个标准的 JavaServer Faces 组件能够以你想要的方式利用这个功能。参考 `Duke's BookStore 项目`
+* 您需要呈现一个非 HTML 客户端，该客户端需要 HTML 不支持的额外组件
+
+### 渲染器（render）的 2 种关键操作
+
+* 解码: 将传入的请求参数转换为组件的本地值
+* 编码: 将组件的当前本地值转换为响应中表示该组件的相应标记
+
+### 处理编码和解码的 2 种编程模型
+
+* 直接实现: 组件类本身实现解码和编码
+* 委托实现: 组件类将编码和解码的实现委托给一个单独的呈现程序
+
+### 创建自定义组件的步骤
+
+1. 创建一个自定义组件类
+2. 重写 getFamily 方法以返回组件族，该组件族用于查找可以呈现组件的呈现程序
+3. 包含渲染代码或将其委托给渲染程序
+4. 允许组件属性接受表达式
+5. 如果组件生成事件，则在组件上为事件排队
+6. 保存并恢复组件状态
+7. 如果组件不处理渲染，则将呈现委托给渲染程序。为此:
+    1. 通过扩展 `javax.faces.render. Renderer` 创建自定义渲染器类
+    2. 将渲染器注册到渲染工具包
+8. 注册组件
+9. 如果组件生成事件，则创建事件处理程序
+10. 创建定义自定义标记的标记库描述符(TLD)
+
+### 创建自定义组件类
+
+组件类定义的行为有如下几种：
+
+* 解码(将请求参数转换为组件的本地值)
+* 编码(将本地值转换为相应的标记)
+* 保存组件的状态
+* 使用本地值更新 bean 值
+* 对本地值进行处理验证
+* 排队事件
+
+### 将渲染委派(delegate)给渲染器
+
+需要完成以下工作：
+
+* 创建渲染器类
+    * 渲染器类以 `@FacesRenderer` 注释开始，注册渲染器类
+    * extends Renderer
+* 识别渲染器类型
+
+### 实现事件侦听器
+
+JSF 支持 2 种事件：
+
+* action 事件
+* value change 事件
+
+事件发生的时机：一个实现了`javax.faces.component.ActionSource`的组件被激活时
+
+事件的类型：`javax.faces.event.ActionEvent`
+
+取决于处理哪一种事件，侦听器必须实现 `javax.faces.event.ActionListener` 接口或者 `javax.faces.event.ValueChangeListener` 接口
+
+### 处理自定义组件的处理事件
+
+* 在触发事件的**标准**组件上，事件会自动排队
+
+* 但是，在**自定义**组件上，需要使用 decode 方法手动对事件进行排队
+
+示例：侦听器类的 processAction 方法
+
+```oac_no_warn
+@Override
+public void processAction(ActionEvent actionEvent)
+        throws AbortProcessingException { ... }
+```
+
+事件类
+
+```oac_no_warn
+public class AreaSelectedEvent extends ActionEvent {
+    public AreaSelectedEvent(MapComponent map) {
+        super(map);
+    }
+    public MapComponent getMapComponent() {
+        return ((MapComponent) getComponent());
+    }
+}
+```
+
+### 在标记库描述符中定义自定义组件标记
+
+标记库描述符 Tag Library Descriptor，TLD
+
+* 功能：定义了自定义标记在 JavaServer Faces 页面中的使用方式
+
+* 命名规则：TLD 文件名必须以 taglib.xml 结尾
+
+* 位置：TLD 文件位于 WEB-INF 目录中
+
+* 在 web.xml 文件中，还需要添加一个上下文参数来识别 TLD 文件
+
+    ```oac_no_warn
+    <context-param>
+        <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+        <param-value>/WEB-INF/bookstore.taglib.xml</param-value>
+    </context-param>
+    ```
+
+### ！该章剩余小节省略，请自行参考官方doc
+
+
+
+
+
 ## 配置 JSF 应用程序
+
+### 配置工作包括：
+
+* 在应用程序中注册托管 bean
+    * 目的：使应用程序的所有部分都可以访问它们
+    * 注意: 在 JSF 2.3中，不推荐使用托管 bean 注释，改为 使用 CDI
+    * 在一个bean类的签名上方，会有：`@Named`注释 + 一个范围注释
+        * 功能：自动将这个类注册为一个资源，并使用 JSF 实现
+        * 特点：使用这些注释的 bean，都是 `CDI 托管 bean`
+    * 使用注释来定义 bean 存储的范围，即所谓的：托管 Bean 作用域
+        * 可以指定的作用域包括：
+            * ApplicationScoped
+            * SessionScoped
+            * FlowScoped
+            * RequestScoped
+            * Dependent
+        * 上述作用域都位于 `javax.enterprise.context` 包里
+* 配置托管 bean 和模型 bean，以便在页面引用它们时使用适当的值对它们进行实例化
+* 为应用程序中的每个页面定义导航规则，以便在需要非默认导航的情况下，应用程序具有平滑的页面流
+* 将应用程序打包为包含所有页面、资源和其他文件，以便将应用程序部署到任何兼容的容器上
+
+### 应用程序配置资源文件
+
+通常命名为：`faces-config.xml`
+
+在以下情况下，需要这个xml文件：
+
+* 为应用程序指定不能通过托管 bean 注释使用的配置元素（如本地化消息和导航规则）
+* 在部署应用程序时重写托管 bean 注释
+
+每个文件必须**按照顺序**包含以下信息：
+
+* XML 版本号（+ 一个编码属性）
+
+    ```
+    <?xml version="1.0" encoding='UTF-8'?>
+    ```
+
+* 一个包含所有其他声明的 faces-config 标记
+
+    ```
+    <faces-config ... > ... </faces-config>
+    ```
+
+一个应用程序可以有多个应用程序配置资源文件，JSF 通过查找以下内容来查找配置文件
+
+* 根目录和 `/WEB-INF/lib/` 目录中的所有 JAR 文件的 `/META-INF/faces-config.xml` 
+* 在 `web.xml` 里的一个上下文初始化参数 `javax.faces.application.CONFIG_FILES`所指定的路径
+
+* `/WEB-INF/` 中的 `faces-config.xml`
+
+当一个应用程序启动时，JSF 实现创建一个 Application 类的实例，并用你在应用程序配置资源文件中提供的信息来配置它
+
+### Configuring Eager Application-Scoped Managed Beans
+
+JSF 托管 bean 有 2 种声明方式：
+
+* 在 `faces-config.xml` 文件中声明
+* 使用 `javax.faces.bean.ManagedBean` 声明
+
+托管 bean 是惰式实例化的，就是说，只有在应用程序请求它的时候，才会对它进行实例化。
+
+对于那些应用程序作用域内的 bean ，为了在应用程序启动之后以及在发出任何请求之前强制实例化它们，并将其放置到应用程序范围中，应该将这些托管 bean 的 `eager` 属性设置为 true
+
+* 文件声明如下:
+
+    ```oac_no_warn
+    <managed-bean eager="true">
+    ```
+
+* 注释如下:
+
+    ```oac_no_warn
+    @ManagedBean(eager=true)
+    @ApplicationScoped
+    ```
+
+### 应用程序配置资源文件的加载顺序
+
+### 使用 Faces Flow
+
+### 配置托管 bean
+
+当一个页面第一次引用一个托管 bean 时，有 2 种初始化方式：
+
+* 根据 bean 类中的@named 注释和作用域注释进行初始化
+* 根据它在应用程序配置资源文件中的配置进行初始化
+
+在应用程序配置资源文件中创建的托管 bean 是 JSF 托管 bean，而不是 CDI 托管 bean。
+
+使用托管 bean 创建工具，可以：
+
+* 在整个应用程序可用的一个集中文件中创建 bean，而不是在整个应用程序中有条件地实例化 bean
+* 自定义 bean 的属性，而不需要任何额外的代码
+* 直接从配置文件中定制 bean 的属性值，以便在创建 bean 时使用这些值对其进行初始化
+* 使用 value 元素，将一个托管 bean 的属性设置为计算另一个值表达式的结果
+
+### 使用托管 bean 元素
+
+通过使用应用程序配置资源文件中的`managed-bean` 元素，启动托管bean
+
+在运行时，JavaServer Faces 实现处理托管 bean 元素
+
+如果一个页面引用了 bean 并且没有 bean 实例存在，那么 JavaServer Faces 实现就会按照元素配置的指定实例化 bean
+
+### JSF 应用的基本要求
+
+JSF 应用程序可以打包在一个 WAR 文件中，该文件必须符合跨不同容器执行的特定要求
+
+JSF 的 WAR 文件至少包含以下内容：
+
+* 一个叫做 web.xml 的 web 应用部署描述符，用来配置 web 应用所需的资源
+* （可选）包含必需类的一组特定 JAR 文件
+* 一组应用程序类、 JSF 页面和其他所需的资源，如图像文件
+* （可选）应用程序配置资源文件，用于配置应用程序资源
+* 一组标记库描述符文件
+
+以下文件必须放在 WAR 文件的 WEB-INF 目录中：
+
+* `web.xml`
+* JAR 文件集
+* 应用程序文件集
+
+### 使用 web.xml 配置应用程序，需指定以下配置：
+
+* 用于处理 JSF 请求的 servlet
+
+    * 背景知识
+
+        * 在 JSF 应用程序启动它的第一个 web 页面之前，web 容器必须按照应用程序生命周期的顺序调用 FacesServlet 实例
+        * JSF 要求：如果一个应用程序引用了之前就已经存储好的 JSF 组件，那么，向这个应用程序发起的申请必须经过 `javax.faces.webapp.FacesServlet`
+        * 一个 `FacesServlet` 实例的作用是：管理请求处理生命周期，并初始化 JSF 技术所需的资源
+
+    * ```oac_no_warn
+        <servlet>
+            <servlet-name>Faces Servlet</servlet-name>
+            <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>Faces Servlet</servlet-name>
+            <url-pattern>/faces/*</url-pattern>
+        </servlet-mapping>
+        ...
+        <welcome-file-list>
+            <welcome-file>faces/greeting.xhtml</welcome-file>
+        </welcome-file-list>
+        ```
+
+* 处理 servlet 的 servlet 映射
+
+* 配置资源文件的路径(如果存在且不位于默认位置)
+
+    * 在 web.xml 文件中，单击编辑器窗口顶部的 General，展开上下文参数节点，点击添加，在添加上下文参数对话框中，在 `Parameter Name` 字段中输入 `javax.faces.CONFIG_FILES`，在 `Parameter Value` 字段中输入配置文件的路径
+
+* 指定状态保存位置
+
+    * 在 web.xml 文件中，单击编辑器窗口顶部的 General，展开上下文参数节点，点击添加，在添加上下文参数对话框中，在 `Parameter Name` 字段中输入 `javax.faces.STATE_SAVING_METHOD`，在`Parameter Value ` 字段中输入 `client` 或 `server`
+
+* 配置项目的 `Stage`
+
+    * 可能取值为：
+        * Development
+        * UnitTest
+        * SystemTest
+        * Production
+
+* 其它可选配置
+
+
+
+
 
 ## 使用 JSF服务技术的 websocket
 
+
+
 ## Servlet 技术
+
+### 简介
+
+Servlet 是一个 Java 编程语言类
+
+功能：扩展主机应用程序通过请求-响应编程模型访问的服务器的功能
+
+常见用途：扩展 web 服务器承载的应用程序。对于它们，javaservlet 技术定义了 http 特定的 Servlet 类
+
+`javax.servlet` 和 `javax.servlet.http` 包提供了用于编写 servlet 的接口和类
+
+所有 servlets 必须实现 `Servlet` 接口
+
+`HttpServlet`提供处理 http 特定服务的方法，比如：`doGet` 和 `doPost`
+
+### Servlet 生命周期
+
+Servlet 的生命周期由部署 servlet 的容器控制
+
+当请求映射到 servlet 时，容器执行以下步骤：
+
+1. 如果 servlet 的实例不存在，web 容器:
+    1. 加载 servlet 类
+    2. 创建 servlet 类的实例
+    3. 通过调用 `init` 方法初始化 Servlet 实例
+    4. 容器调用 `service`方法，传递请求和响应对象
+
+如果需要删除 servlet，则容器通过调用 servlet 的 `destroy` 方法来终结 servlet
+
+#### 处理 Servlet 生命周期事件
+
+为了监视和响应 servlet 生命周期中的事件，可以定义侦听对象（当生命周期事件发生时，它的方法被调用）
+
+若要使用这些侦听器对象，必须定义和指定侦听器类
+
+* 将侦听器类定义为侦听器接口的实现
+
+### 信息共享
+
+* 使用私有的 helper 对象（例如 javabean 组件）
+* 共享属于公共范围属性的对象
+* 使用数据库
+* 调用其他网络资源
+
+### 创建和初始化 Servlet
+
+在一个 servlet 类上，使用 `@webservlet` 注释
+
+* 有 2 个属性：
+
+    * （默认）`value`
+    * （可选）`urlPatterns`
+
+* ```oac_no_warn
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    
+    @WebServlet("/report")
+    public class MoodServlet extends HttpServlet {
+    ```
+
+初始化 servlet 的时机：Web 容器在装载和实例化 servlet 类之后，从客户端传递请求之前
+
+自定义初始化的 2 种方式：
+
+* 覆写 `Servlet`接口的 `init` 方法
+* 指定 `@webservlet` 注释的 `initParams` 属性，它包含一个 `@webinitparam` 注释
+
+### 编写 Service 方法
+
+一个 servlet 提供的服务，是在其 `GenericServlet` 的 `service` 方法中实现的
+
+`Service` 方法，表示 servlet 类向客户机提供服务的任何方法
+
+* 在 `HttpServlet` 对象中，是一系列的 doXXX() 方法，例如：doGet()，doPost() 等等
+* 在其它实现了`Servlet`接口的类中，则是特定于协议的方法
+
+`Service` 方法的一般工作方式：
+
+* 从请求中提取信息
+    * 请求包含了客户机和 servlet 之间传递的数据
+    * 所有请求都实现了 ServletRequest 接口，该接口定义了访问以下信息的方法：
+        * 参数，这些参数通常用于在客户端和 servlet 之间传递信息
+        * 对象值属性，通常用于在 web 容器和 servlet 之间或协作 servlet 之间传递信息
+        * 有关用于通信请求的协议以及请求中涉及的客户机和服务器的信息
+        * 与本地化相关的信息
+* 访问外部资源
+* 根据该信息填充响应
+    * 对于 HTTP servlet，填充响应的正确过程如下：
+        * 从响应中检索输出流
+        * 填写响应标题
+        * 将任何主体内容写入输出流
+
+HTTP servlet 传递一个 HTTP 请求对象 `HttpServletRequest`，其中包含
+
+* 请求 URL
+
+    * ```oac_no_warn
+        http://[host]:[port][request-path]?[query-string]
+        ```
+
+    * 请求路径由以下元素组成
+
+        * 上下文路径：`/web 应用程序的上下文根`
+        * Servlet 路径：`/激活此请求的组件别名`
+        * 路径信息
+
+    * 可以使用实现了 `HttpServletRequest` 接口的 `getContextPath`, `getServletPath` 和 `getPathInfo`方法获取这些信息
+
+    * 查询字符串
+
+        * 由一组参数和值组成
+        * 使用 `getParameter` 方法从请求中检索各个参数
+        * 生成查询字符串的 2 种办法：
+            * 查询字符串可以显式地出现在网页中
+            * 当提交具有 gethttp 方法的表单时，查询字符串将附加到 URL
+
+* HTTP 头
+
+* 查询字符串
+
+### 编写响应
+
+响应包含在服务器和客户机之间传递的数据
+
+所有响应都实现了 `ServletResponse` 接口，它定义了以下方法：
+
+* 检索用于向客户端发送数据的输出流
+* 指示响应使用 setContentType (String)方法返回的内容类型(例如 text/html)
+* 指示是否使用 setBufferSize (int)方法缓冲输出
+
+* 设置本地化信息
+
+HTTP 响应对象（`javax.servlet.http.HttpServletResponse`）有以下字段表示HTTP头：
+
+* Status Codes
+* Cookies
+
+### 过滤请求和响应
+
+主要功能：
+
+* 查询请求并采取相应的行动
+* 阻止请求-响应对进一步传递
+* 修改请求标头和数据
+* 修改响应标头和数据
+* 与外部资源交互
+
+#### 编写过滤器
+
+`javax.servlet` 包的` Filter`, `FilterChain` 和 `FilterConfig` 接口
+
+定义过滤器时，使用 `@WebFilter` 注释
+
+`Filter` 接口中最重要的方法是 `doFilter` 方法
+
+* 它是传递的请求、响应和过滤器链对象
+* 执行以下操作：
+    * 检查请求头
+    * 如果过滤器希望修改请求头或数据，则自定义请求对象
+    * 如果筛选器希望修改响应头或数据，则自定义响应对象。
+    * 调用筛选器链中的下一个实体
+    * 在调用链中的下一个筛选器之后检查响应头
+    * 抛出异常以指示处理过程中的错误
+
+#### 编写定制的请求和响应
+
+#### 指定过滤器映射
+
+### ！其余部分自行查阅 doc
+
+
+
+
 
 ## Java API for WebSockets
 
 ## JSON Processing
 
+#### JSON 简介
+
+2 种数据结构
+
+* 对象：名称-值对
+    * `:`
+* 数组：数组
+
+7 种值类型
+
+* string
+* number
+* object
+    * 整体 `{}`
+    * 内部分割 `,`
+* array
+    * 整体`[]`
+    * 内部分割 `,`
+* true
+* false
+* null
+
+示例：
+
+```json
+{
+   "firstName": "Duke",
+   "lastName": "Java",
+   "age": 18,
+   "streetAddress": "100 Internet Dr",
+   "city": "JavaTown",
+   "state": "JA",
+   "postalCode": "12345",
+   "phoneNumbers": [
+      { "Mobile": "111-111-1111" },
+      { "Home": "222-222-2222" }
+   ]
+}
+```
+
+特点：紧凑
+
+### 2种生成和解析 JSON 数据的模型
+
+* 对象模型
+    * 使用 `树` 表示 JSON 数据
+    * 优点：灵活
+    * 缺点：慢 & 内存占用多
+* stream 模型
+    * 基于 `事件`，一次读取一个元素
+
+### Java EE 平台的 JSON-P API
+
+* `javax.json` 包
+    * 一个 reader 接口
+    * 一个 writer 接口
+    * 一个模型构建器接口
+    * 用于 JSON 元素的实用程序类
+    * 表示 JSON 元素的 Java 类型
+    * 一些实现了 JSON-P 相关标准的类
+* `javax.json.stream` 包
+    * 流模型的解析器接口 & 生成器接口
+* `javax.json.spi` 包
+    * SPI 表示 Service Provider Interface
+    * 作用：插入 JSON 处理对象的实现
+
+### 使用对象模型 API
+
+* 从 JSON 数据创建对象模型
+
+    ```json
+    import java.io.FileReader;
+    import javax.json.Json;
+    import javax.json.JsonReader;
+    import javax.json.JsonStructure;
+    ...
+    JsonReader reader = Json.createReader(new FileReader("jsondata.txt"));
+    JsonStructure jsonst = reader.read();
+    ```
+
+* 从应用程序代码创建对象模型
+
+    ```oac_no_warn
+    import javax.json.Json;
+    import javax.json.JsonObject;
+    ...
+    JsonObject model = Json.createObjectBuilder()
+       .add("firstName", "Duke")
+       .add("lastName", "Java")
+       .add("age", 18)
+       .add("streetAddress", "100 Internet Dr")
+       .add("city", "JavaTown")
+       .add("state", "JA")
+       .add("postalCode", "12345")
+       .add("phoneNumbers", Json.createArrayBuilder()
+          .add(Json.createObjectBuilder()
+             .add("type", "mobile")
+             .add("number", "111-111-1111"))
+          .add(Json.createObjectBuilder()
+             .add("type", "home")
+             .add("number", "222-222-2222")))
+       .build();
+    ```
+
+* 遍历对象模型
+
+* 将对象模型写入流
+
+### 使用 Streaming API
+
+#### 使用解析器读取 JSON 数据
+
+1. 通过调用 `Json.createParser` 静态方法获取解析器实例。
+2. 使用 `JsonParser.hasNext` 和 `JsonParser.next` 方法迭代解析器事件
+3. 对每个元素执行本地处理
+
+```oac_no_warn
+import javax.json.Json;
+import javax.json.stream.JsonParser;
+...
+JsonParser parser = Json.createParser(new StringReader(jsonData));
+while (parser.hasNext()) {
+   JsonParser.Event event = parser.next();
+   switch(event) {
+      case START_ARRAY:
+      case END_ARRAY:
+      case START_OBJECT:
+      case END_OBJECT:
+      case VALUE_FALSE:
+      case VALUE_NULL:
+      case VALUE_TRUE:
+         System.out.println(event.toString());
+         break;
+      case KEY_NAME:
+         System.out.print(event.toString() + " " +
+                          parser.getString() + " - ");
+         break;
+      case VALUE_STRING:
+      case VALUE_NUMBER:
+         System.out.println(event.toString() + " " +
+                            parser.getString());
+         break;
+   }
+}
+```
+
+使用生成器编写 JSON 数据
+
+```oac_no_warn
+FileWriter writer = new FileWriter("test.txt");
+JsonGenerator gen = Json.createGenerator(writer);
+gen.writeStartObject()
+   .write("firstName", "Duke")
+   .write("lastName", "Java")
+   .write("age", 18)
+   .write("streetAddress", "100 Internet Dr")
+   .write("city", "JavaTown")
+   .write("state", "JA")
+   .write("postalCode", "12345")
+   .writeStartArray("phoneNumbers")
+      .writeStartObject()
+         .write("type", "mobile")
+         .write("number", "111-111-1111")
+      .writeEnd()
+      .writeStartObject()
+         .write("type", "home")
+         .write("number", "222-222-2222")
+      .writeEnd()
+   .writeEnd()
+.writeEnd();
+gen.close();
+```
+
+
+
+
+
 ## JSON Binding
+
+功能：
+
+* 将 Java 对象序列化为 JSON 文档
+* 将 JSON 文档反序列化为 Java 对象
+
+包：
+
+* `javax.json.bind`
+* `javax.json.bind.adapter`
+    * 包含 `JsonbAdapter` 接口
+    * 将定制的 Java 类型转换为已知类型来提供绑定方法
+* `javax.json.bind.annotation`
+* `javax.json.bind.config`
+* `javax.json.bind.serializer`
+    * 包含一些接口，这些接口用于为自定义类型创建序列化和反序列化例程
+* `javax.json.bind.spi`
+
+
+
+
+
+
 
 ## Web 应用程序的国际化和本地化
 
