@@ -1,61 +1,83 @@
-java-ee-project:
-前端:
+java-ee-project: 
+
+前端: 
+
 后端:
+<kbd>
+    <img src="https://avatars3.githubusercontent.com/u/46335543?s=400&v=4" width="5%" height="5%" style="border: 10px solid black">
+</kbd>
 
+<!-- TOC -->
 
-[TOC]
+- [文档说明](#%E6%96%87%E6%A1%A3%E8%AF%B4%E6%98%8E)
+    - [项目结构](#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84)
+        - [需求文档](#%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3)
+        - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+        - [项目架构](#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84)
+    - [项目建模](#%E9%A1%B9%E7%9B%AE%E5%BB%BA%E6%A8%A1)
+        - [前端](#%E5%89%8D%E7%AB%AF)
+            - [前端原型设计](#%E5%89%8D%E7%AB%AF%E5%8E%9F%E5%9E%8B%E8%AE%BE%E8%AE%A1)
+        - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
+            - [数据库说明](#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%B4%E6%98%8E)
+            - [数据库建模](#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BB%BA%E6%A8%A1)
+            - [项目配置](#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE)
+    - [参考文档](#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3)
+    - [开发日志](#%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97)
 
+<!-- /TOC -->
+### 文档说明
 
-
-####  项目结构
+#### 项目结构
 
 ###### 需求文档
+
 [需求文档](doc/tutorial/需求分析.md)
 
 ###### 代码结构
-```
-root:project
-|--.gitignore
-|--.iml
-|--pom.xml
-|--README.md
-|--doc:文档
-|   |--images
-|   |--tutorial:整理文档
-|--src:源文件
-|   |--main
-|   |    |--java:源文件
-|   |    |   |--web:业务逻辑
-|   |    |   |--ejb:数据库操作
-|   |    |   |--entity:实体
-|   |    |--resources:资源文件
-|   |    |   |--META-INF
-|   |    |   |   |--beans.xml
-|   |    |   |   |--persistence.xml:数据库配置
-|   |    |--webapp:web应用
-|   |    |   |--resources
-|   |    |   |--WEB-INF
-|   |    |   |   |--web.xml:web应用配置
-|   |    |   |   |--face-config.xml:JSF配置
-|   |    |   |--index.xhtml
-|   |--test:测试文件
-|--target:目标文件
-```
+
+    root:project
+    |--.gitignore
+    |--.iml
+    |--pom.xml
+    |--README.md
+    |--doc:文档
+    |   |--images
+    |   |--tutorial:整理文档
+    |--src:源文件
+    |   |--main
+    |   |    |--java:源文件
+    |   |    |   |--web:业务逻辑
+    |   |    |   |--ejb:数据库操作
+    |   |    |   |--entity:实体
+    |   |    |--resources:资源文件
+    |   |    |   |--META-INF
+    |   |    |   |   |--beans.xml
+    |   |    |   |   |--persistence.xml:数据库配置
+    |   |    |--webapp:web应用
+    |   |    |   |--resources
+    |   |    |   |--WEB-INF
+    |   |    |   |   |--web.xml:web应用配置
+    |   |    |   |   |--face-config.xml:JSF配置
+    |   |    |   |--index.xhtml
+    |   |--test:测试文件
+    |--target:目标文件
 
 ###### 项目架构
-![项目架构](./doc/images/jave-ee-architect.png)
 
+![项目架构](./doc/images/jave-ee-architect.png)
 
 #### 项目建模
 
 ##### 前端
 
 ###### 前端原型设计
+
 [前端原型]()
 
 ##### 数据库
 
 ###### 数据库说明
+
 [文档](doc/model/model.md)
 
 ###### 数据库建模
@@ -63,6 +85,7 @@ root:project
 ![数据库建模](doc/images/database.png)
 
 ###### 项目配置
+
 `web.xml web`应用配置
 
 `persistence.xml` 数据库配置
@@ -80,6 +103,7 @@ root:project
 [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
 
 #### 开发日志
-- 09/06/2020
+
+-   09/06/2020
 
 分析项目需求，完成项目架构、数据库建模、前端原型
