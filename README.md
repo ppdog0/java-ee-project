@@ -1,18 +1,22 @@
-<!-- vscode-markdown-toc -->
-		* 1. [项目结构](#)
-		* 2. [项目建模](#-1)
-		* 3. [参考文档](#-1)
-		* 4. [开发日志](#-1)
+java-ee-project: 前端: 后端:
+<!-- TOC -->
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->java-ee-project: 前端: 后端:
+- [项目结构](#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84)
+        - [需求文档](#%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3)
+        - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
+        - [项目架构](#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84)
+- [项目建模](#%E9%A1%B9%E7%9B%AE%E5%BB%BA%E6%A8%A1)
+    - [前端](#%E5%89%8D%E7%AB%AF)
+        - [前端原型设计](#%E5%89%8D%E7%AB%AF%E5%8E%9F%E5%9E%8B%E8%AE%BE%E8%AE%A1)
+    - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
+        - [数据库说明](#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%B4%E6%98%8E)
+        - [数据库建模](#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BB%BA%E6%A8%A1)
+        - [项目配置](#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE)
+- [参考文档](#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3)
+- [开发日志](#%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97)
 
-
-
-####  1. <a name=''></a>项目结构
+<!-- /TOC -->
+#### 项目结构
 
 ###### 需求文档
 
@@ -51,7 +55,7 @@
 
 ![项目架构](./doc/images/jave-ee-architect.png)
 
-####  2. <a name='-1'></a>项目建模
+#### 项目建模
 
 ##### 前端
 
@@ -79,7 +83,7 @@
 
 `faces-config.xml` JSF配置
 
-####  3. <a name='-1'></a>参考文档
+#### 参考文档
 
 [jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
 
@@ -87,7 +91,7 @@
 
 [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
 
-####  4. <a name='-1'></a>开发日志
+#### 开发日志
 
 -   09/06/2020
 
