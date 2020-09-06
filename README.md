@@ -5,6 +5,8 @@
 
 [整理文档](./doc/tutorial)
 
+[JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
+
 ##### 项目配置
 web.xml web应用配置
 
