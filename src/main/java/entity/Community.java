@@ -1,11 +1,8 @@
 package entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "community")
@@ -23,7 +20,8 @@ public class Community implements java.io.Serializable {
     private Integer id;
     @Column(name = "communityname")
     private String communityname;
-
+    private Set habitantusers = new HashSet();
+    private Set adminusers = new HashSet();
 
 
     @Column(name = "userid")
@@ -42,4 +40,20 @@ public class Community implements java.io.Serializable {
     public void setCommunityname(String communityname) {
         this.communityname = communityname;
     }
+
+    @ManyToMany(mappedBy = "admins")
+    public Set<Community> getAdminusers() {
+        return adminusers;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Community.class)
+    @JoinTable(name = "habitants",
+            joinColumns = {
+                    @JoinColumn(name = "communityid", referencedColumnName = "communityid")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "userid", referencedColumnName = "userid")})
+    public Set getHabitants() {
+        return habitantusers;
+    }
+
 }
