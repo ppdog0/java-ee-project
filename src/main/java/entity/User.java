@@ -1,17 +1,7 @@
 package entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQuery;
-import javax.persistence.GenerationType;
-import javax.persistence.CascadeType;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,13 +16,18 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 @Entity
 @Table(name = "user")
-//@NamedQuery(
-//        name="findUserByIdUser",
-//        query=
-//        "SELECT u FROM User u " +
-//        "WHERE u.iduser = :iduser "
-//)
-public class User implements java.io.Serializable {
+@NamedQuery(
+        name="findUserByIdUser",
+        query=
+        "SELECT u FROM User u " +
+        "WHERE u.userid = :userid "
+)
+@NamedQuery(
+        name="findAllUsers",
+        query = "select u FROM U" +
+                "OREDER BY u.id"
+)
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,6 +39,14 @@ public class User implements java.io.Serializable {
     private String username;
     private Set admincommuintys = new HashSet();
     private Set habitantcommunities= new HashSet();
+
+    public User() {}
+
+    public User(String password,
+                String username) {
+        this.password = password;
+        this.username = username;
+    }
 
     public int getId() {
         return this.id;
