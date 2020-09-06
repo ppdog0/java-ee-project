@@ -22,6 +22,8 @@ public class Community implements java.io.Serializable {
     private String communityname;
     private Set habitantusers = new HashSet();
     private Set adminusers = new HashSet();
+    @OneToMany(mappedBy="complaintid")
+    private Set<Complaint> complaints;
 
 
     @Column(name = "userid")

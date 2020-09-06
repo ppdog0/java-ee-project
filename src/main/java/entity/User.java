@@ -42,6 +42,8 @@ public class User implements Serializable {
     private String username;
     private Set admincommuintys = new HashSet();
     private Set habitantcommunities= new HashSet();
+    @OneToMany(mappedBy="complaintid")
+    private Set<Complaint> complaints;
 
     public User() {}
 
@@ -89,6 +91,8 @@ public class User implements Serializable {
     public Set<Community> getHabitantcommunities() {
         return habitantcommunities;
     }
+
+
 //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
 //    }
