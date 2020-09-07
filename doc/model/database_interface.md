@@ -44,7 +44,7 @@ void updateNotice(Integer noticeid, Integer userId, String title, String text, I
 接口:
 Integer searchMessageId(Message message): 返回messageid
 void createMessage(Integer userId, String title, String text, Integer communityId)
-List<Message> findMessage(Integer communityId)
+List<Message> findAllMessage(Integer communityId)
 void updateMessage(Integer messageId, Integer userid, Integer communityId, String titile, String text)
 void deleteMessage(Integer messageId, Integer userId)
 ```
@@ -69,7 +69,7 @@ void deleteMessage(Integer messageId, Integer userId)
 接口:
 Integer searchBillId(Bill bill): 返回billId
 void createBill(Integer amdinId, Integer userId, Integer communityId, Integer price, String type, Boolean status)
-List<Bill> findBills(Integer communityId)
+List<Bill> findBills(Integer communityId, Integer userId)
 void updateBill(Integer billId, Integer adminId, Boolean status)
 ```
 
@@ -87,10 +87,13 @@ void updateBill(Integer billId, Integer adminId, Boolean status)
 ##### 使用health数据库
 ```
 
-添加信息：userid, status, curr_position, prev_postion (healthid自增, healthtime更新)
+添加信息：userid, status, curr_position (healthid自增, healthtime更新, prev_postion保存之前的curr_postion)
 
 接口:
-
+Integer searchHealthId(Health health): 返回healthId
+void createHealth(Integer userid, String status, String curr_position)
+Health findUserHealth(Integer userId)
+// List<Health> findAllHealth() 待定
 ```
 
 
@@ -98,16 +101,29 @@ void updateBill(Integer billId, Integer adminId, Boolean status)
 ```
 
 添加社区：communityname, adminid (communityid自增)
+
+接口:
+Integer searchCommunityId(Community community): 返回communityId
+void createCommunity(Integer adminId, String communityName)
+Lisr<Community> findAllCommunity()
 ```
 
 ##### admins数据库
 ```
 
 添加管理员：userid, communityid (adminid自增)
+
+接口:
+Integer searchAdminId(Integer userId): 返回adminId
+void createAdmin(Integer userId, Integer communityId)
 ```
 
 ##### habitants数据库
 ```
 
 添加居民：userid, communityid (hid自增)
+
+接口:
+Integer searchHid(Integer userId): 返回hid
+void creatHabitant(Integer userId, Integer communityId)
 ```
