@@ -91,9 +91,9 @@ void updateBill(Integer billId, Integer adminId, Boolean status)
 
 接口:
 Integer searchHealthId(Health health): 返回healthId
-void createHealth(Integer userid, String status, String curr_position)
+void createHealth(Integer userId, String status, String curr_position)
+void updateHealth(Integer healthId, Integer userId, String status, String curr_postion)
 Health findUserHealth(Integer userId)
-// List<Health> findAllHealth() 待定
 ```
 
 
