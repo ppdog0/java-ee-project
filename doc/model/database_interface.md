@@ -44,8 +44,8 @@ void updateNotice(Integer noticeid, Integer userId, String title, String text, I
 接口:
 Integer searchPostId(Post post): 返回posteId
 void createPost(Integer userId, String title, String text, Integer communityId)
-List<Message> findAllPost(Integer communityId)
-void updatePost(Integer postId, Integer userid, Integer communityId, String titile, String text)
+List<Post> findAllPost(Integer communityId)
+void updatePost(Integer postId, Integer userId, Integer communityId, String titile, String text)
 void deletePost(Integer postId, Integer userId)
 ```
 
