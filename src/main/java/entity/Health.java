@@ -73,14 +73,6 @@ public class Health implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String username) {
-        this.title = title;
-    }
-
     public String getCurrposition() {
         return this.currposition;
     }

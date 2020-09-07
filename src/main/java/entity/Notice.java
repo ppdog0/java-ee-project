@@ -17,7 +17,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
-@Table(name = "notice")
+@Table(name = "Notice")
 @NamedQueries({
         @NamedQuery(
                 name = "findUserByIdUser",
@@ -43,9 +43,11 @@ public class Notice implements Serializable {
 
     private String details;
     private Date date;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userid", nullable=false)
     private User user;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="communityid", nullable=false)
     private Community community;
@@ -83,7 +85,7 @@ public class Notice implements Serializable {
         return this.details;
     }
 
-    public void setDetails(String password) {
+    public void setDetails(String details) {
         this.details = details;
     }
 

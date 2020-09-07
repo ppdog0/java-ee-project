@@ -43,9 +43,11 @@ public class Post implements Serializable {
 
     private String details;
     private Date date;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userid", nullable=false)
     private User user;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="communityid", nullable=false)
     private Community community;
