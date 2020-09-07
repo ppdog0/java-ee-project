@@ -26,6 +26,8 @@ public class Community implements java.io.Serializable {
     private Set<Complaint> complaints;
     @OneToMany(mappedBy="noticeid")
     private Set<Complaint> notices;
+    @OneToMany(mappedBy="postid")
+    private Set<Complaint> posts;
 
 
     @Column(name = "userid")

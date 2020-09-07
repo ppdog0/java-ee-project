@@ -52,6 +52,8 @@ public class User implements Serializable {
     private Set<Complaint> complaints;
     @OneToMany(mappedBy="noticeid")
     private Set<Complaint> notices;
+    @OneToMany(mappedBy="postid")
+    private Set<Complaint> posts;
 
     public User() {}
 
