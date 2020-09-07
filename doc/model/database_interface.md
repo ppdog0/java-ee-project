@@ -1,6 +1,6 @@
 ##### 使用User数据库
 ```
-注册：username, password, identity(默认为居民), communityid(待讨论) userid(自增)
+注册：username, password, userid(自增)
 
 登录：username, password
 ```
@@ -14,7 +14,7 @@
 
 查看公告：communityid (按时间排列)
 
-修改公告：noticeid, title, text, communityid (noticetime更新)
+修改公告：noticeid, userid, title, text, communityid (noticetime更新)
 ```
 
 
@@ -32,7 +32,7 @@
 ```
 
 
-##### 使用complaint数据库
+##### 使用complaint数据库(待定)
 ```
 
 发布投诉：userid, title, text, communityid (complaintid 自增 complainttime更新) (使用complaint数据库)
@@ -44,13 +44,13 @@
 ##### 使用bills数据库
 ```
 
-发布收费：userid, price, type, status, communityid (billid 自增 billtime更新)
+发布收费：adminid, userid, price, type, status, communityid (billid 自增 billtime更新)
 
-更新收费：billid, status
+更新收费：billid, status, adminid
 ```
 
 
-##### 使用order数据库
+##### 使用order数据库(待定)
 ```
 
 发布订单：userid, good, buyerid, price (orderid自增 ordertime更新)
@@ -71,4 +71,16 @@
 ```
 
 添加社区：communityname, adminid (communityid自增)
+```
+
+##### admins数据库
+```
+
+添加管理员：userid, communityid (adminid自增)
+```
+
+##### habitants数据库
+```
+
+添加居民：userid, communityid (hid自增)
 ```
