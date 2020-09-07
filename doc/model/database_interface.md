@@ -65,3 +65,10 @@
 
 添加信息：userid, status, curr_position, prev_postion (healthid自增, healthtime更新)
 ```
+
+
+##### community数据库
+```
+
+添加社区：communityname, adminid (communityid自增)
+```
