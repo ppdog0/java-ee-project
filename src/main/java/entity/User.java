@@ -17,18 +17,24 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Entity
 @Table(name = "user")
 @NamedQueries({
-@NamedQuery(
-        name="findUserByIdUser",
-        query=
-        "SELECT u FROM User u " +
-        "WHERE u.id = :id "
-),
-@NamedQuery(
-        name="findAllUsers",
-        query =
-        "select u FROM User u " +
-        "ORDER BY u.id"
-)
+        @NamedQuery(
+                name = "findUserById",
+                query =
+                        "SELECT u FROM User u " +
+                                "WHERE u.id = :id "
+        ),
+        @NamedQuery(
+                name = "findUserByName",
+                query =
+                        "select u.id FROM User u " +
+                                "WHERE u.username = :name"
+        ),
+        @NamedQuery(
+                name = "findAllUsers",
+                query =
+                        "select u FROM User u " +
+                                "ORDER BY u.id"
+        )
 })
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
