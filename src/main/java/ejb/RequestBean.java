@@ -140,33 +140,76 @@ public class RequestBean {
         }
         return null;
     }
-//
-//    //待定
-//    public void createOrders() {}
-//    public void getOrderPrice() {}
-//
-    public void createBill(Integer userId, Integer communityId, Integer price, String title, String details, Boolean status) {
+
+    public void createBill(Integer userId, Integer communityId, Integer price, String title, String type, Boolean status) {
         try {
             User user = em.find(User.class, userId);
             Community community = em.find(Community.class, communityId);
             Date date = new Date();
 
-            Bill bill = new Bill(user, community, title, details, price, status, date);
+            Bill bill = new Bill(user, community, title, type, price, status, date);
             em.persist(bill);
         } catch (Exception e) {
 
         }
     }
-    public void updateBill(Integer billId, Integer adminId, Boolean status) {}
-    List<Bill> findBills(Integer communityId, Integer userId) {}
-//
-//    //待定
-//    public void createComplaints() {}
-//
-//    Integer searchHealthId(Health health) {}
-//    void createHealth(Integer userId, String status, String curr_position) {}
-//    void updateHealth(Integer healthId, Integer userId, String status, String curr_postion) {}
-//    Health findUserHealth(Integer userId) {}
+    public void updateBill(Integer billId, Integer userId, Boolean status) {
+        try {
+            Bill bill = em.find(Bill.class, billId);
+            User user = em.find(User.class, userId);
+            if(user.checkAdminCommunity(bill.getCommunity())) {
+                Date date = new Date();
+                bill.setDate(date);
+                bill.setStatus(status);
+                em.merge(bill);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+    List<Bill> findBills(Integer communityId, Integer userId) {
+        try {
+            return (List<Bill>) em.createNamedQuery("findBillById")
+                    .setParameter("id", userId).setParameter("cid", communityId)
+                    .getResultList();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    void createHealth(Integer userId, String status, String curr_position) {
+        try {
+            User user = em.find(User.class, userId);
+            Date date = new Date();
+            Health health = new Health(user, status, curr_position, date);
+
+            em.persist(health);
+        } catch (Exception e) {
+
+        }
+    }
+    void updateHealth(Integer healthId, Integer userId, String status, String curr_position) {
+        try {
+            Health health = em.find(Health.class, healthId);
+            health.setStatus(status);
+            health.setCurrposition(curr_position);
+
+            em.persist(health);
+        } catch (Exception e) {
+
+        }
+    }
+    Health findUserHealth(Integer userId) {
+        try {
+            return (Health) em.createNamedQuery("findHealthById")
+                    .setParameter("id", userId)
+                    .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
 //
 //    Community findCommunity(Integer communityid) {
 //        try {
@@ -174,4 +217,13 @@ public class RequestBean {
 //        } catch (Exception e) {
 //
 //        }
+//
+//待定
+//    public void createComplaints() {}
+//
+//待定
+//    public void createOrders() {}
+//    public void getOrderPrice() {}
+//
+//
 }

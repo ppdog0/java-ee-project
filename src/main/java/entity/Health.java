@@ -20,16 +20,9 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Table(name = "Health")
 @NamedQueries({
         @NamedQuery(
-                name = "findUserByIdUser",
-                query =
-                        "select c FROM Health c " +
-                                "WHERE c.id = :id "
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
-                query =
-                        "select c FROM Health c " +
-                                "ORDER BY c.id"
+                name = "findHealthById",
+                query = "select c FROM Health c " +
+                                "WHERE c.user.id = :id "
         )
 })
 public class Health implements Serializable {
@@ -39,6 +32,7 @@ public class Health implements Serializable {
     @Column(name = "healthid")
     private Integer id;
 
+    private String status;
     private String currposition;
     private String prevposition;
 
@@ -56,11 +50,13 @@ public class Health implements Serializable {
     }
 
     public Health(User user,
+                String status,
                 String currposition,
-                String prevposition,
                 Date date) {
+        this.user = user;
+        this.status = status;
+        this.prevposition = this.currposition;
         this.currposition = currposition;
-        this.prevposition = prevposition;
         this.date = date;
     }
 
@@ -77,6 +73,7 @@ public class Health implements Serializable {
     }
 
     public void setCurrposition(String currposition) {
+        this.prevposition = this.currposition;
         this.currposition = currposition;
     }
 
@@ -103,7 +100,16 @@ public class Health implements Serializable {
     public Community getCommunity(){return this.community;}
 
     public void setUser(Community community){this.community=community; }
-//    public void setAdmincommuintys(Set admincommuintys) {
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
 //    }
 }

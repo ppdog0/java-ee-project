@@ -17,19 +17,12 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
-@Table(name = "bills")
+@Table(name = "bill")
 @NamedQueries({
         @NamedQuery(
-                name = "findUserByIdUser",
-                query =
-                        "select c FROM Bills c " +
-                                "WHERE c.id = :id "
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
-                query =
-                        "select c FROM Bills c " +
-                                "ORDER BY c.id"
+                name = "findBillById",
+                query = "select c FROM Bill c " +
+                                "where c.user.id = :id and c.community.id = :cid"
         )
 })
 public class Bill implements Serializable {
