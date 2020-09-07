@@ -1699,7 +1699,7 @@ while (parser.hasNext()) {
 使用生成器编写 JSON 数据
 
 ```oac_no_warn
-FileWriter writer = new FileWriter("test.txt");
+FileWriter writer = new FileWriter("test.ejb.test.txt");
 JsonGenerator gen = Json.createGenerator(writer);
 gen.writeStartObject()
    .write("firstName", "Duke")
