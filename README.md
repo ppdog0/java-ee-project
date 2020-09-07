@@ -84,6 +84,9 @@ java-ee-project:
 
 ##### 数据库
 
+###### 数据库接口
+[数据库接口](doc/model/database_interface.md)
+
 ###### 数据库说明
 
 [文档](doc/model/model.md)
