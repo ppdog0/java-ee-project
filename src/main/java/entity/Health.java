@@ -17,49 +17,50 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
-@Table(name = "Post")
+@Table(name = "Health")
 @NamedQueries({
         @NamedQuery(
-                name = "findAllPost",
+                name = "findUserByIdUser",
                 query =
-                        "select c FROM Post c " +
+                        "select c FROM Health c " +
+                                "WHERE c.id = :id "
+        ),
+        @NamedQuery(
+                name = "findAllUsers",
+                query =
+                        "select c FROM Health c " +
                                 "ORDER BY c.id"
         )
 })
-public class Post implements Serializable {
+public class Health implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "postid")
+    @Column(name = "healthid")
     private Integer id;
 
-    private String title;
+    private String currposition;
+    private String prevposition;
 
-    private String details;
     private Date date;
-
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userid", nullable=false)
     private User user;
-
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="communityid", nullable=false)
     private Community community;
 
 
 
-    public Post() {
+    public Health() {
     }
 
-    public Post(User user,
-                Community community,
-                String title,
-                String details,
+    public Health(User user,
+                String currposition,
+                String prevposition,
                 Date date) {
-        this.user = user;
-        this.community = community;
-        this.title = title;
-        this.details = details;
+        this.currposition = currposition;
+        this.prevposition = prevposition;
         this.date = date;
     }
 
@@ -71,20 +72,20 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getCurrposition() {
+        return this.currposition;
     }
 
-    public void setTitle(String username) {
-        this.title = title;
+    public void setCurrposition(String currposition) {
+        this.currposition = currposition;
     }
 
-    public String getDetails() {
-        return this.details;
+    public String getPrevposition() {
+        return this.prevposition;
     }
 
-    public void setDetails(String password) {
-        this.details = details;
+    public void setPrevposition(String prevposition) {
+        this.prevposition = prevposition;
     }
 
     public Date getDate() {

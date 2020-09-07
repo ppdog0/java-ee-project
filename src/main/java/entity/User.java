@@ -10,7 +10,6 @@ import java.util.Set;
 import static javax.persistence.CascadeType.ALL;
 
 
-
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 
@@ -30,18 +29,30 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userid")
     private Integer id;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "username")
     private String username;
+
     private Set admincommuintys = new HashSet();
-    private Set habitantcommunities= new HashSet();
-    @OneToMany(mappedBy="complaintid")
+    private Set habitantcommunities = new HashSet();
+
+    @OneToMany(mappedBy = "complaintid")
     private Set<Complaint> complaints;
-    @OneToMany(mappedBy="noticeid")
+
+    @OneToMany(mappedBy = "noticeid")
     private Set<Complaint> notices;
 
-    public User() {}
+    @OneToMany(mappedBy = "postid")
+    private Set<Complaint> posts;
+
+    @OneToMany(mappedBy = "healthid")
+    private Set<Complaint> healths;
+
+    public User() {
+    }
 
     public User(String password,
                 String username) {
