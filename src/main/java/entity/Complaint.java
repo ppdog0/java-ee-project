@@ -99,6 +99,9 @@ public class Complaint implements Serializable {
 
     public void setUser(User user){this.user=user; }
 
+    public Community getCommunity(){return this.community;}
+
+    public void setUser(Community community){this.community=community; }
 //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
 //    }

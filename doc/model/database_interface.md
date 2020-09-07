@@ -10,11 +10,11 @@
 ##### 使用notice数据库
 ```
 
-发布公告：userid, title, text, communityid (noticeid 自增 noticetime更新) 
+发布公告：userid, title, detail, communityid (noticeid 自增 noticetime更新) 
 
 查看公告：communityid (按时间排列)
 
-修改公告：noticeid, title, text, communityid (noticetime更新)
+修改公告：noticeid, title, detail, communityid (noticetime更新)
 ```
 
 
@@ -22,11 +22,11 @@
 ##### 使用message数据库
 ```
 
-发布帖子：userid, title, text, communityid (messageid 自增 messagetime更新) 
+发布帖子：userid, title, detail, communityid (messageid 自增 messagetime更新) 
 
 查看帖子：communityid (按时间排列)
 
-修改帖子：messageid, title, text, userid, communityid (messagetime更新)
+修改帖子：messageid, title, detail, userid, communityid (messagetime更新)
 
 删除帖子：messageid, userid, communityid
 ```
@@ -35,7 +35,7 @@
 ##### 使用complaint数据库
 ```
 
-发布投诉：userid, title, text, communityid (complaintid 自增 complainttime更新) (使用complaint数据库)
+发布投诉：userid, title, detail, communityid (complaintid 自增 complainttime更新) (使用complaint数据库)
 
 回复和处理投诉不知道怎么弄
 ```

@@ -44,6 +44,8 @@ public class User implements Serializable {
     private Set habitantcommunities= new HashSet();
     @OneToMany(mappedBy="complaintid")
     private Set<Complaint> complaints;
+    @OneToMany(mappedBy="noticeid")
+    private Set<Complaint> notices;
 
     public User() {}
 

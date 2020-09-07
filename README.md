@@ -67,7 +67,7 @@ java-ee-project:
     |   |    |   |   |--web.xml:web应用配置
     |   |    |   |   |--face-config.xml:JSF配置
     |   |    |   |--index.xhtml
-    |   |--test:测试文件
+    |   |--test.ejb.test:测试文件
     |--target:目标文件
 
 ###### 项目架构
