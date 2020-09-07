@@ -42,7 +42,6 @@ public class Health implements Serializable {
     private String currposition;
     private String prevposition;
 
-
     private Date date;
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userid", nullable=false)
