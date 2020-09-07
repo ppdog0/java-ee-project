@@ -10,25 +10,30 @@ import java.util.Set;
 import static javax.persistence.CascadeType.ALL;
 
 
-
 import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
 @Table(name = "user")
 @NamedQueries({
-@NamedQuery(
-        name="findUserByIdUser",
-        query=
-        "SELECT u FROM User u " +
-        "WHERE u.id = :id "
-),
-@NamedQuery(
-        name="findAllUsers",
-        query =
-        "select u FROM User u " +
-        "ORDER BY u.id"
-)
+        @NamedQuery(
+                name = "findUserById",
+                query =
+                        "SELECT u FROM User u " +
+                                "WHERE u.id = :id "
+        ),
+        @NamedQuery(
+                name = "findUserByName",
+                query =
+                        "select u.id FROM User u " +
+                                "WHERE u.username = :name"
+        ),
+        @NamedQuery(
+                name = "findAllUsers",
+                query =
+                        "select u FROM User u " +
+                                "ORDER BY u.id"
+        )
 })
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,10 +45,11 @@ public class User implements Serializable {
     private String password;
     @Column(name = "username")
     private String username;
-    private Set admincommuintys = new HashSet();
-    private Set habitantcommunities= new HashSet();
+//    private Set admincommuintys = new HashSet();
+//    private Set habitantcommunities = new HashSet();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String password,
                 String username) {
@@ -75,21 +81,21 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Community.class)
-    @JoinTable(name = "admins",
-            joinColumns = {
-                    @JoinColumn(name = "userid", referencedColumnName = "userid")},
-            inverseJoinColumns = {
-                    @JoinColumn(name = "communityid", referencedColumnName = "communityid")})
-    public Set getAdmincommuintys() {
-        return admincommuintys;
-    }
-
-    @ManyToMany(mappedBy = "habitants")
-    public Set<Community> getHabitantcommunities() {
-        return habitantcommunities;
-    }
-//    public void setAdmincommuintys(Set admincommuintys) {
-//        this.admincommuintys = admincommuintys;
+//    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Community.class)
+//    @JoinTable(name = "admins",
+//            joinColumns = {
+//                    @JoinColumn(name = "userid", referencedColumnName = "userid")},
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "communityid", referencedColumnName = "communityid")})
+//    public Set getAdmincommuintys() {
+//        return admincommuintys;
 //    }
+//
+//    @ManyToMany(mappedBy = "habitants")
+//    public Set<Community> getHabitantcommunities() {
+//        return habitantcommunities;
+//    }
+////    public void setAdmincommuintys(Set admincommuintys) {
+////        this.admincommuintys = admincommuintys;
+////    }
 }
