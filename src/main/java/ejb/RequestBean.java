@@ -5,6 +5,8 @@ import entity.User;
 import javax.ejb.EJBException;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,7 +16,12 @@ import java.util.logging.Logger;
 public class RequestBean {
     @PersistenceContext
     private EntityManager em;
-
+//    public RequestBean() {
+//        //这部分是ejb测试时才需要的代码
+//        //EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+//        //em = entityManagerFactory.createEntityManager();
+//        //这部分是ejb测试时才需要的代码
+//    }
     private static final Logger logger = Logger.getLogger("java.ejb.RequestBean");
 
     public void createUser(String password,
