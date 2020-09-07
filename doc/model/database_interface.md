@@ -87,7 +87,7 @@ void updateBill(Integer billId, Integer adminId, Boolean status)
 ##### 使用health数据库
 ```
 
-添加信息：userid, status, curr_position (healthid自增, healthtime更新, prev_postion保存之前的curr_postion)
+添加信息：userid, status, currposition (healthid自增, healthtime更新, prevpostion保存之前的curr_postion)
 
 接口:
 Integer searchHealthId(Health health): 返回healthId

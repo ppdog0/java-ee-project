@@ -18,17 +18,24 @@ public class Community implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "communityid")
     private Integer id;
+
     @Column(name = "communityname")
     private String communityname;
+
     private Set habitantusers = new HashSet();
     private Set adminusers = new HashSet();
+
     @OneToMany(mappedBy="complaintid")
     private Set<Complaint> complaints;
+
     @OneToMany(mappedBy="noticeid")
     private Set<Complaint> notices;
+
     @OneToMany(mappedBy="postid")
     private Set<Complaint> posts;
 
+    @OneToMany(mappedBy = "healthid")
+    private Set<Complaint> healths;
 
     @Column(name = "userid")
     public int getId() {
