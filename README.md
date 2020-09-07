@@ -123,7 +123,7 @@ JSF文档: [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
 
 - 09/06/2020
 
-分析项目[需求文档](doc/tutorial/需求分析.md)，完成项目架构、数据库建模、[前端原型](https://dywioe.axshare.com)，更新整理文档: [整理文档](./doc/tutorial)、[wiki](https://github.com/ppdog0/java-ee-project/wiki/Requirements-Analysis)
+分析项目[需求文档](doc/tutorial/需求分析.md)，完成[项目架构](#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84)、- [数据库建模](#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BB%BA%E6%A8%A1)、[前端原型](https://dywioe.axshare.com)，更新整理文档: [整理文档](./doc/tutorial)、[wiki](https://github.com/ppdog0/java-ee-project/wiki/Requirements-Analysis)
 
 - 09/07/2020
 
