@@ -42,6 +42,7 @@ java-ee-project:
 ###### 需求文档
 
 [需求文档](doc/tutorial/需求分析.md)
+[wiki](https://github.com/ppdog0/java-ee-project/wiki/Requirements-Analysis)
 
 ###### 代码结构
 
@@ -82,7 +83,7 @@ java-ee-project:
 
 ###### 前端原型设计
 
-[前端原型]()
+[前端原型](https://dywioe.axshare.com)
 
 ##### 数据库
 
@@ -109,14 +110,19 @@ java-ee-project:
 
 #### 参考文档
 
-[jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
+官方文档: [jakarta-tutorial](https://javaee.github.io/tutorial/toc.html)
 
-[整理文档](./doc/tutorial)
+整理文档: [整理文档](./doc/tutorial)
 
-[JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
+JSF文档: [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
+[验证器](https://blog.csdn.net/qq_33429968/article/details/73928719)
+[JSF分离](https://blog.csdn.net/fish_your_god/article/details/100566216)
 
 #### 开发日志
 
--   09/06/2020
+- 09/06/2020
 
-分析项目需求，完成项目架构、数据库建模、前端原型
+分析项目[需求文档](doc/tutorial/需求分析.md)，完成项目架构、数据库建模、[前端原型](https://dywioe.axshare.com)，更新整理文档: [整理文档](./doc/tutorial)、[wiki](https://github.com/ppdog0/java-ee-project/wiki/Requirements-Analysis)
+
+- 09/07/2020
+完成[数据库接口](doc/model/database_interface.md)，更新整理文档: [整理文档](./doc/tutorial)
