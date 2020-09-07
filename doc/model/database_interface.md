@@ -12,7 +12,7 @@ User findUser(String userid) :返回查询结果: 用户实体
 
 
 
-##### 使用notice数据库
+##### 使用Notice数据库
 ```
 
 发布公告：userName, title, text, communityId (noticeid 自增 noticetime更新) 
@@ -24,33 +24,33 @@ User findUser(String userid) :返回查询结果: 用户实体
 接口：
 Integer searchNoticeId(Notice notice): 返回noticeid
 void createNotice(String userId, String title, String text, String communityId)
-List<Notice> findNotice(String communityId): 返回公告实体的列表
+List<Notice> findAllNotice(String communityId): 返回公告实体的列表
 void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId)
 ```
 
 
 
-##### 使用message数据库
+##### 使用Post数据库
 ```
 
-发布帖子：userid, title, text, communityid (messageid 自增 messagetime更新) 
+发布帖子：userId, title, text, communityId (postId 自增 postTime更新) 
 
-查看帖子：communityid (按时间排列)
+查看帖子：communityId (按时间排列)
 
-修改帖子：messageid, title, text, userid, communityid (messagetime更新)
+修改帖子：postId, title, text, userId, communityId (messageTime更新)
 
-删除帖子：messageid, userid, communityid
+删除帖子：postId, userId, communityId
 
 接口:
-Integer searchMessageId(Message message): 返回messageid
-void createMessage(Integer userId, String title, String text, Integer communityId)
-List<Message> findAllMessage(Integer communityId)
-void updateMessage(Integer messageId, Integer userid, Integer communityId, String titile, String text)
-void deleteMessage(Integer messageId, Integer userId)
+Integer searchPostId(Post post): 返回posteId
+void createPost(Integer userId, String title, String text, Integer communityId)
+List<Message> findAllPost(Integer communityId)
+void updatePost(Integer postId, Integer userid, Integer communityId, String titile, String text)
+void deletePost(Integer postId, Integer userId)
 ```
 
 
-##### 使用complaint数据库(待定)
+##### 使用Complaint数据库(待定)
 ```
 
 发布投诉：userid, title, text, communityid (complaintid 自增 complainttime更新) (使用complaint数据库)
@@ -59,7 +59,7 @@ void deleteMessage(Integer messageId, Integer userId)
 ```
 
 
-##### 使用bills数据库
+##### 使用Bill数据库
 ```
 
 发布收费：adminid, userid, price, type, status, communityid (billid 自增 billtime更新)
