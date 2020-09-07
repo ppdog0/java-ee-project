@@ -18,22 +18,10 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Table(name = "user")
 @NamedQueries({
         @NamedQuery(
-                name = "findUserById",
-                query =
-                        "SELECT u FROM User u " +
-                                "WHERE u.id = :id "
-        ),
-        @NamedQuery(
                 name = "findUserByName",
                 query =
                         "select u.id FROM User u " +
                                 "WHERE u.username = :name"
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
-                query =
-                        "select u FROM User u " +
-                                "ORDER BY u.id"
         )
 })
 public class User implements Serializable {
@@ -100,6 +88,12 @@ public class User implements Serializable {
         return habitantcommunities;
     }
 
+    public boolean checkAdminCommunity(Community community){
+        if(this.admincommuintys.contains(community))
+            return true;
+        else
+            return false;
+    }
 
 //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
