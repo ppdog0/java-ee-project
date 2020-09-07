@@ -20,7 +20,7 @@ public class RequestBean {
     public void createUser(String password,
                            String username) {
         try {
-            Integer id = searchUserId(username);
+            //Integer id = searchUserId(username);
             User user = new User(password,
                     username);
             logger.log(Level.INFO, "Created user {0}--{1}", new Object[]{username, password});
