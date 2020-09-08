@@ -127,4 +127,8 @@ JSF文档: [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
 
 - 09/07/2020
 
-完成[数据库接口](doc/model/database_interface.md)，更新整理文档: [整理文档](./doc/tutorial)
+完成[数据库接口](doc/model/database_interface.md)，更新整理文档: [整理文档](./doc/tutorial)，完成entity和EJB的编写
+
+- 09/08/2020
+
+开始WEB开发
