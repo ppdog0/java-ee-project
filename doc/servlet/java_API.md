@@ -119,20 +119,20 @@
 	//社区2
 	{
 		"communityname": "云社区",
-    	"communityid": "1",
+    		"communityid": "1",
 		"notice": 
 		{
-            // 公告1
+            		// 公告1
 			{ 
-    			"postid": 1,
+    				"postid": 1,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
 				"username": "pp"
 			},
-	        // 公告2
+	        	// 公告2
 			{
-                "postid": 2,
+                		"postid": 2,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -141,9 +141,9 @@
 		}
 		"post": 
 		{
-            // 帖子1
+            		// 帖子1
 			{
-	            "noticeid": 1,
+	            		"noticeid": 1,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -151,7 +151,7 @@
 			},
 			// 帖子2
 			{
-                "noticeid": 2,
+                		"noticeid": 2,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -231,19 +231,19 @@
         // 公告1
      	{
     		"noticeid": 1,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
 		},
-	    // 公告2
-		{
+	// 公告2
+	{
         	"noticeid": 2,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		}   
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	}   
     }
 }
 ```
@@ -275,19 +275,19 @@
         // 公告1
      	{
     		"noticeid": 1,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		},
-	    // 公告2
-		{
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	},
+	// 公告2
+	{
         	"noticeid": 2,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		}   
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	}   
     }
 }
 ```
@@ -312,26 +312,26 @@
 // 返回数据
 {
 	"communityname":"cloud",
-    "communityid":1,
-    "post": 
-    {
-        // 帖子1
-     	{
-    		"noticeid": 1,
+    	"communityid":1,
+    	"post": 
+    	{
+        	// 帖子1
+     		{
+    			"noticeid": 1,
 			"title": "Yellow lives matter!",
 			"details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
 			"username": "pp"
 		},
-	    // 帖子2
+	    	// 帖子2
 		{
-        	"noticeid": 2,
+        		"noticeid": 2,
 			"title": "Yellow lives matter!",
 			"details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
 			"username": "pp"
 		}   
-    }
+	}
 }
 ```
 
