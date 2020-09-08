@@ -1,11 +1,5 @@
 package web;
 
-import netscape.javascript.JSObject;
-
-import javax.json.JsonObject;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,13 +37,6 @@ public class MainServlet extends HttpServlet{
         } catch (Exception e) {
 
         }
-
-        JsonbConfig config = new JsonbConfig()
-                .withFormatting(true);
-        Jsonb jsonb = JsonbBuilder.create(config);
-
-        //to json
-        jsonb.toJson();
 
 //        try {
 //            // 使用JSONObject的parseObject方法解析JSON字符串
