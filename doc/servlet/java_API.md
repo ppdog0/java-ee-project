@@ -1,5 +1,39 @@
 # API
 
+<!-- TOC -->
+
+- [API](#api)
+    - [用户](#%E7%94%A8%E6%88%B7)
+        - [用户登录](#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95)
+        - [用户注册](#%E7%94%A8%E6%88%B7%E6%B3%A8%E5%86%8C)
+    - [社区](#%E7%A4%BE%E5%8C%BA)
+        - [社区页面](#%E7%A4%BE%E5%8C%BA%E9%A1%B5%E9%9D%A2)
+        - [加入社区](#%E5%8A%A0%E5%85%A5%E7%A4%BE%E5%8C%BA)
+        - [创建社区](#%E5%88%9B%E5%BB%BA%E7%A4%BE%E5%8C%BA)
+    - [公告](#%E5%85%AC%E5%91%8A)
+        - [公告栏](#%E5%85%AC%E5%91%8A%E6%A0%8F)
+        - [发布公告](#%E5%8F%91%E5%B8%83%E5%85%AC%E5%91%8A)
+        - [公告修改](#%E5%85%AC%E5%91%8A%E4%BF%AE%E6%94%B9)
+    - [论坛](#%E8%AE%BA%E5%9D%9B)
+        - [帖子](#%E5%B8%96%E5%AD%90)
+        - [帖子发布](#%E5%B8%96%E5%AD%90%E5%8F%91%E5%B8%83)
+        - [帖子修改](#%E5%B8%96%E5%AD%90%E4%BF%AE%E6%94%B9)
+    - [投诉区](#%E6%8A%95%E8%AF%89%E5%8C%BA)
+        - [投诉](#%E6%8A%95%E8%AF%89)
+        - [发布投诉](#%E5%8F%91%E5%B8%83%E6%8A%95%E8%AF%89)
+    - [健康](#%E5%81%A5%E5%BA%B7)
+        - [创建](#%E5%88%9B%E5%BB%BA)
+        - [查看](#%E6%9F%A5%E7%9C%8B)
+        - [更新](#%E6%9B%B4%E6%96%B0)
+    - [缴费](#%E7%BC%B4%E8%B4%B9)
+        - [发布](#%E5%8F%91%E5%B8%83)
+        - [查看](#%E6%9F%A5%E7%9C%8B)
+        - [更新](#%E6%9B%B4%E6%96%B0)
+    - [订单](#%E8%AE%A2%E5%8D%95)
+        - [发布](#%E5%8F%91%E5%B8%83)
+        - [查看](#%E6%9F%A5%E7%9C%8B)
+<!-- /TOC -->
+
 ## 用户
 
 ### 用户登录
@@ -63,13 +97,16 @@
 
 ### 社区页面
 
-- url:`localhost:8080/community`
+- url:`localhost:8080/community?userid=`
 - method: `GET`
-- data:`None`
+- data:`userid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
 ```
-// 无发送数据
+// 发送数据
+{
+	"userid": 1
+}
 
 // 返回数据
 {
@@ -162,6 +199,52 @@
 }
 ```
 
+### 加入社区
+
+- url:`localhost:8080/community/add`
+- method: `POST`
+- data:`userid`, `communityid`
+- return: `status`, `username`, `communityname`
+
+```
+// 发送数据
+{
+	"userid": 1,
+	"communityid": 2
+}
+
+// 接收数据
+{
+	"username": "pp",
+	"communityname": "BUPT",
+	"status": "success"
+}
+```
+
+### 创建社区
+
+- url:`localhost:8080/community/create`
+- method: `POST`
+- data:`userid`, `communityname`
+- return: `status`, `username`, `communityid`
+
+```
+// 发送数据
+{
+	"userid": 1,
+	"communityname": "BUPT"
+}
+
+// 接收数据
+{
+	"username": "pp", (admin 管理员)
+	"communityid": 2,
+	"status": "success"
+}
+```
+
+
+
 
 
 ## 公告
@@ -207,9 +290,9 @@
 
 ### 发布公告
 
-- url:`localhost:8080/notice/publish?communityid=`
+- url:`localhost:8080/notice/publish`
 - method: `POST`
-- data:``communityid`,`noticeid`,`title`,`details``,`userid`
+- data:`communityid`,`noticeid`,`title`,`details`,`userid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
 ```
@@ -250,8 +333,8 @@
 
 ### 公告修改
 
-- url:`localhost:8080/notice/update?noticeid=`
-- method: `GET`
+- url:`localhost:8080/notice/update`
+- method: `POST`
 - data:`communityid`,`noticeid`,`title`,`details`,`userid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
@@ -381,7 +464,7 @@
 ### 帖子修改
 
 - url:`localhost:8080/post/update`
-- method: `GET`
+- method: `POST`
 - data:`communityid`,`postid`,`title`,`details`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
@@ -544,7 +627,7 @@ return:`healthid`, `username`, `status`, `temporature`, `position`, `date`
 
 ### 查看
 
-url: `localhost:8080/health`
+url: `localhost:8080/health?userid=`
 
 method: `GET`
 
@@ -685,7 +768,7 @@ method:  `POST`
 
 data: `billid`,   `status`
 
-return:`billid`, `username`, `communityid`,`type`,`details`, `price`, `status`, `date`
+return:`billid`, `username`, `communityid`, `type`, `details`, `price`, `status`, `date`
 
 ```
 // 发送数据
@@ -718,8 +801,54 @@ url: `localhost:8080/order/create`
 
 method: `POST`
 
-data: `userid`, `communityid`,`type`,`details`, `price`, `status`
+data: `userid`, `agentid`, `storeid`,`good`
 
-return:`billid`, `username`, `communityid`,`type`,`details`, `price`, `status`, `dat
+return:`orderid`, `username`, `agentname`,`storename`,`phonenumber`, `price`, `date`
+
+```
+// 发送数据
+{
+	"userid": 1,
+	"agentid": 2,
+	"storeid": 3,
+	"good": "food, fruits"
+}
+
+// 返回数据
+{
+	"orderid": 2,
+	"username": "pp",
+	"agentname": "mm",
+	"storename": "BUPT",
+	"phonenumber": 1234567891,
+	"price": 60,
+	"date": "09/08/2020"
+}
+```
 
 ### 查看
+
+url: `localhost:8080/order?orderid=`
+
+method: `GET`
+
+data: `orderid`
+
+return:`username`, `agentname`,`storename`,`phonenumber`, `price`, `date`
+
+```
+// 发送数据
+{
+	"orderid": 1
+}
+
+// 返回数据
+{
+	"username": "pp",
+	"agentname": "mm",
+	"storename": "BUPT",
+	"phonenumber": 1234567891,
+	"price": 60,
+	"date": "09/08/2020"
+}
+```
