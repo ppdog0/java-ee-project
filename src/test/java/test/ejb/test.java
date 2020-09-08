@@ -10,7 +10,7 @@ public class test {
     public void first(){
         RequestBean request = new RequestBean();
         request.createUser("hello","hello");
-        List<User> users=request.getAllUsers();
-        System.out.println(users);
+        //List<User> users=request.getAllUsers();
+        //System.out.println(users);
     }
 }
