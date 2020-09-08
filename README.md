@@ -84,7 +84,7 @@ java-ee-project:
 
 ###### 前端原型设计
 
-![](doc/images/prototype.jpg)
+![prototype](doc/images/prototype.jpg)
 
 ##### 数据库
 
