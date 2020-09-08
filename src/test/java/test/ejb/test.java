@@ -3,7 +3,7 @@ package test.ejb;
 import ejb.RequestBean;
 import entity.User;
 import java.util.List;
-import org.junit.Test;
+//import org.junit.Test;
 
 //public class test {
 //    @Test
