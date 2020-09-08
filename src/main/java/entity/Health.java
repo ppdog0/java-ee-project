@@ -9,9 +9,9 @@ import java.util.Date;
 @Table(name = "health")
 @NamedQueries({
         @NamedQuery(
-                name = "findHealthById",
+                name = "findHealthByUserId",
                 query = "select c FROM Health c " +
-                                "WHERE c.healthid = :id "
+                        "WHERE c.user = :user "
         )
 })
 public class Health implements Serializable {
@@ -22,30 +22,28 @@ public class Health implements Serializable {
     private Integer healthid;
 
     private String status;
-    private String currposition;
-    private String prevposition;
-
+    private String position;
+    private float temperature;
     private Date date;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="userid", nullable=false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private User user;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="communityid", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "communityid", nullable = false)
     private Community community;
-
 
 
     public Health() {
     }
 
     public Health(User user,
-                String status,
-                String currposition,
-                Date date) {
+                  String status,
+                  String position,
+                  float temperature,
+                  Date date) {
         this.user = user;
         this.status = status;
-        this.prevposition = this.currposition;
-        this.currposition = currposition;
+        this.temperature = temperature;
+        this.position = position;
         this.date = date;
     }
 
@@ -57,21 +55,20 @@ public class Health implements Serializable {
         this.healthid = id;
     }
 
-    public String getCurrposition() {
-        return this.currposition;
+    public String getPosition() {
+        return this.position;
     }
 
-    public void setCurrposition(String currposition) {
-        this.prevposition = this.currposition;
-        this.currposition = currposition;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
-    public String getPrevposition() {
-        return this.prevposition;
+    public float getTemperature() {
+        return this.temperature;
     }
 
-    public void setPrevposition(String prevposition) {
-        this.prevposition = prevposition;
+    public void setTemperature(float temperature) {
+        this.temperature = temperature;
     }
 
     public Date getDate() {
@@ -82,13 +79,21 @@ public class Health implements Serializable {
         this.date = date;
     }
 
-    public User getUser(){return this.user;}
+    public User getUser() {
+        return this.user;
+    }
 
-    public void setUser(User user){this.user=user; }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    public Community getCommunity(){return this.community;}
+    public Community getCommunity() {
+        return this.community;
+    }
 
-    public void setUser(Community community){this.community=community; }
+    public void setUser(Community community) {
+        this.community = community;
+    }
 
     public String getStatus() {
         return status;

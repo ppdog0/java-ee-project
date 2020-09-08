@@ -204,22 +204,22 @@ public class RequestBean {
         return null;
     }
 
-    void createHealth(Integer userId, String status, String curr_position) {
+    void createHealth(Integer userId, String status, String position, float temperature) {
         try {
             User user = em.find(User.class, userId);
             Date date = new Date();
-            Health health = new Health(user, status, curr_position, date);
+            Health health = new Health(user, status, position, temperature,date);
 
             em.persist(health);
         } catch (Exception e) {
 
         }
     }
-    void updateHealth(Integer healthId, Integer userId, String status, String curr_position) {
+    void updateHealth(Integer healthId, String status, String curr_position) {
         try {
             Health health = em.find(Health.class, healthId);
             health.setStatus(status);
-            health.setCurrposition(curr_position);
+            health.setPosition(curr_position);
 
             em.persist(health);
         } catch (Exception e) {
@@ -228,7 +228,91 @@ public class RequestBean {
     }
     Health findUserHealth(Integer userId) {
         try {
-            return (Health) em.createNamedQuery("findHealthById")
+            User user = em.find(User.class, userId);
+            return (Health) em.createNamedQuery("findHealthByUserId")
+                    .setParameter("user", user)
+                    .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+
+
+    void createStore(String storename, String phonenumber) {
+        try {
+            Store store = new Store(storename,phonenumber);
+
+            em.persist(store);
+        } catch (Exception e) {
+
+        }
+    }
+    void updateStore(Integer storeId, String storename, String phonenumber) {
+        try {
+            Store store = em.find(Store.class, storeId);
+            store.setStorename(storename);
+            store.setPhonenumber(phonenumber);
+
+            em.persist(store);
+        } catch (Exception e) {
+
+        }
+    }
+
+    void createPurchasingAgent(String purchasingagentname, String phonenumber) {
+        try {
+            PurchasingAgent purchasingAgent = new PurchasingAgent(purchasingagentname,phonenumber);
+
+            em.persist(purchasingAgent);
+        } catch (Exception e) {
+
+        }
+    }
+    void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
+        try {
+            Store purchasingAgent = em.find(Store.class, purchasingAgentId);
+            purchasingAgent.setStorename(purchasingagentname);
+            purchasingAgent.setPhonenumber(phonenumber);
+
+            em.persist(purchasingAgent);
+        } catch (Exception e) {
+
+        }
+    }
+
+
+    void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
+        try {
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+            Store store = em.find(Store.class, storeId);
+            PurchasingAgent purchasingAgent = em.find(PurchasingAgent.class, purchasingAgentId);
+            Date date = new Date();
+            Order order=new Order(date,details,status,community,user,store,purchasingAgent);
+
+            em.persist(order);
+        } catch (Exception e) {
+
+        }
+    }
+
+    void updateOrder(Integer orderId,String details ,String status) {
+        try {
+            Order order=em.find(Order.class,orderId);
+            order.setDetails(details);
+            order.setStatus(status);
+
+            em.persist(order);
+        } catch (Exception e) {
+
+        }
+    }
+
+    Health findUserOrder(Integer userId) {
+        try {
+            return (Health) em.createNamedQuery("findOrderById")
                     .setParameter("id", userId)
                     .getSingleResult();
         } catch (Exception e) {
@@ -236,6 +320,9 @@ public class RequestBean {
         }
         return null;
     }
+
+
+
 
     Integer searchCommunityId(String communityname) {
         try {

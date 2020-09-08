@@ -54,8 +54,8 @@ public class User implements Serializable {
     @OneToMany(targetEntity=Post.class,mappedBy = "user")
     private Set<Post> posts;
 
-    @OneToMany(targetEntity=Health.class,mappedBy = "user")
-    private Set<Health> healths;
+    @OneToOne(targetEntity=Health.class,mappedBy = "user")
+    private Health health;
 
     @OneToMany(targetEntity=Order.class,mappedBy = "user")
     private Set<Order> orders;

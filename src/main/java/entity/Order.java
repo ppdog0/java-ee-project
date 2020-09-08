@@ -2,16 +2,16 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 
 @Entity
 @Table(name = "order")
 @NamedQueries({
         @NamedQuery(
-                name = "findAllPurchasingAgent",
-                query =
-                        "select c FROM Post c " +
-                                "ORDER BY c.orderid"
+                name = "findOrderById",
+                query = "select c FROM Order c " +
+                        "WHERE c.orderid = :id "
         )
 })
 public class Order implements Serializable {
@@ -22,6 +22,7 @@ public class Order implements Serializable {
     private Integer orderid;
     private String details;
     private String status;
+    private Date date;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="userid", nullable=false)
@@ -42,10 +43,15 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(String details, String status
+    public Order(Date date,String details, String status, Community community, User user, Store store, PurchasingAgent purchasingAgent
     ) {
+        this.date=date;
         this.details = details;
         this.status = status;
+        this.community=community;
+        this.user=user;
+        this.store=store;
+        this.purchasingagent=purchasingAgent;
     }
 
     public Integer getOrderid() {
