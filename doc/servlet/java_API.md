@@ -22,16 +22,17 @@
         - [投诉](#%E6%8A%95%E8%AF%89)
         - [发布投诉](#%E5%8F%91%E5%B8%83%E6%8A%95%E8%AF%89)
     - [健康](#%E5%81%A5%E5%BA%B7)
-        - [创建](#%E5%88%9B%E5%BB%BA)
-        - [查看](#%E6%9F%A5%E7%9C%8B)
-        - [更新](#%E6%9B%B4%E6%96%B0)
+        - [创建记录](#%E5%88%9B%E5%BB%BA%E8%AE%B0%E5%BD%95)
+        - [查看记录](#%E6%9F%A5%E7%9C%8B%E8%AE%B0%E5%BD%95)
+        - [更新记录](#%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95)
     - [缴费](#%E7%BC%B4%E8%B4%B9)
-        - [发布](#%E5%8F%91%E5%B8%83)
-        - [查看](#%E6%9F%A5%E7%9C%8B)
-        - [更新](#%E6%9B%B4%E6%96%B0)
+        - [发布账单](#%E5%8F%91%E5%B8%83%E8%B4%A6%E5%8D%95)
+        - [查看账单](#%E6%9F%A5%E7%9C%8B%E8%B4%A6%E5%8D%95)
+        - [更新账单](#%E6%9B%B4%E6%96%B0%E8%B4%A6%E5%8D%95)
     - [订单](#%E8%AE%A2%E5%8D%95)
-        - [发布](#%E5%8F%91%E5%B8%83)
-        - [查看](#%E6%9F%A5%E7%9C%8B)
+        - [发布订单](#%E5%8F%91%E5%B8%83%E8%AE%A2%E5%8D%95)
+        - [查看订单](#%E6%9F%A5%E7%9C%8B%E8%AE%A2%E5%8D%95)
+
 <!-- /TOC -->
 
 ## 用户
@@ -595,7 +596,7 @@
 
 ## 健康
 
-### 创建
+### 创建记录
 
 url: `localhost:8080/health/create`
 
@@ -625,7 +626,7 @@ return:`healthid`, `username`, `status`, `temporature`, `position`, `date`
 }
 ```
 
-### 查看
+### 查看记录
 
 url: `localhost:8080/health?userid=`
 
@@ -651,7 +652,7 @@ return: `username`, `status`, `temporature`, `position`, `date`
 }
 ```
 
-### 更新
+### 更新记录
 
 url:  `localhost:8080/health/update`
 
@@ -685,7 +686,7 @@ return:  `healthid`, `username`, `status`, `temporature`, `position`, `date`
 
 ## 缴费
 
-### 发布
+### 发布账单
 
 url: `localhost:8080/bill/create`
 
@@ -719,7 +720,7 @@ return:`billid`, `username`, `communityid`,`type`,`details`, `price`, `status`, 
 }
 ```
 
-### 查看
+### 查看账单
 
 url: `localhost:8080/health?userid=`
 
@@ -760,7 +761,7 @@ return: `billid`, `username`, `communityid`, `type`, `details`, `price`, `status
 }
 ```
 
-### 更新
+### 更新账单
 
 url:  `localhost:8080/health/update`
 
@@ -795,15 +796,15 @@ return:`billid`, `username`, `communityid`, `type`, `details`, `price`, `status`
 
 ## 订单
 
-### 发布
+### 发布订单
 
 url: `localhost:8080/order/create`
 
 method: `POST`
 
-data: `userid`, `agentid`, `storeid`,`good`
+data: `userid`, `agentid`, `storeid`, `communityid`, `good`
 
-return:`orderid`, `username`, `agentname`,`storename`,`phonenumber`, `price`, `date`
+return:`orderid`, `username`, `agentname`,`storename`, `communityname`, `phonenumber`, `price`, `date`
 
 ```
 // 发送数据
@@ -820,13 +821,14 @@ return:`orderid`, `username`, `agentname`,`storename`,`phonenumber`, `price`, `d
 	"username": "pp",
 	"agentname": "mm",
 	"storename": "BUPT",
+	"communityname": "hotel",
 	"phonenumber": 1234567891,
 	"price": 60,
 	"date": "09/08/2020"
 }
 ```
 
-### 查看
+### 查看订单
 
 url: `localhost:8080/order?orderid=`
 
@@ -847,6 +849,7 @@ return:`username`, `agentname`,`storename`,`phonenumber`, `price`, `date`
 	"username": "pp",
 	"agentname": "mm",
 	"storename": "BUPT",
+	"communityname": "hotel",
 	"phonenumber": 1234567891,
 	"price": 60,
 	"date": "09/08/2020"
