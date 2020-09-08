@@ -5,13 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "community")
-//@NamedQuery(
-//        name="findUserByIdUser",
-//        query=
-//        "SELECT u FROM User u " +
-//        "WHERE u.iduser = :iduser "
-//)
+@Table(name = "Community")
+@NamedQuery(
+        name="findCommunityByName",
+        query=
+        "SELECT u.id FROM Community u " +
+        "WHERE u.communityname = :name "
+)
 public class Community implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,21 +54,36 @@ public class Community implements java.io.Serializable {
     }
 
     @ManyToMany(mappedBy = "admins")
-    public Set<Community> getAdminusers() {
-        return adminusers;
+    public Set<User> getAdminusers() {
+        return this.adminusers;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, targetEntity = Community.class)
+    public void setAdminusers(Set<User> adminusers){
+        this.adminusers=adminusers;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL, targetEntity = User.class)
     @JoinTable(name = "habitants",
             joinColumns = {
                     @JoinColumn(name = "communityid", referencedColumnName = "communityid")},
             inverseJoinColumns = {
                     @JoinColumn(name = "userid", referencedColumnName = "userid")})
-    public Set getHabitants() {
-        return habitantusers;
+    public Set<User> getHabitantusers() {
+        return this.habitantusers;
+    }
+
+    public void setHabitantusers(Set<User> habitantusers){
+        this.habitantusers=habitantusers;
     }
 
     public boolean checkAdminCommunity(User user){
+        if(this.adminusers.contains(user))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean checkHabitantCommunity(User user){
         if(this.habitantusers.contains(user))
             return true;
         else

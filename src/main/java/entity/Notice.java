@@ -20,13 +20,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Table(name = "Notice")
 @NamedQueries({
         @NamedQuery(
-                name = "findUserByIdUser",
-                query =
-                        "select c FROM Notice c " +
-                                "WHERE c.id = :id "
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
+                name = "findAllNotice",
                 query =
                         "select c FROM Notice c " +
                                 "ORDER BY c.id"
@@ -57,12 +51,16 @@ public class Notice implements Serializable {
     public Notice() {
     }
 
-    public Notice(String title,
-                     String details,
-                     Date date) {
+    public Notice(User user,
+                  String title,
+                  String details,
+                  Date date,
+                  Community community) {
+        this.user = user;
         this.title = title;
         this.details = details;
         this.date = date;
+        this.community = community;
     }
 
     public int getId() {

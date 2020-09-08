@@ -17,22 +17,15 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
-@Table(name = "bills")
+@Table(name = "bill")
 @NamedQueries({
         @NamedQuery(
-                name = "findUserByIdUser",
-                query =
-                        "select c FROM Bills c " +
-                                "WHERE c.id = :id "
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
-                query =
-                        "select c FROM Bills c " +
-                                "ORDER BY c.id"
+                name = "findBillById",
+                query = "select c FROM Bill c " +
+                                "where c.user.id = :id and c.community.id = :cid"
         )
 })
-public class Bills implements Serializable {
+public class Bill implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -40,7 +33,7 @@ public class Bills implements Serializable {
     private Integer id;
     private float price;
     private String type;
-    private String status;
+    private Boolean status;
     private String title;
     private String details;
     private Date date;
@@ -52,16 +45,22 @@ public class Bills implements Serializable {
     private Community community;
 
 
-    public Bills() {
+    public Bill() {
     }
 
-    public Bills(String title,
-                 float price,
-                 String type,
-                 String status,
-                 Date date) {
+    public Bill(User user,
+                Community community,
+                String title,
+                String details,
+                float price,
+                Boolean status,
+                Date date) {
+        this.user = user;
+        this.community = community;
         this.title = title;
         this.details = details;
+        this.price = price;
+        this.status = status;
         this.date = date;
     }
 
@@ -89,11 +88,11 @@ public class Bills implements Serializable {
         this.type = type;
     }
 
-    public String getSatus() {
+    public Boolean getSatus() {
         return this.status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

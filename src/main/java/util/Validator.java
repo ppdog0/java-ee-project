@@ -15,7 +15,7 @@ public class Validator {
         } else return "用户名合法";
     }
 
-    public bool adminValidate(String username,Integer communityid){
-        if
-    }
+//    public bool adminValidate(String username,Integer communityid){
+//        if
+//    }
 }
