@@ -1,19 +1,8 @@
 package entity;
 
-import entity.Community;
-import entity.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
-
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
@@ -29,8 +18,8 @@ public class Bill implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "billsid")
-    private Integer id;
+    @Column(name = "billid")
+    private Integer billid;
     private float price;
     private String type;
     private Boolean status;
@@ -64,12 +53,12 @@ public class Bill implements Serializable {
         this.date = date;
     }
 
-    public int getId() {
-        return this.id;
+    public int getBillid() {
+        return this.billid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBillid(int id) {
+        this.billid = id;
     }
 
     public String getTitle() {

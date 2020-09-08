@@ -1,19 +1,8 @@
 package entity;
 
-import entity.Community;
-import entity.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
-
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
@@ -23,13 +12,13 @@ import static javax.persistence.TemporalType.TIMESTAMP;
                 name = "findUserByIdUser",
                 query =
                         "select c FROM Complaint c " +
-                                "WHERE c.id = :id "
+                                "WHERE c.complaintid = :id "
         ),
         @NamedQuery(
                 name = "findAllUsers",
                 query =
                         "select c FROM Complaint c " +
-                                "ORDER BY c.id"
+                                "ORDER BY c.complaintid"
         )
 })
 public class Complaint implements Serializable {
@@ -37,7 +26,7 @@ public class Complaint implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "complaintid")
-    private Integer id;
+    private Integer complaintid;
 
     private String title;
 
@@ -63,12 +52,12 @@ public class Complaint implements Serializable {
         this.date = date;
     }
 
-    public int getId() {
-        return this.id;
+    public int getComplaintid() {
+        return this.complaintid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setComplaintid(int id) {
+        this.complaintid = id;
     }
 
     public String getTitle() {

@@ -1,19 +1,8 @@
 package entity;
 
-import entity.Community;
-import entity.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
-
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
@@ -30,7 +19,7 @@ public class Health implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "healthid")
-    private Integer id;
+    private Integer healthid;
 
     private String status;
     private String currposition;
@@ -60,12 +49,12 @@ public class Health implements Serializable {
         this.date = date;
     }
 
-    public int getId() {
-        return this.id;
+    public int getHealthid() {
+        return this.healthid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setHealthid(int id) {
+        this.healthid = id;
     }
 
     public String getCurrposition() {

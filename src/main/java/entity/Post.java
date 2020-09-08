@@ -1,19 +1,8 @@
 package entity;
 
-import entity.Community;
-import entity.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
-
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
@@ -23,7 +12,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
                 name = "findAllPost",
                 query =
                         "select c FROM Post c " +
-                                "ORDER BY c.id"
+                                "ORDER BY c.postid"
         )
 })
 public class Post implements Serializable {
@@ -31,7 +20,7 @@ public class Post implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "postid")
-    private Integer id;
+    private Integer postid;
 
     private String title;
 
@@ -63,12 +52,12 @@ public class Post implements Serializable {
         this.date = date;
     }
 
-    public int getId() {
-        return this.id;
+    public int getPostid() {
+        return this.postid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPostid(int id) {
+        this.postid = id;
     }
 
     public String getTitle() {

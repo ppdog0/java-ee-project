@@ -1,19 +1,8 @@
 package entity;
 
-import entity.Community;
-import entity.User;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import static javax.persistence.CascadeType.ALL;
-
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
@@ -23,15 +12,16 @@ import static javax.persistence.TemporalType.TIMESTAMP;
                 name = "findAllNotice",
                 query =
                         "select c FROM Notice c " +
-                                "ORDER BY c.id"
+                                "ORDER BY c.noticeid"
         )
 })
 public class Notice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     @Column(name = "noticeid")
-    private Integer id;
+    private Integer noticeid;
 
     private String title;
 
@@ -63,12 +53,12 @@ public class Notice implements Serializable {
         this.community = community;
     }
 
-    public int getId() {
-        return this.id;
+    public int getNoticeid() {
+        return this.noticeid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNoticeid(int id) {
+        this.noticeid = id;
     }
 
     public String getTitle() {

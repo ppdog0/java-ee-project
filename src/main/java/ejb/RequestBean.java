@@ -86,7 +86,7 @@ public class RequestBean {
 
             if(user.checkAdminCommunity(community)) {
                 Notice notice = new Notice(user, title, text, date, community);
-                notice.setId(noticeid);
+                notice.setNoticeid(noticeid);
 
                 em.merge(notice);
             }
@@ -114,7 +114,7 @@ public class RequestBean {
             Date date = new Date();
 
             Post post = new Post(user, community, titile, text, date);
-            post.setId(postId);
+            post.setPostid(postId);
 
             em.merge(post);
         } catch (Exception e) {
