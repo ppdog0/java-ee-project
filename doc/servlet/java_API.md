@@ -21,7 +21,7 @@
 // 返回数据(成功)
 {
 	"status": "success",
-    "userid": 1
+    	"userid": 1
 }
 
 // 返回数据(失败)
@@ -68,7 +68,7 @@
 - data:`None`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 无发送数据
 
 // 返回数据
@@ -76,12 +76,12 @@
     // 社区1
 	{
 		"communityname": "云社区",
-    	"communityid": "1",
+    		"communityid": "1",
 		"notice": 
 		{
-    		//公告1
+    			//公告1
 			{
-    			"postid": 1,
+    				"postid": 1,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -89,7 +89,7 @@
 			},
 			// 公告2
 			{
-              	"postid": 2,
+              		"postid": 2,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -98,9 +98,9 @@
 		}
 		"post": 
 		{
-            // 帖子1
+            		// 帖子1
 			{ 
-	            "noticeid": 1,
+	           		"noticeid": 1,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -108,7 +108,7 @@
 			},
 			// 帖子2
 			{
-                "noticeid": 2,
+                		"noticeid": 2,
 				"title": "Yellow lives matter!",
 				"details": "我们社区真是太厉害啦!",
 				"data": "09/08/2020",
@@ -173,7 +173,7 @@
 - data:`communityid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 发送数据
 {
     "communityid":1
@@ -188,19 +188,19 @@
         // 公告1
      	{
     		"noticeid": 1,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		},
-	    // 公告2
-		{
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	},
+	// 公告2
+	{
         	"noticeid": 2,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		}   
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	}   
     }
 }
 ```
@@ -255,7 +255,7 @@
 - data:`communityid`,`noticeid`,`title`,`details`,`userid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 发送数据
 {
     "communityid": 1,
@@ -303,7 +303,7 @@
 - data:`communityid`
 - return:`communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 发送数据
 {
 	"communityid":1
@@ -385,7 +385,7 @@
 - data:`communityid`,`postid`,`title`,`details`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 发送数据
 {
     "communityid": 1,
@@ -399,26 +399,26 @@
 // 返回数据
 {
 	"communityname":"cloud",
-    "communityid":1,
-    "post": 
-    {
-        // 帖子1
-     	{
-    		"postid": 1,
+    	"communityid":1,
+    	"post": 
+    	{
+        	// 帖子1
+     		{
+    			"postid": 1,
 			"title": "Yellow lives matter!",
 			"details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
 			"username": "pp"
 		},
-	    // 帖子2
+		// 帖子2
 		{
-        	"postid": 2,
+        		"postid": 2,
 			"title": "Yellow lives matter!",
 			"details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
 			"username": "pp"
 		}   
-    }
+    	}
 }
 ```
 
@@ -433,7 +433,7 @@
 - data:`communityid`
 - return:`communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 发送数据
 {
 	"communityid":1
@@ -442,26 +442,26 @@
 // 返回数据
 {
 	"communityname":"cloud",
-    "communityid":1,
-    "post": 
-    {
-        // 投诉1
-     	{
-    		"complaintid": 1,
+	"communityid":1,
+	"post": 
+	{
+        	// 投诉1
+     		{
+    			"complaintid": 1,
 			"title": "Yellow lives matter!",
 			"details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
 			"username": "pp"
 		},
-	    // 投诉2
+		// 投诉2
 		{
-        	"complaintid": 2,
+        		"complaintid": 2,
 			"title": "Yellow lives matter!",
 			"details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
 			"username": "pp"
 		}   
-    }
+   	}
 }
 ```
 
@@ -472,7 +472,7 @@
 - data:`communityid`,`postid`,`title`,`details`,`userid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
-```json
+```
 // 发送数据
 {
     "communityid": 1,
@@ -491,19 +491,19 @@
         // 投诉1
      	{
     		"complaintid": 1,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		},
-	    // 投诉2
-		{
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	},
+	// 投诉2
+	{
         	"complaintid": 2,
-			"title": "Yellow lives matter!",
-			"details": "我们社区真是太厉害啦!",
-			"date": "09/08/2020",
-			"username": "pp"
-		}   
+		"title": "Yellow lives matter!",
+		"details": "我们社区真是太厉害啦!",
+		"date": "09/08/2020",
+		"username": "pp"
+	}   
     }
 }
 ```
