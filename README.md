@@ -84,7 +84,7 @@ java-ee-project:
 
 ###### 前端原型设计
 
-[前端原型](https://dywioe.axshare.com)
+![](doc/images/prototype.jpg)
 
 ##### 数据库
 
