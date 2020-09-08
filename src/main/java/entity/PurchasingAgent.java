@@ -2,7 +2,6 @@ package entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 
@@ -20,8 +19,8 @@ public class PurchasingAgent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "purchasingagentid")
-    private Integer purchasingagentid;
+    @Column(name = "agentid")
+    private Integer agentid;
     private String purchasingagentname;
     private String phonenumber;
 
@@ -37,11 +36,11 @@ public class PurchasingAgent implements Serializable {
         this.phonenumber = phonenumber;
     }
 
-    public Integer getPurchasingagentid() {
-        return purchasingagentid;
+    public Integer getAgentid() {
+        return agentid;
     }
-    public void setPurchasingagentid(Integer purchasingagentid){
-        this.purchasingagentid=purchasingagentid;
+    public void setAgentid(Integer purchasingagentid){
+        this.agentid =purchasingagentid;
     }
 
     public String getPurchasingagentname(){

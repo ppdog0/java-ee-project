@@ -33,7 +33,7 @@ public class Order implements Serializable {
     private Community community;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="purchasingagentid", nullable=false)
+    @JoinColumn(name="agentid", nullable=false)
     private PurchasingAgent purchasingagent;
 
     @ManyToOne(fetch=FetchType.LAZY)
