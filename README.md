@@ -28,7 +28,7 @@ java-ee-project:
         - [数据库](#%E6%95%B0%E6%8D%AE%E5%BA%93)
             - [数据库接口](#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8E%A5%E5%8F%A3)
             - [数据库文档](#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E6%A1%A3)
-            - [数据库建模](#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BB%BA%E6%A8%A1)
+        - [路由url](#%E8%B7%AF%E7%94%B1url)
         - [项目配置](#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE)
 - [参考文档](#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3)
 - [开发日志](#%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97)
@@ -95,9 +95,9 @@ java-ee-project:
 
 [数据库文档](doc/model/model.md)
 
-###### 数据库建模
+##### 路由url
 
-![数据库建模](doc/images/database.png)
+[API文档](doc/servlet/java_API.md)
 
 ###### 项目配置
 
