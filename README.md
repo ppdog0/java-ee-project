@@ -84,7 +84,7 @@ java-ee-project:
 
 ###### 前端原型设计
 
-[前端原型](https://dywioe.axshare.com)
+![prototype](doc/images/prototype.jpg)
 
 ##### 数据库
 
@@ -118,6 +118,11 @@ java-ee-project:
 JSF文档: [JSF文档](https://www.w3cschool.cn/java/inject-managed-beans.html)
 [验证器](https://blog.csdn.net/qq_33429968/article/details/73928719)
 [JSF分离](https://blog.csdn.net/fish_your_god/article/details/100566216)
+
+web文档:[跨域访问](https://blog.csdn.net/Wen__Fei/article/details/101458322)
+[JS跨域访问](https://www.zhihu.com/question/26376773)
+[servlet](https://www.zhihu.com/question/26376773)
+
 
 #### 开发日志
 

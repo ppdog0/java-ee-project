@@ -8,13 +8,13 @@
         <param-value>Development</param-value>
     </context-param>
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-name>MainServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.xhtml</url-pattern>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/MainServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
