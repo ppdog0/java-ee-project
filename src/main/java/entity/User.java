@@ -125,6 +125,7 @@ public class User implements Serializable {
         else
             return false;
     }
+
 //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
 //    }

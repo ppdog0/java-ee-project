@@ -1,13 +1,12 @@
 package ejb;
 
-import entity.User;
+import entity.*;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +15,7 @@ import java.util.logging.Logger;
 public class RequestBean {
     @PersistenceContext
     private EntityManager em;
-//    public RequestBean() {
-//        //这部分是ejb测试时才需要的代码
-//        //EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-//        //em = entityManagerFactory.createEntityManager();
-//        //这部分是ejb测试时才需要的代码
-//    }
+
     private static final Logger logger = Logger.getLogger("java.ejb.RequestBean");
 
     public void createUser(String password,
@@ -37,22 +31,18 @@ public class RequestBean {
             throw new EJBException(ex.getMessage());
         }
     }
-
-//    public List<User> getAllUsers() {
-//        List<User> users = (List<User>) em.createNamedQuery("findAllUsers").getResultList();
-//        return users;
-//    }
-
-    public User findUser(Integer userId) {
+    public User findUser(String username) {
+        User user;
         try {
-            return (User) em.createNamedQuery("findUserById")
-                    .setParameter("id", userId)
-                    .getSingleResult();
-        } catch (Exception ex) {
-            throw new EJBException(ex.getMessage());
-        }
-    }
+            Integer userid = searchUserId(username);
+            user = em.find(User.class, userid);
 
+            return user;
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
     public Integer searchUserId(String username) {
         try {
             return (Integer) em.createNamedQuery("findUserByName")
@@ -63,51 +53,181 @@ public class RequestBean {
         }
     }
 
-    public boolean userAdmin(String username, Integer communityid){
+    public void createNotice(Integer userId, String title, String text, Integer communityId) {
         try {
-            Integer userid=this.searchUserId(username);
-            User user=this.findUser(userid);
+            //SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 
-        }catch (Exception ex) {
+
+            Date date = new Date();
+
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+
+            Notice notice = new Notice(user, title, text, date, community);
+            em.persist(notice);
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    public List<Notice> findAllNotice(String communityId) {
+        try {
+            return (List<Notice>) em.createNamedQuery("findAllNotice")
+                    .getSingleResult();
+        } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
     }
+    public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {
+        try {
+            Date date = new Date();
 
-//    public Integer searchNoticeId(Notice notice) {}
-//    public void createNotice(String userId, String title,  String text, String communityId) {}
-//    public List<Notice> findAllNotice(String communityId) {}
-//    public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {}
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+
+            if(user.checkAdminCommunity(community)) {
+                Notice notice = new Notice(user, title, text, date, community);
+                notice.setId(noticeid);
+
+                em.merge(notice);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void createPost(Integer userId, String title, String text, Integer communityId) {
+        try {
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+            Date date = new Date();
+
+            Post post = new Post(user, community, title, text, date);
+            em.persist(post);
+        } catch (Exception e) {
+
+        }
+    }
+    public void updatePost(Integer postId, Integer userId, Integer communityId, String titile, String text) {
+        try {
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+            Date date = new Date();
+
+            Post post = new Post(user, community, titile, text, date);
+            post.setId(postId);
+
+            em.merge(post);
+        } catch (Exception e) {
+
+        }
+    }
+    public void deletePost(Integer postId, Integer userId) {
+        try {
+            Post post = em.find(Post.class, postId);
+            User user = em.find(User.class, userId);
+            if(post.getUser().getId() == userId || user.checkAdminCommunity(post.getCommunity())) {
+                em.remove(em.merge(post));
+            }
+        } catch (Exception e) {
+        }
+    }
+    public List<Post> findAllPosts(Integer communityId) {
+        try {
+            return (List<Post>) em.createNamedQuery("findAllPost")
+                    .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public void createBill(Integer userId, Integer communityId, Integer price, String title, String type, Boolean status) {
+        try {
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+            Date date = new Date();
+
+            Bill bill = new Bill(user, community, title, type, price, status, date);
+            em.persist(bill);
+        } catch (Exception e) {
+
+        }
+    }
+    public void updateBill(Integer billId, Integer userId, Boolean status) {
+        try {
+            Bill bill = em.find(Bill.class, billId);
+            User user = em.find(User.class, userId);
+            if(user.checkAdminCommunity(bill.getCommunity())) {
+                Date date = new Date();
+                bill.setDate(date);
+                bill.setStatus(status);
+                em.merge(bill);
+            }
+        } catch (Exception e) {
+
+        }
+    }
+    List<Bill> findBills(Integer communityId, Integer userId) {
+        try {
+            return (List<Bill>) em.createNamedQuery("findBillById")
+                    .setParameter("id", userId).setParameter("cid", communityId)
+                    .getResultList();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    void createHealth(Integer userId, String status, String curr_position) {
+        try {
+            User user = em.find(User.class, userId);
+            Date date = new Date();
+            Health health = new Health(user, status, curr_position, date);
+
+            em.persist(health);
+        } catch (Exception e) {
+
+        }
+    }
+    void updateHealth(Integer healthId, Integer userId, String status, String curr_position) {
+        try {
+            Health health = em.find(Health.class, healthId);
+            health.setStatus(status);
+            health.setCurrposition(curr_position);
+
+            em.persist(health);
+        } catch (Exception e) {
+
+        }
+    }
+    Health findUserHealth(Integer userId) {
+        try {
+            return (Health) em.createNamedQuery("findHealthById")
+                    .setParameter("id", userId)
+                    .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    Integer searchCommunityId(String communityname) {
+        try {
+            return (Integer) em.createNamedQuery("findCommunityByName")
+                    .setParameter("name", communityname)
+                    .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+//待定
+//    public void createComplaints() {}
 //
-//    public Integer searchPostId(Post post) {}
-//    public void createPost(Integer userId, String title, String text, Integer communityId) {}
-//    public void updatePost(Integer postId, Integer userId, Integer communityId, String titile, String text) {}
-//    public void deletePost(Integer postId, Integer userId) {}
-//    public List<Post> findAllPosts(Integer communityId) {}
-//
-//    //待定
+//待定
 //    public void createOrders() {}
 //    public void getOrderPrice() {}
 //
-//    Integer searchBillId(Bill bill) {}
-//    public void createBill(Integer amdinId, Integer userId, Integer communityId, Integer price, String type, Boolean status) {}
-//    public void updateBill(Integer billId, Integer adminId, Boolean status) {}
-//    List<Bill> findBills(Integer communityId, Integer userId) {}
 //
-//    //待定
-//    public void createComplaints() {}
-//
-//    Integer searchHealthId(Health health) {}
-//    void createHealth(Integer userId, String status, String curr_position) {}
-//    void updateHealth(Integer healthId, Integer userId, String status, String curr_postion) {}
-//    Health findUserHealth(Integer userId) {}
-//
-//    Integer searchCommunityId(Community community) {}
-//    void createCommunity(Integer adminId, String communityName) {}
-//    Lisr<Community> findAllCommunity() {}
-//
-//    Integer searchAdminId(Integer userId) {}
-//    void createAdmin(Integer userId, Integer communityId) {}
-//
-//    Integer searchHid(Integer userId) {}
-//    void creatHabitant(Integer userId, Integer communityId) {}
 }
