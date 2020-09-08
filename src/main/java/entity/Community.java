@@ -29,15 +29,14 @@ public class Community implements java.io.Serializable {
     private Set<Complaint> complaints;
 
     @OneToMany(mappedBy="noticeid")
-    private Set<Complaint> notices;
+    private Set<Notice> notices;
 
     @OneToMany(mappedBy="postid")
-    private Set<Complaint> posts;
+    private Set<Post> posts;
 
     @OneToMany(mappedBy = "healthid")
-    private Set<Complaint> healths;
+    private Set<Health> healths;
 
-    @Column(name = "userid")
     public int getId() {
         return this.id;
     }
@@ -69,4 +68,10 @@ public class Community implements java.io.Serializable {
         return habitantusers;
     }
 
+    public boolean checkAdminCommunity(User user){
+        if(this.habitantusers.contains(user))
+            return true;
+        else
+            return false;
+    }
 }

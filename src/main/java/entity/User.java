@@ -55,13 +55,13 @@ public class User implements Serializable {
     private Set<Complaint> complaints;
 
     @OneToMany(mappedBy = "noticeid")
-    private Set<Complaint> notices;
+    private Set<Notice> notices;
 
     @OneToMany(mappedBy = "postid")
-    private Set<Complaint> posts;
+    private Set<Post> posts;
 
     @OneToMany(mappedBy = "healthid")
-    private Set<Complaint> healths;
+    private Set<Health> healths;
 
     public User() {
     }
@@ -106,12 +106,25 @@ public class User implements Serializable {
         return admincommuintys;
     }
 
+    public void setAdmincommuintys(Set<Community> admincommuintys){
+        this.admincommuintys=admincommuintys;
+    }
+
     @ManyToMany(mappedBy = "habitants")
     public Set<Community> getHabitantcommunities() {
         return habitantcommunities;
     }
 
+    public void setHabitantcommunities(Set<Community> habitantcommunities){
+        this.habitantcommunities=habitantcommunities;
+    }
 
+    public boolean checkAdminCommunity(Community community){
+        if(this.admincommuintys.contains(community))
+            return true;
+        else
+            return false;
+    }
 //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
 //    }

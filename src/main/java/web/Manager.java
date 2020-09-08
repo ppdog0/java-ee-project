@@ -16,6 +16,7 @@ public class Manager {
     private RequestBean request;
     private String userName;
     private String password;
+    private String communityname;
 
     public String addUser() {
         request.createUser(userName, password);
@@ -36,5 +37,13 @@ public class Manager {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCommunityname() {
+        return communityname;
+    }
+
+    public void setCommunityname(String password) {
+        this.communityname = communityname;
     }
 }

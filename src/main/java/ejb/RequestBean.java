@@ -43,7 +43,7 @@ public class RequestBean {
 //        return users;
 //    }
 
-    User findUser(Integer userId) {
+    public User findUser(Integer userId) {
         try {
             return (User) em.createNamedQuery("findUserById")
                     .setParameter("id", userId)
@@ -53,11 +53,21 @@ public class RequestBean {
         }
     }
 
-    Integer searchUserId(String username) {
+    public Integer searchUserId(String username) {
         try {
             return (Integer) em.createNamedQuery("findUserByName")
                     .setParameter("name", username)
                     .getSingleResult();
+        }catch (Exception ex) {
+            throw new EJBException(ex.getMessage());
+        }
+    }
+
+    public boolean userAdmin(String username, Integer communityid){
+        try {
+            Integer userid=this.searchUserId(username);
+            User user=this.findUser(userid);
+
         }catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
