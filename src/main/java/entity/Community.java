@@ -77,16 +77,10 @@ public class Community implements java.io.Serializable {
     }
 
     public boolean checkAdminCommunity(User user){
-        if(this.adminusers.contains(user))
-            return true;
-        else
-            return false;
+        return this.adminusers.contains(user);
     }
 
     public boolean checkHabitantCommunity(User user){
-        if(this.habitantusers.contains(user))
-            return true;
-        else
-            return false;
+        return this.habitantusers.contains(user);
     }
 }

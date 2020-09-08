@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,6 +54,31 @@ public class RequestBean {
         }
     }
 
+    public void userHabitantCommunity(Integer userId, Integer communityId){
+        try {
+
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+            Set<Community> communitys=user.getHabitantcommunities();
+            communitys.add(community);
+            user.setHabitantcommunities(communitys);
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+
+    public void userAdminCommunity(Integer userId, Integer communityId){
+        try {
+
+            User user = em.find(User.class, userId);
+            Community community = em.find(Community.class, communityId);
+            Set<Community> communitys=user.getAdmincommuintys();
+            communitys.add(community);
+            user.setHabitantcommunities(communitys);
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
     public void createNotice(Integer userId, String title, String text, Integer communityId) {
         try {
             //SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");

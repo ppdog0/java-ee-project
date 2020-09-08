@@ -96,8 +96,8 @@ public class User implements Serializable {
                     @JoinColumn(name = "userid", referencedColumnName = "userid")},
             inverseJoinColumns = {
                     @JoinColumn(name = "communityid", referencedColumnName = "communityid")})
-    public Set getAdmincommuintys() {
-        return admincommuintys;
+    public Set<Community> getAdmincommuintys() {
+        return this.admincommuintys;
     }
 
     public void setAdmincommuintys(Set<Community> admincommuintys){
@@ -106,7 +106,7 @@ public class User implements Serializable {
 
     @ManyToMany(mappedBy = "habitants")
     public Set<Community> getHabitantcommunities() {
-        return habitantcommunities;
+        return this.habitantcommunities;
     }
 
     public void setHabitantcommunities(Set<Community> habitantcommunities){
@@ -114,10 +114,11 @@ public class User implements Serializable {
     }
 
     public boolean checkAdminCommunity(Community community){
-        if(this.admincommuintys.contains(community))
-            return true;
-        else
-            return false;
+        return this.admincommuintys.contains(community);
+    }
+
+    public boolean checkHabitantCommunity(Community community){
+        return this.habitantcommunities.contains(community);
     }
 
 //    public void setAdmincommuintys(Set admincommuintys) {
