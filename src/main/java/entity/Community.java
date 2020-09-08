@@ -25,16 +25,16 @@ public class Community implements java.io.Serializable {
     private Set habitantusers = new HashSet();
     private Set adminusers = new HashSet();
 
-    @OneToMany(mappedBy="complaintid")
+    @OneToMany(targetEntity=Complaint.class,mappedBy = "community")
     private Set<Complaint> complaints;
 
-    @OneToMany(mappedBy="noticeid")
+    @OneToMany(targetEntity=Notice.class,mappedBy = "community")
     private Set<Notice> notices;
 
-    @OneToMany(mappedBy="postid")
+    @OneToMany(targetEntity=Post.class,mappedBy = "community")
     private Set<Post> posts;
 
-    @OneToMany(mappedBy = "healthid")
+    @OneToMany(targetEntity=Health.class,mappedBy = "community")
     private Set<Health> healths;
 
     public int getId() {

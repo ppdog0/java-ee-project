@@ -27,12 +27,6 @@ import static javax.persistence.TemporalType.TIMESTAMP;
                 query =
                         "select u.id FROM User u " +
                                 "WHERE u.username = :name"
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
-                query =
-                        "select u FROM User u " +
-                                "ORDER BY u.id"
         )
 })
 public class User implements Serializable {
@@ -51,16 +45,16 @@ public class User implements Serializable {
     private Set admincommuintys = new HashSet();
     private Set habitantcommunities = new HashSet();
 
-    @OneToMany(mappedBy = "complaintid")
+    @OneToMany(targetEntity=Complaint.class,mappedBy = "user")
     private Set<Complaint> complaints;
 
-    @OneToMany(mappedBy = "noticeid")
+    @OneToMany(targetEntity=Notice.class,mappedBy = "user")
     private Set<Notice> notices;
 
-    @OneToMany(mappedBy = "postid")
+    @OneToMany(targetEntity=Post.class,mappedBy = "user")
     private Set<Post> posts;
 
-    @OneToMany(mappedBy = "healthid")
+    @OneToMany(targetEntity=Health.class,mappedBy = "user")
     private Set<Health> healths;
 
     public User() {

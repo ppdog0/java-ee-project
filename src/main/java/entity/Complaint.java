@@ -7,20 +7,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "complaint")
-@NamedQueries({
-        @NamedQuery(
-                name = "findUserByIdUser",
-                query =
-                        "select c FROM Complaint c " +
-                                "WHERE c.complaintid = :id "
-        ),
-        @NamedQuery(
-                name = "findAllUsers",
-                query =
-                        "select c FROM Complaint c " +
-                                "ORDER BY c.complaintid"
-        )
-})
 public class Complaint implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
