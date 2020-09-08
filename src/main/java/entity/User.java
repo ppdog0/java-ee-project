@@ -57,6 +57,9 @@ public class User implements Serializable {
     @OneToMany(targetEntity=Health.class,mappedBy = "user")
     private Set<Health> healths;
 
+    @OneToMany(targetEntity=Order.class,mappedBy = "user")
+    private Set<Order> orders;
+
     public User() {
     }
 

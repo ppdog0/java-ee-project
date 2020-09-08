@@ -6,12 +6,12 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "Health")
+@Table(name = "health")
 @NamedQueries({
         @NamedQuery(
                 name = "findHealthById",
                 query = "select c FROM Health c " +
-                                "WHERE c.user.id = :id "
+                                "WHERE c.healthid = :id "
         )
 })
 public class Health implements Serializable {

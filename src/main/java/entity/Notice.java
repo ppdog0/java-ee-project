@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "Notice")
+@Table(name = "notice")
 @NamedQueries({
         @NamedQuery(
                 name = "findAllNotice",
