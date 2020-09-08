@@ -5,13 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "community")
-//@NamedQuery(
-//        name="findUserByIdUser",
-//        query=
-//        "SELECT u FROM User u " +
-//        "WHERE u.iduser = :iduser "
-//)
+@Table(name = "Community")
+@NamedQuery(
+        name="findCommunityByName",
+        query=
+        "SELECT u.id FROM Community u " +
+        "WHERE u.communityname = :name "
+)
 public class Community implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -210,14 +210,18 @@ public class RequestBean {
         }
         return null;
     }
-//
-//    Community findCommunity(Integer communityid) {
-//        try {
-//
-//        } catch (Exception e) {
-//
-//        }
-//
+
+    Integer searchCommunityId(String communityname) {
+        try {
+            return (Integer) em.createNamedQuery("findCommunityByName")
+                    .setParameter("name", communityname)
+                    .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
 //待定
 //    public void createComplaints() {}
 //
