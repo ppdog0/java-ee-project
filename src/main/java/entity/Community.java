@@ -34,9 +34,6 @@ public class Community implements java.io.Serializable {
     @OneToMany(targetEntity=Post.class,mappedBy = "community")
     private Set<Post> posts;
 
-    @OneToMany(targetEntity=Health.class,mappedBy = "community")
-    private Set<Health> healths;
-
     public Community() {}
     public Community(String communityname) {
         this.communityname = communityname;

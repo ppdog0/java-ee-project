@@ -87,45 +87,37 @@ public class JsonBean {
     }
 
     // 调用方：CommunityServlet
-    public String generateJsonStringCommunity() {
+    public String generateJsonStringCommunity(Integer comId) {
         // 1. Collect all communities.
-        User user = account.findUser(account.getCurrentUsername());
-        this.username = user.getUsername();
-        Set<Community> communities = userCommunities(user);
+        // User user = account.findUser(account.getCurrentUsername());
+        // this.username = user.getUsername();
 
-        // 2. Iterate every communities.
-        JsonArrayBuilder communitiesBuilder = Json.createArrayBuilder();
-        communities.forEach((Community com) -> {
-            communitiesBuilder.add(communityBuilder(com));
-        });
-
-        JsonArray array = communitiesBuilder.build();
+        JsonObject cbObject = communityBuilder(comId).build();
         StringWriter stWriter = new StringWriter();
         try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeArray(array);
+            jsonWriter.writeObject(cbObject);
         }
 
         return stWriter.toString();
     }
     
 
-    public JsonObjectBuilder communityBuilder(Community com) {
+    public JsonObjectBuilder communityBuilder(Integer comId) {
         JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
         JsonArrayBuilder noticeAB = Json.createArrayBuilder();
         JsonArrayBuilder postAB = Json.createArrayBuilder();
 
-        List<Notice> notices = account.findAllNotice(Integer.toString(com.getId()));
+        List<Notice> notices = account.findAllNotice(Integer.toString(comId));
         notices.forEach(nt -> {
             noticeAB.add(noticeBuilder(nt));
         });
 
-        List<Post> posts = account.findAllPosts(com.getId());
+        List<Post> posts = account.findAllPosts(comId);
         posts.forEach(pt -> {
             postAB.add(postBuilder(pt));
         });
 
-        communityBuilder.add("communityname", com.getCommunityname())
-                .add("communityid", Integer.toString(com.getId()))
+        communityBuilder.add("communityname", account.findCommunityName(comId))
                 .add("notice", noticeAB)
                 .add("post", postAB);
 
@@ -205,9 +197,12 @@ public class JsonBean {
         JsonArrayBuilder postAB = Json.createArrayBuilder();
 
         List<Post> posts = account.findAllPosts(comId);
-        posts.forEach(pt -> {
-            postAB.add(postBuilder(pt));
-        });
+        for (int i = 0; i < posts.size(); i++) {
+            postAB.add(postBuilder(posts.get(i)));
+        }
+//        posts.forEach(pt -> {
+//            postAB.add(postBuilder(pt));
+//        });
 
         communityBuilder.add("communityname", comName)
                 .add("communityid", comId)

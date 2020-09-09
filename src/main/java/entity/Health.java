@@ -27,9 +27,8 @@ public class Health implements Serializable {
     private Date date;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "communityid", nullable = false)
-    private Community community;
+
+
 
 
     public Health() {
@@ -85,14 +84,6 @@ public class Health implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Community getCommunity() {
-        return this.community;
-    }
-
-    public void setUser(Community community) {
-        this.community = community;
     }
 
     public String getStatus() {

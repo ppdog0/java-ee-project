@@ -8,8 +8,13 @@ package web;
 import ejb.JsonBean;
 import ejb.AccountBean;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,9 +34,11 @@ public class CommunityServlet extends HttpServlet {
     private JsonBean jsonbean;
     private static final long serialVersionUID = 7903037019848392847L;
 
-    private void completeResponse(HttpServletResponse response) throws IOException {
+    private static final Logger logger = Logger.getLogger("java.ejb.CommunityServlet");
 
-        String jsonString = jsonbean.generateJsonStringCommunity();
+    private void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+
+        String jsonString = jsonbean.generateJsonStringCommunity(comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -40,13 +47,20 @@ public class CommunityServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+        JsonObject object = reader.readObject();
+        String str = object.getString("communityid");
+        //Integer comId = comId = object.getInt("communityid");
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(response);
+        Integer comId = Integer.valueOf(str);
+
+        completeResponse(comId, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

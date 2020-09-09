@@ -71,13 +71,15 @@ public class RequestBean {
     public Integer searchUserId(String username) {
         try {
             //logger.log(Level.INFO, "search user id {0}", new Object[]{username});
+
             User user = (User) em.createNamedQuery("findUserByName")
                     .setParameter("name", username)
                     .getSingleResult();
-            //logger.log(Level.INFO, "search user id {0}--{1}", new Object[]{user.getUsername(), user.getPassword()});
+//            logger.log(Level.INFO, "search user id {0}--{1}", new Object[]{user.getUsername(), user.getPassword()});
             Integer userId = user.getId();
             return userId;
         }catch (Exception ex) {
+            logger.log(Level.WARNING, ex.toString());
             throw new EJBException(ex.getMessage());
         }
     }
