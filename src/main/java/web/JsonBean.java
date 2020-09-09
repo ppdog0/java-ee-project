@@ -34,7 +34,7 @@ public class JsonBean {
     }
     
     // 调用方：SignInServlet 和 SignOutServlet
-    protected String generateJsonString(Map<String, String> map) {
+    protected String generateJsonStringSign(Map<String, String> map) {
         JsonObjectBuilder modelBuilder = Json.createObjectBuilder();
 
         map.keySet().forEach(key -> {
@@ -62,7 +62,7 @@ public class JsonBean {
     }
     
     // 调用方：CommunityServlet
-    protected String generateJsonString(AccountBean account) {
+    protected String generateJsonStringCommunity() {
         // 1. Collect all communities.
         User user = account.findUser(account.getCurrentUsername());
         this.username = user.getUsername();
@@ -126,4 +126,10 @@ public class JsonBean {
                         .add("username", this.username);
                 return postBuilder;
     }
+    
+    /*
+    protected String generateJsonStringNotice() {
+        
+    }
+*/
 }

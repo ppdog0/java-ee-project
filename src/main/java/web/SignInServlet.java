@@ -35,7 +35,7 @@ public class SignInServlet extends HttpServlet {
             map.put("userid", userid);
         }
 
-        String jsonString = jsonbean.generateJsonString(map);
+        String jsonString = jsonbean.generateJsonStringSign(map);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);

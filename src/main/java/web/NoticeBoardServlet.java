@@ -21,17 +21,19 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-public class NoticeServlet extends HttpServlet {
-
+/*
+public class NoticeBoardServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
+    private Integer comId;
+    private String comName;
     private static final long serialVersionUID = 7903037019848392847L;
 
-    private void completeResponse(Integer communityId, HttpServletResponse response) throws IOException {
+    private void completeResponse(HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonString(account);
+        String jsonString = jsonbean.generateJsonStringNotice(account);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -42,10 +44,12 @@ public class NoticeServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer communityId = object.getInt("communityid");
+        comId = object.getInt("communityid");
+        comName = account.findCommunityName(comId);
+        
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(communityId, response);
+        completeResponse(comId, comName, response);
     }
 
     @Override
@@ -53,5 +57,5 @@ public class NoticeServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
 }
+*/

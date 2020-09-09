@@ -98,4 +98,8 @@ public class AccountBean implements Serializable{
        SimpleDateFormat ft = new SimpleDateFormat("MM/dd/yyyy");
        return ft.format(date);
     }
+    
+    public String findCommunityName(Integer communityId) {
+        return request.findCommunityName(communityId);
+    }
 }

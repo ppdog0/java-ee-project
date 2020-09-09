@@ -33,7 +33,7 @@ public class SignUpServlet extends HttpServlet {
         Map<String, String> map = new HashMap<>();           
         map.put("status", status);
 
-        String jsonString = jsonbean.generateJsonString(map);
+        String jsonString = jsonbean.generateJsonStringSign(map);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
