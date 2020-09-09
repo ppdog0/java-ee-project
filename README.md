@@ -3,20 +3,20 @@ java-ee-project:
 前端: 
 <kbd>
     <a href="https://github.com/Akashi-L">
-        <img src="https://avatars0.githubusercontent.com/u/65905930?s=400&v=4", width="5%" height="5%">
+        <img src="https://avatars0.githubusercontent.com/u/65905930?s=400&v=4" width="5%" height="5%">
     </a>
 </kbd>
 
 后端:
 <kbd>
     <a href="https://github.com/ppdog0">
-        <img src="https://avatars2.githubusercontent.com/u/48408863?s=460&v=4" width="5%" height="5%" style="border: 50% solid black">
+        <img src="https://avatars2.githubusercontent.com/u/48408863?s=460&v=4" width="5%" height="5%">
     </a>
     <a href="https://github.com/buggyminer">
-        <img src="https://avatars3.githubusercontent.com/u/46335543?s=400&v=4" width="5%" height="5%" style="border: 50% solid black">
+        <img src="https://avatars3.githubusercontent.com/u/46335543?s=400&v=4" width="5%" height="5%">
     </a>
     <a href="https://github.com/GwanWingYan">
-        <img src="https://avatars2.githubusercontent.com/u/47978664?s=400&v=4" width="5%" height="5%" style="border: 50% solid black">
+        <img src="https://avatars2.githubusercontent.com/u/47978664?s=400&v=4" width="5%" height="5%">
     </a>
 </kbd>
 
