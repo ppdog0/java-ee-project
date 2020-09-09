@@ -6,12 +6,12 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "store")
+@Table(name = "Store")
 @NamedQueries({
         @NamedQuery(
-                name = "findAllPurchasingAgent",
+                name = "findAllStore",
                 query =
-                        "select c FROM Post c " +
+                        "select c FROM Store c " +
                                 "ORDER BY c.storeid"
         )
 })

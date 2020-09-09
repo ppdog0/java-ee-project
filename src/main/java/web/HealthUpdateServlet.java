@@ -26,14 +26,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "HealthUpdateServlet")
+@WebServlet(urlPatterns = {"/health/update"})
 public class HealthUpdateServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
-    @EJB
-    private static final long serialVersionUID = 7903037019848392847L;
 
     protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 

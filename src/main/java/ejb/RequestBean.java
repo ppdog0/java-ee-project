@@ -224,13 +224,14 @@ public class RequestBean {
 
         }
     }
-    public void updateHealth(Integer healthId, String status, String curr_position) {
+    public void updateHealth(Integer healthId, String status, float temperature, String curr_position) {
         try {
             Health health = em.find(Health.class, healthId);
             health.setStatus(status);
             health.setPosition(curr_position);
+            health.setTemperature(temperature);
 
-            em.persist(health);
+            em.merge(health);
         } catch (Exception e) {
 
         }
@@ -262,7 +263,7 @@ public class RequestBean {
             store.setStorename(storename);
             store.setPhonenumber(phonenumber);
 
-            em.persist(store);
+            em.merge(store);
         } catch (Exception e) {
 
         }
@@ -283,7 +284,7 @@ public class RequestBean {
             purchasingAgent.setStorename(purchasingagentname);
             purchasingAgent.setPhonenumber(phonenumber);
 
-            em.persist(purchasingAgent);
+            em.merge(purchasingAgent);
         } catch (Exception e) {
 
         }
@@ -309,7 +310,7 @@ public class RequestBean {
             order.setDetails(details);
             order.setStatus(status);
 
-            em.persist(order);
+            em.merge(order);
         } catch (Exception e) {
 
         }

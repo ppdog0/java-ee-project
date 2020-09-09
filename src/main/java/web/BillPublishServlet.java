@@ -24,14 +24,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "BillPublishServlet")
+@WebServlet(urlPatterns = {"/bill/create"})
 public class BillPublishServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
-    @EJB
-    private static final long serialVersionUID = 7903037019848392847L;
 
     protected void completeResponse(Integer userId, Integer communityId, HttpServletResponse response) throws IOException {
 
