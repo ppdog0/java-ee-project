@@ -238,8 +238,6 @@ public class RequestBean {
         return null;
     }
 
-
-
     void createStore(String storename, String phonenumber) {
         try {
             Store store = new Store(storename,phonenumber);
@@ -282,7 +280,6 @@ public class RequestBean {
         }
     }
 
-
     void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
         try {
             User user = em.find(User.class, userId);
@@ -297,7 +294,6 @@ public class RequestBean {
 
         }
     }
-
     void updateOrder(Integer orderId,String details ,String status) {
         try {
             Order order=em.find(Order.class,orderId);
@@ -321,14 +317,20 @@ public class RequestBean {
         return null;
     }
 
-
-
-
     Integer searchCommunityId(String communityname) {
         try {
             return (Integer) em.createNamedQuery("findCommunityByName")
                     .setParameter("name", communityname)
                     .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    String findCommunityName(Integer communityid) {
+        try {
+            Community community = em.find(Community.class, communityid);
+            return community.getCommunityname();
         } catch (Exception e) {
 
         }
