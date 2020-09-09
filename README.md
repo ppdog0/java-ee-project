@@ -22,6 +22,8 @@ java-ee-project:
         - [需求文档](#%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3)
         - [代码结构](#%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84)
         - [项目架构](#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84)
+            - [JSF](#jsf)
+            - [frontend-backend](#frontend-backend)
     - [项目建模](#%E9%A1%B9%E7%9B%AE%E5%BB%BA%E6%A8%A1)
         - [前端](#%E5%89%8D%E7%AB%AF)
             - [前端原型设计](#%E5%89%8D%E7%AB%AF%E5%8E%9F%E5%9E%8B%E8%AE%BE%E8%AE%A1)
@@ -31,15 +33,15 @@ java-ee-project:
         - [路由url](#%E8%B7%AF%E7%94%B1url)
         - [项目配置](#%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE)
 - [参考文档](#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3)
-     - [官方文档](#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3)
-     - [整理文档](#%E6%95%B4%E7%90%86%E6%96%87%E6%A1%A3)
-     - [JSF文档](#jsf%E6%96%87%E6%A1%A3)
-     - [web文档](#web%E6%96%87%E6%A1%A3)
+    - [官方文档](#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3)
+    - [整理文档](#%E6%95%B4%E7%90%86%E6%96%87%E6%A1%A3)
+    - [JSF文档](#jsf%E6%96%87%E6%A1%A3)
+    - [web文档](#web%E6%96%87%E6%A1%A3)
 - [开发日志](#%E5%BC%80%E5%8F%91%E6%97%A5%E5%BF%97)
-     - [09/06/2020](#09062020)
-     - [09/07/2020](#09072020)
-     - [09/08/2020](#09082020)
-     - [09/09/2020](#09092020)
+    - [/06/2020](#062020)
+    - [/07/2020](#072020)
+    - [/08/2020](#082020)
+    - [/09/2020](#092020)
 
 <!-- /TOC -->
 
@@ -47,13 +49,13 @@ java-ee-project:
 
 #### 项目结构
 
-###### 需求文档
+##### 需求文档
 
 [需求文档](doc/tutorial/需求分析.md)
 
 [wiki](https://github.com/ppdog0/java-ee-project/wiki/Requirements-Analysis)
 
-###### 代码结构
+##### 代码结构
 
     root:project
     |--.gitignore
@@ -82,9 +84,15 @@ java-ee-project:
     |   |--test.ejb.test:测试文件
     |--target:目标文件
 
-###### 项目架构
+##### 项目架构
 
-![项目架构](./doc/images/jave-ee-architect.png)
+###### JSF
+
+![项目架构](./doc/images/jave-ee-JSF.png)
+
+###### frontend-backend
+
+![项目架构](./doc/images/jave-ee-Architect.png)
 
 #### 项目建模
 
