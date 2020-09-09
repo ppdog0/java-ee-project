@@ -11,9 +11,13 @@
 package web;
 
 import ejb.RequestBean;
-import ejb.AccountStatusBean;
+import entity.Notice;
+import entity.Post;
 import entity.User;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -25,131 +29,73 @@ import javax.inject.Named;
 @SessionScoped
 public class AccountBean implements Serializable{
     
-    @EJB
-    private RequestBean request;
-    @EJB
-    private AccountStatusBean currentAccount;
-    private final int passwordMinLength = 8;
+    @EJB private RequestBean request;
+    private String currentUsername = null;
+    private Integer currentUserid = null;
+    private static final long serialVersionUID = 7908187125656392847L;
     
-    public String signIn(String userName, String password) {
+    protected boolean hasUser(String userName) {
         User user = request.findUser(userName);
-        if (user == null) {
-            return "signin";
-        }
-        
-        if (user.getUsername().equals(userName) && user.getPassword().equals(password)) {
-            currentAccount.signIn(userName, request.searchUserId(userName));
-            return "index";     // 如果登录成功，则进入主页 index.xhtml
-        } else {
-            return "signin";    // 如果登录失败，则重载登录页面 signin.xhtml
-        }
+        return user != null;
     }
     
-    public String signOut() {
-        // 调用前提：用户已登录。因此，无需检查用户的登录状况。
-        currentAccount.signOut();
-        return "signin";
-    }
-    
-    public String signUp(String userName, String password, String passwordAgain) {
+    protected boolean rightPassword(String userName, String password) {
         User user = request.findUser(userName);
-        if (user != null) {
-            // 警告：已存在该用户名
-            return "signup";
-        } else if (password.length() < passwordMinLength) {
-            // 警告：密码长度过短，应大于 8 位
-            return "signup";
-        } else if (!password.equals(passwordAgain)) {
-            // 警告：两次密码不相同
-            return "signup";
-        } else {
-            request.createUser(password, userName);
-            return "signin";
-        }
+        return user.getUsername().equals(userName) && user.getPassword().equals(password);
     }
     
-    public String joinCommunity(Integer communityId, Integer ) {
-        // 加入社区
-        
-        return "index";
+    protected String searchUserId(String username) {
+        return this.request.searchUserId(username).toString();
     }
     
-    public String quitCommunity() {
-        return "index";
+    protected void signIn(String username) {
+        this.setCurrentUsername(username);
+        this.currentUserid = request.searchUserId(username);
     }
     
-    public String createNotice(String noticeTitle, String noticeDetail) {
-        // 前提条件：只有管理员，才可调用该方法
-        if (noticeTitle.isEmpty()) {
-            // 报错：通知标题不可为空
-        } else {
-            request.createNotice(currentAccount.getUserId(), 
-                    noticeTitle, noticeDetail, currentAccount.getCurrentCommunityId());
-        }
-        return "notice";
+    protected boolean legalPassword(String password) {
+        return password != null && password.length() > 0;
     }
     
-    public String modifyNotice(Integer noticeId, String noticeTitle, String noticeDetail) {
-        // 前提条件：只有管理员，才可调用该方法
-        if (noticeTitle.isEmpty()) {
-            // 报错：通知标题不可为空
-        } else {
-            request.updateNotice(noticeId, currentAccount.getUserId(), 
-                    noticeTitle, noticeDetail, currentAccount.getCurrentCommunityId());
-        }
-        return "notice";
+    protected boolean legalUsername(String username) {
+        return (!hasUser(username)) && username.length() > 4 && username.length() < 21;
     }
     
-    public String deleteNotice(Integer noticeId) {
-        // 前提条件：只有管理员，才可调用该方法
-        // 删除通知
-        return "notice";
+    protected void createUser(String username, String password) {
+        request.createUser(password, username);
     }
     
-    public String createPost(String postTitle, String postDetail) {
-        if (postTitle.isEmpty()) {
-            // 报错：通知标题不可为空
-        } else {
-            request.createPost(currentAccount.getUserId(), 
-                    postTitle, postDetail, currentAccount.getCurrentCommunityId());
-        }
-        return "post";
+    public User findUser(String username) {
+        return request.findUser(username);
     }
     
-    public String modifyPost(Integer postId, String postTitle, String postDetail) {
-        // 前提条件：只有创建者，才可调用该方法
-        // Q:管理员怎么办？
-        
-        if (postTitle.isEmpty()) {
-            // 报错：通知标题不可为空
-        } else {
-            request.updatePost(postId, currentAccount.getUserId(), 
-                    currentAccount.getCurrentCommunityId(), postTitle, postDetail);
-        }
-        return "post";
+    public String getCurrentUsername() {
+        return this.currentUsername;
     }
     
-    public String deletePost(Integer postId) {
-        // 前提条件：只有创建者，才可调用该方法
-        // Q:管理员怎么办？
-        request.deletePost(postId, currentAccount.getUserId());
-        return "post";
+    private void setCurrentUsername(String username) {
+        this.currentUsername = username;
     }
     
-    public String createBill(Integer price, String title, String type, Boolean status) {
-        // 前提条件：只有管理员，才可调用该方法
-        request.createBill(currentAccount.getUserId(), currentAccount.getCurrentCommunityId(), 
-                    price, title, type, status);
-        return "bill";
+    public Integer getCurrentUserid() {
+        return this.currentUserid;
     }
     
-    public String modifyBill() {
-        
+    private void setCurrentUserid(Integer userid) {
+        this.currentUserid = userid;
     }
     
-    public String deleteBill() {
-        
+    public List<Notice> findAllNotice(String communityId) {
+        return request.findAllNotice(communityId);
     }
     
+    public List<Post> findAllPosts(Integer communityId) {
+        return request.findAllPosts(communityId);
+    }
     
+    public static String mdyNow() {
+       Date date = new Date();
+       SimpleDateFormat ft = new SimpleDateFormat("MM/dd/yyyy");
+       return ft.format(date);
+    }
 }
