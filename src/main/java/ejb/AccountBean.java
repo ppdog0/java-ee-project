@@ -8,7 +8,7 @@
  * @author Gwan
  */
 
-package web;
+package ejb;
 
 import ejb.RequestBean;
 import entity.Notice;
@@ -24,7 +24,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
 import javax.inject.Named;
 
-@FacesConfig(version = FacesConfig.Version.JSF_2_3)
 @Named
 @SessionScoped
 public class AccountBean implements Serializable{
@@ -53,15 +52,15 @@ public class AccountBean implements Serializable{
         this.currentUserid = request.searchUserId(username);
     }
     
-    protected boolean legalPassword(String password) {
+    public boolean legalPassword(String password) {
         return password != null && password.length() > 0;
     }
     
-    protected boolean legalUsername(String username) {
+    public boolean legalUsername(String username) {
         return (!hasUser(username)) && username.length() > 4 && username.length() < 21;
     }
     
-    protected void createUser(String username, String password) {
+    public void createUser(String username, String password) {
         request.createUser(password, username);
     }
     
@@ -101,5 +100,17 @@ public class AccountBean implements Serializable{
     
     public String findCommunityName(Integer communityId) {
         return request.findCommunityName(communityId);
+    }
+    
+    public String searchUserName(Integer userId) {
+        return request.searchUserName(userId);
+    }
+    
+    public void createNotice(Integer userId, String title, String text, Integer communityId) {
+        createNotice(userId, title, text, communityId);
+    }
+    
+    public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {
+        request.updateNotice(noticeid, userId, title, text, communityId);
     }
 }

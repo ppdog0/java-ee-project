@@ -1,5 +1,6 @@
 package web;
 
+import ejb.AccountBean;
 import ejb.RequestBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,6 +34,7 @@ public class SignInServlet extends HttpServlet {
         map.put("status", status);
         if (status.equals("success")) {
             map.put("userid", userid);
+            map.put("admin", status)
         }
 
         String jsonString = jsonbean.generateJsonStringSign(map);

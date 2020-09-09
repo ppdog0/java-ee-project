@@ -5,6 +5,7 @@
  */
 package web;
 
+import ejb.AccountBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -21,19 +22,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-/*
+
 public class NoticeBoardServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
     private Integer comId;
-    private String comName;
     private static final long serialVersionUID = 7903037019848392847L;
 
     private void completeResponse(HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringNotice(account);
+        String jsonString = jsonbean.generateJsonStringNotice(comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -45,11 +45,10 @@ public class NoticeBoardServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         comId = object.getInt("communityid");
-        comName = account.findCommunityName(comId);
         
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(comId, comName, response);
+        completeResponse(response);
     }
 
     @Override
@@ -58,4 +57,3 @@ public class NoticeBoardServlet extends HttpServlet {
         processRequest(request, response);
     }
 }
-*/
