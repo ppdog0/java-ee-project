@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -23,7 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "ComplaintBoardServlet")
+@Stateful
+@WebServlet()
 public class ComplaintBoardServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;

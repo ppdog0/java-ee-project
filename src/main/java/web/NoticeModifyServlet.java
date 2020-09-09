@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "NoticeModifyServlet")
+@WebServlet()
 public class NoticeModifyServlet extends HttpServlet {
 
     @EJB

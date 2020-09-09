@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "ComplaintPublishServlet")
+@WebServlet()
 public class ComplaintPublishServlet extends HttpServlet {
 
     @EJB

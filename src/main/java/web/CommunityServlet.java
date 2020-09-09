@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "CommunityServlet", urlPatterns = {"/community"})
+@WebServlet(urlPatterns = {"/community"})
 public class CommunityServlet extends HttpServlet {
 
     @EJB

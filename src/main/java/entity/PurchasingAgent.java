@@ -11,8 +11,8 @@ import java.util.Set;
         @NamedQuery(
                 name = "findAllPurchasingAgent",
                 query =
-                        "select c FROM Post c " +
-                                "ORDER BY c.purchasingagentid"
+                        "select c FROM PurchasingAgent c " +
+                                "ORDER BY c.agentid"
         )
 })
 public class PurchasingAgent implements Serializable {

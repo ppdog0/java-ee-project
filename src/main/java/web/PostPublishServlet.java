@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "PostPublishServlet")
+@WebServlet()
 public class PostPublishServlet extends HttpServlet {
     
     @EJB
