@@ -7,6 +7,14 @@ import java.util.Date;
 
 @Entity
 @Table(name = "complaint")
+@NamedQueries({
+        @NamedQuery(
+                name = "findAllComplaint",
+                query =
+                        "select c FROM Post c " +
+                                "where c.community.id = :id"
+        )
+})
 public class Complaint implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -30,9 +38,13 @@ public class Complaint implements Serializable {
     public Complaint() {
     }
 
-    public Complaint(String title,
+    public Complaint(User user,
+                     Community community,
+                     String title,
                      String details,
                      Date date) {
+        this.user = user;
+        this.community = community;
         this.title = title;
         this.details = details;
         this.date = date;

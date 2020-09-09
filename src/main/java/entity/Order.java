@@ -9,9 +9,9 @@ import java.util.Date;
 @Table(name = "order")
 @NamedQueries({
         @NamedQuery(
-                name = "findOrderById",
+                name = "findAllOrders",
                 query = "select c FROM Order c " +
-                        "WHERE c.orderid = :id "
+                        "WHERE c.user.id = :id "
         )
 })
 public class Order implements Serializable {

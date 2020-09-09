@@ -42,7 +42,7 @@
 - url:`localhost:8080/user/login`
 - method:`POST`
 - data:`username`,`passord`
-- return:`status`,`userid`
+- return:`status`,`userid`, `admin`
 
 示例
 
@@ -56,7 +56,8 @@
 // 返回数据(成功)
 {
 	"status": "success",
-    "userid": 1
+    "userid": 1,
+    "admin": true
 }
 
 // 返回数据(失败)
@@ -401,7 +402,7 @@
    	{
        	// 帖子1
         {
-    		"noticeid": 1,
+    		"postid": 1,
 			"title": "Yellow lives matter!",
             "details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
@@ -409,7 +410,7 @@
 		},
         // 帖子2
 		{
-       		"noticeid": 2,
+       		"postid": 2,
 			"title": "Yellow lives matter!",
             "details": "我们社区真是太厉害啦!",
 			"date": "09/08/2020",
@@ -527,7 +528,7 @@
 {
 	"communityname":"cloud",
 	"communityid":1,
-	"post": 
+	"complaint": 
 	{
 		// 投诉1
         {    	
@@ -553,7 +554,7 @@
 
 - url:`localhost:8080/post/publish`
 - method: `POST`
-- data:`communityid`,`postid`,`title`,`details`,`userid`
+- data:`communityid`,`title`,`details`,`userid`
 - return: `communityname`,`title`,`details`,`date`,`username`
 
 ```
@@ -644,6 +645,7 @@ return: `username`, `status`, `temporature`, `position`, `date`
 
 // 返回数据
 {
+    "healthid": 1,
 	"username": "pp",
 	"status": "healthy",
 	"temporature": "36.5",

@@ -314,10 +314,9 @@ public class RequestBean {
 
         }
     }
-
-    public Health findUserOrder(Integer userId) {
+    public List<Order> findOrders(Integer userId) {
         try {
-            return (Health) em.createNamedQuery("findOrderById")
+            return (List<Order>) em.createNamedQuery("findAllOrders")
                     .setParameter("id", userId)
                     .getSingleResult();
         } catch (Exception e) {
@@ -346,12 +345,27 @@ public class RequestBean {
         return null;
     }
 
-//待定
-//    public void createComplaints() {}
-//
-//待定
-//    public void createOrders() {}
-//    public void getOrderPrice() {}
-//
-//
+    public void createComplaint(Integer userid, Integer communityid, String title, String details) {
+        try {
+            Date date = new Date();
+            User user = em.find(User.class, userid);
+            Community community = em.find(Community.class, communityid);
+
+            Complaint complaint = new Complaint(user, community, title, details, date);
+            em.persist(complaint);
+        } catch (Exception e) {
+
+        }
+    }
+    public List<Complaint> findComplaints(Integer communityid) {
+        try {
+            return (List<Complaint>) em.createNamedQuery("findAllComplaint")
+                    .setParameter("id", communityid)
+                    .getResultList();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
 }
