@@ -24,8 +24,10 @@ import javax.servlet.http.HttpServlet;
  */
 @WebServlet(urlPatterns = {"/user/login"})
 public class SignInServlet extends HttpServlet {
-    @EJB private AccountBean account;
-    @EJB private JsonBean jsonbean;
+    @EJB
+    private AccountBean account;
+    @EJB
+    private JsonBean jsonbean;
     private static final long serialVersionUID = 7908187019848392847L;
     
     

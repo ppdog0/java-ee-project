@@ -30,8 +30,6 @@ public class BillViewServlet extends HttpServlet {
     
     @EJB
     private JsonBean jsonbean;
-    @EJB
-    private static final long serialVersionUID = 7903037019848392847L;
 
     protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 

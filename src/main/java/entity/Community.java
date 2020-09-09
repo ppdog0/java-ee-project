@@ -40,6 +40,11 @@ public class Community implements java.io.Serializable {
     @OneToMany(targetEntity=Order.class,mappedBy = "community")
     private Set<Order> orders;
 
+    public Community() {}
+    public Community(String communityname) {
+        this.communityname = communityname;
+    }
+
     public int getId() {
         return this.id;
     }

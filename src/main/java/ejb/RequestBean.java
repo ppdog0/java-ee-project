@@ -55,9 +55,11 @@ public class RequestBean {
     }
     public Integer searchUserId(String username) {
         try {
-            return (Integer) em.createNamedQuery("findUserByName")
+            logger.log(Level.INFO, "find user {0}", new Object[]{username});
+            User user = (User) em.createNamedQuery("findUserByName")
                     .setParameter("name", username)
                     .getSingleResult();
+            return user.getId();
         }catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
@@ -129,6 +131,16 @@ public class RequestBean {
 
         }
     }
+    public Notice findNotice(Integer noticeid) {
+        try {
+            Notice notice = em.find(Notice.class, noticeid);
+
+            return notice;
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
 
     public void createPost(Integer userId, String title, String text, Integer communityId) {
         try {
@@ -170,6 +182,15 @@ public class RequestBean {
         try {
             return (List<Post>) em.createNamedQuery("findAllPost")
                     .getSingleResult();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    public Post findPost(Integer postid) {
+        try {
+            Post post = em.find(Post.class, postid);
+            return post;
         } catch (Exception e) {
 
         }
@@ -344,6 +365,15 @@ public class RequestBean {
 
         }
         return null;
+    }
+    public void createCommunity(String communityname) {
+        try {
+            Community community = new Community(communityname);
+
+            em.persist(community);
+        } catch (Exception e) {
+
+        }
     }
 
     public void createComplaint(Integer userid, Integer communityid, String title, String details) {

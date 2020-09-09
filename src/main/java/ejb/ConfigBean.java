@@ -13,7 +13,14 @@ public class ConfigBean {
     private RequestBean request;
 
     @PostConstruct
-    public void createData() {}
+    public void createData() {
+//        request.createUser();
+//        request.createNotice();
+//        request.createPost();
+//        request.createHealth();
+//        request.createBill();
+//        request.createCommunity();
+    }
 
     @PreDestroy
     public void deleteData() {}
