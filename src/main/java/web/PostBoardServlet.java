@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Gwan
  */
 @Stateful
-@WebServlet(urlPatterns = {"post"})
+@WebServlet(urlPatterns = {"/post"})
 public class PostBoardServlet extends HttpServlet {
 
     @EJB
