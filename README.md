@@ -92,7 +92,7 @@ java-ee-project:
 
 ###### frontend-backend
 
-![项目架构](./doc/images/jave-ee-architect.png)
+![项目架构](./doc/images/jave_ee_architect.png)
 
 #### 项目建模
 
