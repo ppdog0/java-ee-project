@@ -5,11 +5,9 @@ import entity.Community;
 import entity.Complaint;
 import entity.Health;
 import entity.Notice;
-import entity.Order;
 import entity.Post;
 import entity.User;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -176,21 +174,6 @@ public class JsonBean {
                 .add("date", AccountBean.mdyNow());
         return billBuilder;
     }
-    
-    public JsonObjectBuilder orderBuilder(Order order, Boolean returnOrderId) {
-        JsonObjectBuilder orderBuilder = Json.createObjectBuilder();
-        if (returnOrderId) {
-            orderBuilder.add("orderid", Integer.toString(order.getOrderid()));
-        }
-        orderBuilder.add("username", this.username)
-            .add("agentname", order.getPurchasingagent().getPurchasingagentname())
-            .add("storename", order.getStore().getStorename())
-            .add("communityname", order.getCommunity().getCommunityname())
-            .add("phonenumber", "15378539280")
-            .add("price", 60)
-            .add("date", AccountBean.mdyNow());
-        return orderBuilder;
-    }
 
     // 调用方：NoticeBoardServlet, NoticeModifyServlet
     public String generateJsonStringNotice(Integer comId) {
@@ -322,33 +305,22 @@ public class JsonBean {
         return stWriter.toString();
     }
 
-    public String generateJsonStringOrder(Integer userId, Integer communityId) {
-        List<Order> orders = account.findOrders(userId);
+//    public String generateJsonStringOrder(Integer userId, Integer communityId) {
+//        List<Order> orders = account.findOrders(userId);
+//
+//        JsonArrayBuilder orderAB = Json.createArrayBuilder();
+//
+//        orders.forEach(order -> {
+//            orderAB.add(orderBuilder(order, true));
+//        });
+//
+//        JsonArray orderJsonArray = orderAB.build();
+//        StringWriter stWriter = new StringWriter();
+//        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+//            jsonWriter.writeArray(orderJsonArray);
+//        }
+//
+//        return stWriter.toString();
+//    }
 
-        JsonArrayBuilder orderAB = Json.createArrayBuilder();
-
-        orders.forEach(order -> {
-            orderAB.add(orderBuilder(order, true));
-        });
-
-        JsonArray orderJsonArray = orderAB.build();
-        StringWriter stWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeArray(orderJsonArray);
-        }
-
-        return stWriter.toString();
-    }
-    
-    public String generateJsonStringOrder(Integer orderId) {
-
-        Order order = account.findOrder(orderId);
-        JsonObject orderJsonObject = orderBuilder(order, false).build();
-        StringWriter stWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeObject(orderJsonObject);
-        }
-
-        return stWriter.toString();
-    }
 }

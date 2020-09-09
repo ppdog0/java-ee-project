@@ -857,3 +857,16 @@ return:`username`, `agentname`,`storename`,`phonenumber`, `price`, `date`
 	"date": "09/08/2020"
 }
 ```
+
+
+
+url: `/notice/id`
+
+data: `noticeid`
+
+```
+{
+
+}
+```
+

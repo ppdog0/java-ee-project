@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "community")
+@Table(name = "Community")
 @NamedQuery(
         name="findCommunityByName",
         query=
@@ -36,9 +36,6 @@ public class Community implements java.io.Serializable {
 
     @OneToMany(targetEntity=Health.class,mappedBy = "community")
     private Set<Health> healths;
-
-    @OneToMany(targetEntity=Order.class,mappedBy = "community")
-    private Set<Order> orders;
 
     public Community() {}
     public Community(String communityname) {

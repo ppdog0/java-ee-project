@@ -10,12 +10,10 @@
 
 package ejb;
 
-import ejb.RequestBean;
 import entity.Bill;
 import entity.Complaint;
 import entity.Health;
 import entity.Notice;
-import entity.Order;
 import entity.Post;
 import entity.User;
 import java.io.Serializable;
@@ -26,8 +24,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.annotation.FacesConfig;
-import javax.inject.Named;
 
 @Stateful
 @SessionScoped
@@ -39,14 +35,17 @@ public class AccountBean implements Serializable{
     private static final long serialVersionUID = 7908187125656392847L;
     
     public boolean hasUser(String userName) {
-        System.out.println(userName);
+        // System.out.println(userName);
         Integer userid = request.searchUserId(userName);
         return userid != null;
     }
     
     public boolean rightPassword(String userName, String password) {
-        User user = request.findUser(userName);
-        return user.getPassword().equals(password);
+        Integer userid = searchUserId(userName);
+        User user = findUser(userName);
+        String t_passsword = user.getPassword();
+//        Integer userid = request.searchUserId(userName);
+        return t_passsword.equals(password);
     }
     
     public Integer searchUserId(String username) {
@@ -161,17 +160,17 @@ public class AccountBean implements Serializable{
         request.updateBill(billId, userId, status);
     }
     
-    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
-        request.createOrder(userId, communityId, storeId, purchasingAgentId, details, status);
-    }
-    
-    public List<Order> findOrders(Integer userId) {
-        return request.findOrders(userId);
-    }
-    
-    public Order findOrder(Integer orderId) {
-        List<Order> orders = findOrders(getCurrentUserid());
-        Order result = orders.stream().filter(o -> o.getOrderid().equals(orderId)).findFirst().orElse(null);
-        return result;
-    }
+//    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
+//        request.createOrder(userId, communityId, storeId, purchasingAgentId, details, status);
+//    }
+//
+//    public List<Order> findOrders(Integer userId) {
+//        return request.findOrders(userId);
+//    }
+//
+//    public Order findOrder(Integer orderId) {
+//        List<Order> orders = findOrders(getCurrentUserid());
+//        Order result = orders.stream().filter(o -> o.getOrderid().equals(orderId)).findFirst().orElse(null);
+//        return result;
+//    }
 }

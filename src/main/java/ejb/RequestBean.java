@@ -6,6 +6,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,18 +28,32 @@ public class RequestBean {
                     username);
             logger.log(Level.INFO, "Created user {0}--{1}", new Object[]{username, password});
             em.persist(user);
-            logger.log(Level.INFO, "Persisted user {0}--{1}", new Object[]{username, password});
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
     }
     public User findUser(String username) {
-        User user;
         try {
             Integer userid = searchUserId(username);
-            user = em.find(User.class, userid);
-
+            //user = em.find(User.class, userid);
+            User user = (User) em.createNamedQuery("findUserByName")
+                    .setParameter("name", username)
+                    .getSingleResult();
+            logger.log(Level.INFO, "find user {0}--{1}", new Object[]{user.getUsername(), user.getPassword()});
             return user;
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    public String searchUserPassword(String username) {
+        try {
+            User user = (User) em.createNamedQuery("findUserByName")
+                    .setParameter("name", username)
+                    .getSingleResult();
+            String password = user.getPassword();
+            logger.log(Level.INFO, "search user password {0}", new Object[]{password});
+            return password;
         } catch (Exception e) {
 
         }
@@ -55,11 +70,13 @@ public class RequestBean {
     }
     public Integer searchUserId(String username) {
         try {
-            logger.log(Level.INFO, "find user {0}", new Object[]{username});
+            //logger.log(Level.INFO, "search user id {0}", new Object[]{username});
             User user = (User) em.createNamedQuery("findUserByName")
                     .setParameter("name", username)
                     .getSingleResult();
-            return user.getId();
+            //logger.log(Level.INFO, "search user id {0}--{1}", new Object[]{user.getUsername(), user.getPassword()});
+            Integer userId = user.getId();
+            return userId;
         }catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
@@ -269,83 +286,83 @@ public class RequestBean {
         return null;
     }
 
-    public void createStore(String storename, String phonenumber) {
-        try {
-            Store store = new Store(storename,phonenumber);
+//    public void createStore(String storename, String phonenumber) {
+//        try {
+//            Store store = new Store(storename,phonenumber);
+//
+//            em.persist(store);
+//        } catch (Exception e) {
+//
+//        }
+//    }
+//    public void updateStore(Integer storeId, String storename, String phonenumber) {
+//        try {
+//            Store store = em.find(Store.class, storeId);
+//            store.setStorename(storename);
+//            store.setPhonenumber(phonenumber);
+//
+//            em.merge(store);
+//        } catch (Exception e) {
+//
+//        }
+//    }
+//
+//    public void createPurchasingAgent(String purchasingagentname, String phonenumber) {
+//        try {
+//            PurchasingAgent purchasingAgent = new PurchasingAgent(purchasingagentname,phonenumber);
+//
+//            em.persist(purchasingAgent);
+//        } catch (Exception e) {
+//
+//        }
+//    }
+//    public void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
+//        try {
+//            Store purchasingAgent = em.find(Store.class, purchasingAgentId);
+//            purchasingAgent.setStorename(purchasingagentname);
+//            purchasingAgent.setPhonenumber(phonenumber);
+//
+//            em.merge(purchasingAgent);
+//        } catch (Exception e) {
+//
+//        }
+//    }
 
-            em.persist(store);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updateStore(Integer storeId, String storename, String phonenumber) {
-        try {
-            Store store = em.find(Store.class, storeId);
-            store.setStorename(storename);
-            store.setPhonenumber(phonenumber);
-
-            em.merge(store);
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void createPurchasingAgent(String purchasingagentname, String phonenumber) {
-        try {
-            PurchasingAgent purchasingAgent = new PurchasingAgent(purchasingagentname,phonenumber);
-
-            em.persist(purchasingAgent);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
-        try {
-            Store purchasingAgent = em.find(Store.class, purchasingAgentId);
-            purchasingAgent.setStorename(purchasingagentname);
-            purchasingAgent.setPhonenumber(phonenumber);
-
-            em.merge(purchasingAgent);
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
-        try {
-            User user = em.find(User.class, userId);
-            Community community = em.find(Community.class, communityId);
-            Store store = em.find(Store.class, storeId);
-            PurchasingAgent purchasingAgent = em.find(PurchasingAgent.class, purchasingAgentId);
-            Date date = new Date();
-            Order order=new Order(date,details,status,community,user,store,purchasingAgent);
-
-            em.persist(order);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updateOrder(Integer orderId,String details ,String status) {
-        try {
-            Order order=em.find(Order.class,orderId);
-            order.setDetails(details);
-            order.setStatus(status);
-
-            em.merge(order);
-        } catch (Exception e) {
-
-        }
-    }
-    public List<Order> findOrders(Integer userId) {
-        try {
-            return (List<Order>) em.createNamedQuery("findAllOrders")
-                    .setParameter("id", userId)
-                    .getSingleResult();
-        } catch (Exception e) {
-
-        }
-        return null;
-    }
+//    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
+//        try {
+//            User user = em.find(User.class, userId);
+//            Community community = em.find(Community.class, communityId);
+//            Store store = em.find(Store.class, storeId);
+//            PurchasingAgent purchasingAgent = em.find(PurchasingAgent.class, purchasingAgentId);
+//            Date date = new Date();
+//            Order order=new Order(date,details,status,community,user,store,purchasingAgent);
+//
+//            em.persist(order);
+//        } catch (Exception e) {
+//
+//        }
+//    }
+//    public void updateOrder(Integer orderId,String details ,String status) {
+//        try {
+//            Order order=em.find(Order.class,orderId);
+//            order.setDetails(details);
+//            order.setStatus(status);
+//
+//            em.merge(order);
+//        } catch (Exception e) {
+//
+//        }
+//    }
+//    public List<Order> findOrders(Integer userId) {
+//        try {
+//            return (List<Order>) em.createNamedQuery("findAllOrders")
+//                    .setParameter("id", userId)
+//                    .getSingleResult();
+//        } catch (Exception e) {
+//
+//        }
+//        return null;
+//    }
 
     public Integer searchCommunityId(String communityname) {
         try {

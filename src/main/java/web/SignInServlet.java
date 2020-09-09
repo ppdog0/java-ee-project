@@ -57,7 +57,7 @@ public class SignInServlet extends HttpServlet {
         jsonbean.initResponseAsJson(response);
 
         // 2. validate user's existence and validate password
-        if (account.hasUser(username) || !account.rightPassword(username, password)) {
+        if (!account.hasUser(username) || !account.rightPassword(username, password)) {
             completeResponse(response, "fail", null);
             return;
         }
