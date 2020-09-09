@@ -1,7 +1,7 @@
 package web;
 
+import ejb.JsonBean;
 import ejb.AccountBean;
-import ejb.RequestBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -29,12 +29,12 @@ public class SignInServlet extends HttpServlet {
     private static final long serialVersionUID = 7908187019848392847L;
     
     
-    private void completeResponse(HttpServletResponse response, String status, String userid) throws IOException {
-        Map<String, String> map = new HashMap<>();           
+    private void completeResponse(HttpServletResponse response, String status, Integer userid) throws IOException {
+        Map<String, Object> map = new HashMap<>();           
         map.put("status", status);
         if (status.equals("success")) {
             map.put("userid", userid);
-            map.put("admin", status)
+            map.put("admin", true);
         }
 
         String jsonString = jsonbean.generateJsonStringSign(map);

@@ -1,5 +1,6 @@
 package web;
 
+import ejb.JsonBean;
 import ejb.AccountBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
 
     
     private void completeResponse(HttpServletResponse response, String status) throws IOException {
-        Map<String, String> map = new HashMap<>();           
+        Map<String, Object> map = new HashMap<>();           
         map.put("status", status);
 
         String jsonString = jsonbean.generateJsonStringSign(map);

@@ -5,6 +5,7 @@
  */
 package web;
 
+import ejb.JsonBean;
 import ejb.AccountBean;
 import java.io.IOException;
 import java.io.PrintWriter;

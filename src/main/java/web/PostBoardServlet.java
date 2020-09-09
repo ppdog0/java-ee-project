@@ -6,7 +6,6 @@
 package web;
 
 import ejb.JsonBean;
-import ejb.AccountBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "NoticeBoardServlet")
-public class NoticeBoardServlet extends HttpServlet {
+@WebServlet(name = "PostBoardServlet")
+public class PostBoardServlet extends HttpServlet {
 
     @EJB
     private JsonBean jsonbean;

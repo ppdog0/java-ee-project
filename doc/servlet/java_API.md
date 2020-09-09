@@ -612,7 +612,7 @@ return:`healthid`, `username`, `status`, `temporature`, `position`, `date`
 {
 	"userid": 1,
 	"status": "healthy",
-	"temporture": "36.5",
+	"temperature": "36.5",
 	"position": "Beijing",
 }
 
@@ -621,7 +621,7 @@ return:`healthid`, `username`, `status`, `temporature`, `position`, `date`
 	"healthid": 1,
 	"username": "pp",
 	"status": "healthy",
-	"temporture": "36.5",
+	"temperature": "36.5",
 	"position": "Beijing",
 	"date": "09/08/2020"
 }
@@ -635,7 +635,7 @@ method: `GET`
 
 data: `userid`
 
-return: `username`, `status`, `temporature`, `position`, `date`
+return: `username`, `status`, `temperature`, `position`, `date`
 
 ```
 // 发送数据
@@ -648,7 +648,7 @@ return: `username`, `status`, `temporature`, `position`, `date`
     "healthid": 1,
 	"username": "pp",
 	"status": "healthy",
-	"temporature": "36.5",
+	"temperature": "36.5",
 	"position": "Beijing",
 	"date": "09/08/2020"
 }
@@ -662,14 +662,14 @@ method:  `POST`
 
 data:  `healthid`, `status`, `temporature`, `position`, `date`
 
-return:  `healthid`, `username`, `status`, `temporature`, `position`, `date`
+return:  `healthid`, `username`, `status`, `temperature`, `position`, `date`
 
 ```
 // 发送数据
 {
 	"healthid": 1,
 	"status": "healthy",
-	"temporture": "36.5",
+	"temperature": "36.5",
 	"position": "Beijing"
 }
 
@@ -678,7 +678,7 @@ return:  `healthid`, `username`, `status`, `temporature`, `position`, `date`
 	"healthid": 1,
 	"username": "pp",
 	"status": "healthy",
-	"temporture": "36.5",
+	"temperature": "36.5",
 	"position": "Beijing",
 	"date": "09/08/2020"
 }

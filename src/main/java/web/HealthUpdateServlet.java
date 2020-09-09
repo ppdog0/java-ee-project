@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package web;
 
-import ejb.JsonBean;
+
 import ejb.AccountBean;
+import ejb.JsonBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -20,39 +16,52 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author Gwan
  */
-@WebServlet(name = "NoticeBoardServlet")
-public class NoticeBoardServlet extends HttpServlet {
-
+@WebServlet(name = "HealthUpdateServlet")
+public class HealthUpdateServlet extends HttpServlet {
+    @EJB
+    private AccountBean account;
     @EJB
     private JsonBean jsonbean;
+    @EJB
     private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringPost(comId);
+        String jsonString = jsonbean.generateJsonStringHealth(userId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
         }
     }
-
+    
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
-
+        Integer userId = object.getInt("userid");
+        String status = object.getString("status");
+        String temperature = object.getString("temperature");
+        String position = object.getString("position");
+        
+        this.account.updateHealth(userId, status, Float.valueOf(temperature), position);
+        
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(comId, response);
+        completeResponse(userId, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

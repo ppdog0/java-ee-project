@@ -11,6 +11,8 @@
 package ejb;
 
 import ejb.RequestBean;
+import entity.Complaint;
+import entity.Health;
 import entity.Notice;
 import entity.Post;
 import entity.User;
@@ -20,11 +22,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
 import javax.inject.Named;
 
-@Named
+@Stateful
 @SessionScoped
 public class AccountBean implements Serializable{
     
@@ -33,21 +36,21 @@ public class AccountBean implements Serializable{
     private Integer currentUserid = null;
     private static final long serialVersionUID = 7908187125656392847L;
     
-    protected boolean hasUser(String userName) {
+    public boolean hasUser(String userName) {
         User user = request.findUser(userName);
         return user != null;
     }
     
-    protected boolean rightPassword(String userName, String password) {
+    public boolean rightPassword(String userName, String password) {
         User user = request.findUser(userName);
         return user.getUsername().equals(userName) && user.getPassword().equals(password);
     }
     
-    protected String searchUserId(String username) {
-        return this.request.searchUserId(username).toString();
+    public Integer searchUserId(String username) {
+        return this.request.searchUserId(username);
     }
     
-    protected void signIn(String username) {
+    public void signIn(String username) {
         this.setCurrentUsername(username);
         this.currentUserid = request.searchUserId(username);
     }
@@ -112,5 +115,33 @@ public class AccountBean implements Serializable{
     
     public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {
         request.updateNotice(noticeid, userId, title, text, communityId);
+    }
+    
+    public void updatePost(Integer postId, Integer userId, Integer communityId, String titile, String text) {
+        request.updatePost(postId, userId, communityId, titile, text);
+    }
+
+    public void createPost(Integer userId, String title, String text, Integer communityId) {
+        request.createPost(userId, title, text, communityId);
+    }
+    
+    public List<Complaint> findComplaints(Integer communityid) {
+        return request.findComplaints(communityid);
+    }
+    
+    public void createComplaint(Integer userid, Integer communityid, String title, String details) {
+        request.createComplaint(userid, communityid, title, details);
+    }
+
+    public void createHealth(Integer userId, String status, String position, float temperature) {
+        request.createHealth(userId, status, position, temperature);
+    }
+    
+    public Health findUserHealth(Integer userId) {
+        return request.findUserHealth(userId);
+    }
+    
+    public void updateHealth(Integer healthId, String status, Float temperature, String curr_position) {
+        request.updateHealth(healthId, status, temperature, curr_position);
     }
 }

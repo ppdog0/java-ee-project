@@ -6,7 +6,6 @@
 package web;
 
 import ejb.JsonBean;
-import ejb.AccountBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,16 +23,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "NoticeBoardServlet")
-public class NoticeBoardServlet extends HttpServlet {
-
+@WebServlet(name = "ComplaintBoardServlet")
+public class ComplaintBoardServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;
     private static final long serialVersionUID = 7903037019848392847L;
 
     protected void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringPost(comId);
+        String jsonString = jsonbean.generateJsonStringComplaint(comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);

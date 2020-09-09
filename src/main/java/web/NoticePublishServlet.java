@@ -5,16 +5,16 @@
  */
 package web;
 
+import ejb.JsonBean;
 import ejb.AccountBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,42 +23,31 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
+@WebServlet(name = "NoticePublishServlet")
 public class NoticePublishServlet extends HttpServlet {
 
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
-    private Integer comId;
-    private Integer userId;
-    private String title;
-    private String details;
-    private JsonObjectBuilder newNoticeBuilder;
+    @EJB
+    private NoticeBoardServlet nbs;
     private static final long serialVersionUID = 7903037019848392847L;
-
-    private void completeResponse(HttpServletResponse response) throws IOException {
-
-        String jsonString = jsonbean.generateJsonStringNotice(comId);
-
-        try (PrintWriter out = response.getWriter();) {
-            out.print(jsonString);
-        }
-    }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        comId = object.getInt("communityid");
-        userId = object.getInt("userid");
-        title = object.getString("title");
-        details = object.getString("details");
+        Integer comId = object.getInt("communityid");
+        Integer userId = object.getInt("userid");
+        String title = object.getString("title");
+        String details = object.getString("details");
         
         this.account.createNotice(userId, title, details, comId);
 
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(response);
+        nbs.completeResponse(comId, response);
     }
 
     @Override

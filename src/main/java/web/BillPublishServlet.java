@@ -5,8 +5,8 @@
  */
 package web;
 
-import ejb.JsonBean;
 import ejb.AccountBean;
+import ejb.JsonBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,35 +24,42 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "NoticeBoardServlet")
-public class NoticeBoardServlet extends HttpServlet {
-
+@WebServlet(name = "BillPublishServlet")
+public class BillPublishServlet extends HttpServlet {
+    @EJB
+    private AccountBean account;
     @EJB
     private JsonBean jsonbean;
+    @EJB
     private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringPost(comId);
+        String jsonString = jsonbean.generateJsonStringHealth(userId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
         }
     }
-
+    
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
-
+        Integer userId = object.getInt("userid");
+        String status = object.getString("status");
+        String temperature = object.getString("temperature");
+        String position = object.getString("position");
+        
+        this.account.createHealth(userId, status, position, Float.valueOf(temperature));
+        
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(comId, response);
+        completeResponse(userId, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
