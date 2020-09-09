@@ -202,7 +202,7 @@ public class RequestBean {
 
         }
     }
-    List<Bill> findBills(Integer communityId, Integer userId) {
+    public List<Bill> findBills(Integer communityId, Integer userId) {
         try {
             return (List<Bill>) em.createNamedQuery("findBillById")
                     .setParameter("id", userId).setParameter("cid", communityId)
@@ -213,7 +213,7 @@ public class RequestBean {
         return null;
     }
 
-    void createHealth(Integer userId, String status, String position, float temperature) {
+    public void createHealth(Integer userId, String status, String position, float temperature) {
         try {
             User user = em.find(User.class, userId);
             Date date = new Date();
@@ -224,7 +224,7 @@ public class RequestBean {
 
         }
     }
-    void updateHealth(Integer healthId, String status, String curr_position) {
+    public void updateHealth(Integer healthId, String status, String curr_position) {
         try {
             Health health = em.find(Health.class, healthId);
             health.setStatus(status);
@@ -235,7 +235,7 @@ public class RequestBean {
 
         }
     }
-    Health findUserHealth(Integer userId) {
+    public Health findUserHealth(Integer userId) {
         try {
             User user = em.find(User.class, userId);
             return (Health) em.createNamedQuery("findHealthByUserId")
@@ -247,7 +247,7 @@ public class RequestBean {
         return null;
     }
 
-    void createStore(String storename, String phonenumber) {
+    public void createStore(String storename, String phonenumber) {
         try {
             Store store = new Store(storename,phonenumber);
 
@@ -256,7 +256,7 @@ public class RequestBean {
 
         }
     }
-    void updateStore(Integer storeId, String storename, String phonenumber) {
+    public void updateStore(Integer storeId, String storename, String phonenumber) {
         try {
             Store store = em.find(Store.class, storeId);
             store.setStorename(storename);
@@ -268,7 +268,7 @@ public class RequestBean {
         }
     }
 
-    void createPurchasingAgent(String purchasingagentname, String phonenumber) {
+    public void createPurchasingAgent(String purchasingagentname, String phonenumber) {
         try {
             PurchasingAgent purchasingAgent = new PurchasingAgent(purchasingagentname,phonenumber);
 
@@ -277,7 +277,7 @@ public class RequestBean {
 
         }
     }
-    void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
+    public void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
         try {
             Store purchasingAgent = em.find(Store.class, purchasingAgentId);
             purchasingAgent.setStorename(purchasingagentname);
@@ -289,7 +289,7 @@ public class RequestBean {
         }
     }
 
-    void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
+    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
         try {
             User user = em.find(User.class, userId);
             Community community = em.find(Community.class, communityId);
@@ -303,7 +303,7 @@ public class RequestBean {
 
         }
     }
-    void updateOrder(Integer orderId,String details ,String status) {
+    public void updateOrder(Integer orderId,String details ,String status) {
         try {
             Order order=em.find(Order.class,orderId);
             order.setDetails(details);
@@ -315,7 +315,7 @@ public class RequestBean {
         }
     }
 
-    Health findUserOrder(Integer userId) {
+    public Health findUserOrder(Integer userId) {
         try {
             return (Health) em.createNamedQuery("findOrderById")
                     .setParameter("id", userId)
@@ -326,7 +326,7 @@ public class RequestBean {
         return null;
     }
 
-    Integer searchCommunityId(String communityname) {
+    public Integer searchCommunityId(String communityname) {
         try {
             return (Integer) em.createNamedQuery("findCommunityByName")
                     .setParameter("name", communityname)
@@ -336,7 +336,7 @@ public class RequestBean {
         }
         return null;
     }
-    String findCommunityName(Integer communityid) {
+    public String findCommunityName(Integer communityid) {
         try {
             Community community = em.find(Community.class, communityid);
             return community.getCommunityname();
