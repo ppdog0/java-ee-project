@@ -10,6 +10,7 @@ import ejb.JsonBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,17 +26,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author Gwan
  */
 @WebServlet(name = "BillPublishServlet")
-public class BillPublishServlet extends HttpServlet {
-    @EJB
-    private AccountBean account;
+public class BillViewServlet extends HttpServlet {
+    
     @EJB
     private JsonBean jsonbean;
     @EJB
     private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer userId, Integer communityId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringBill(userId, communityId);
+        Set<Integer> comIds = jsonbean.userCommunitiesIds(userId);
+        String jsonString = jsonbean.generateJsonStringBill(userId, comIds);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -46,22 +47,15 @@ public class BillPublishServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer userId = object.getInt("userid");
-        Integer communityId = object.getInt("communityId");
-        String type = object.getString("type");
-        String details = object.getString("details");
-        Integer price = object.getInt("price");
-        Boolean status = object.getBoolean("status");
-        
-        this.account.createBill(userId, communityId, price, details, type, status);
+        Integer userId = object.getInt("userid"); 
         
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, communityId, response);
+        completeResponse(userId, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

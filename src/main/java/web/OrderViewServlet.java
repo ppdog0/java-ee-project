@@ -24,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "BillPublishServlet")
-public class BillPublishServlet extends HttpServlet {
+@WebServlet
+public class OrderViewServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
@@ -33,9 +33,9 @@ public class BillPublishServlet extends HttpServlet {
     @EJB
     private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer userId, Integer communityId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer orderId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringBill(userId, communityId);
+        String jsonString = jsonbean.generateJsonStringOrder(orderId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -46,18 +46,11 @@ public class BillPublishServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer userId = object.getInt("userid");
-        Integer communityId = object.getInt("communityId");
-        String type = object.getString("type");
-        String details = object.getString("details");
-        Integer price = object.getInt("price");
-        Boolean status = object.getBoolean("status");
-        
-        this.account.createBill(userId, communityId, price, details, type, status);
-        
+        Integer orderId = object.getInt("orderid");
+    
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, communityId, response);
+        completeResponse(orderId, response);
     }
 
     @Override

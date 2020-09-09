@@ -11,9 +11,11 @@
 package ejb;
 
 import ejb.RequestBean;
+import entity.Bill;
 import entity.Complaint;
 import entity.Health;
 import entity.Notice;
+import entity.Order;
 import entity.Post;
 import entity.User;
 import java.io.Serializable;
@@ -143,5 +145,31 @@ public class AccountBean implements Serializable{
     
     public void updateHealth(Integer healthId, String status, Float temperature, String curr_position) {
         request.updateHealth(healthId, status, temperature, curr_position);
+    }
+    
+    public void createBill(Integer userId, Integer communityId, Integer price, String title, String type, Boolean status) {
+        request.createBill(userId, communityId, price, title, type, status);
+    }
+    
+    public List<Bill> findBills(Integer communityId, Integer userId) {
+        return request.findBills(communityId, userId);
+    }
+    
+    public void updateBill(Integer billId, Integer userId, Boolean status) {
+        request.updateBill(billId, userId, status);
+    }
+    
+    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
+        request.createOrder(userId, communityId, storeId, purchasingAgentId, details, status);
+    }
+    
+    public List<Order> findOrders(Integer userId) {
+        return request.findOrders(userId);
+    }
+    
+    public Order findOrder(Integer orderId) {
+        List<Order> orders = findOrders(getCurrentUserid());
+        Order result = orders.stream().filter(o -> o.getOrderid().equals(orderId)).findFirst().orElse(null);
+        return result;
     }
 }
