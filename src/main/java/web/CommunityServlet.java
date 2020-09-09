@@ -5,10 +5,6 @@
  */
 package web;
 
-import entity.Community;
-import entity.Notice;
-import entity.Post;
-import entity.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -33,7 +29,7 @@ public class CommunityServlet extends HttpServlet {
 
     private void completeResponse(HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonString(account);
+        String jsonString = jsonbean.generateJsonStringCommunity();
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
