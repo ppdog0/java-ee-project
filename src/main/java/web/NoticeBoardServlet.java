@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Gwan
  */
 @Stateful
-@WebServlet()
+@WebServlet(urlPatterns = {"/notice"})
 public class NoticeBoardServlet extends HttpServlet {
 
     @EJB

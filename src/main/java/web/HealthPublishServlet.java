@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet()
+@WebServlet(urlPatterns = {"/health/create"})
 public class HealthPublishServlet extends HttpServlet {
     @EJB
     private AccountBean account;

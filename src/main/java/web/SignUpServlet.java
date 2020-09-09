@@ -21,7 +21,7 @@ import javax.json.JsonReader;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/register"})
+@WebServlet(urlPatterns = {"/user/register"})
 public class SignUpServlet extends HttpServlet {
 
     @EJB

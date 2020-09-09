@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServlet;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/"})
+@WebServlet(urlPatterns = {"/user/login"})
 public class SignInServlet extends HttpServlet {
     @EJB private AccountBean account;
     @EJB private JsonBean jsonbean;

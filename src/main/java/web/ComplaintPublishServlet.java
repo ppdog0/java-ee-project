@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet()
+@WebServlet(urlPatterns = {"/complaint/publish"})
 public class ComplaintPublishServlet extends HttpServlet {
 
     @EJB

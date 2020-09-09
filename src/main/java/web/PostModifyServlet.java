@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet()
+@WebServlet(urlPatterns = {"/post/update"})
 public class PostModifyServlet extends HttpServlet {
 
     @EJB

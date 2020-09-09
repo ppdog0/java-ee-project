@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Gwan
  */
 @Stateful
-@WebServlet()
+@WebServlet(urlPatterns = {"complaint"})
 public class ComplaintBoardServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;

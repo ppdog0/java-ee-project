@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/bill/publish"})
+@WebServlet(urlPatterns = {"/bill/create"})
 public class BillPublishServlet extends HttpServlet {
     @EJB
     private AccountBean account;
