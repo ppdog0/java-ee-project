@@ -44,6 +44,15 @@ public class RequestBean {
         }
         return null;
     }
+    public String searchUserName(Integer userid) {
+        try {
+            User user = em.find(User.class, userid);
+            return user.getUsername();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
     public Integer searchUserId(String username) {
         try {
             return (Integer) em.createNamedQuery("findUserByName")
