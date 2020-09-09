@@ -87,6 +87,10 @@ public class Order implements Serializable {
 
     public Store getStore(){return this.store;}
 
+    public PurchasingAgent getPurchasingagent() {
+        return purchasingagent;
+    }
+
     public void setStore(Store store){this.store=store; }
     //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;

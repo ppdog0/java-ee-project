@@ -14,7 +14,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 
 
 @Entity
-@Table(name = "user")
+@Table(name = "User")
 @NamedQueries({
         @NamedQuery(
                 name = "findUserById",
@@ -25,7 +25,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
         @NamedQuery(
                 name = "findUserByName",
                 query =
-                        "select u.id FROM User u " +
+                        "select u FROM User u " +
                                 "WHERE u.username = :name"
         )
 })

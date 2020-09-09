@@ -60,5 +60,5 @@ public class PurchasingAgent implements Serializable {
     }
     //    public void setAdmincommuintys(Set admincommuintys) {
 //        this.admincommuintys = admincommuintys;
-//    }
+//
 }

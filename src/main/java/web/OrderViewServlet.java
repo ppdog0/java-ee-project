@@ -30,8 +30,6 @@ public class OrderViewServlet extends HttpServlet {
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
-    @EJB
-    private static final long serialVersionUID = 7903037019848392847L;
 
     protected void completeResponse(Integer orderId, HttpServletResponse response) throws IOException {
 

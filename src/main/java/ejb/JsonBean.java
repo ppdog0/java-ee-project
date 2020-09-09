@@ -183,7 +183,7 @@ public class JsonBean {
             orderBuilder.add("orderid", Integer.toString(order.getOrderid()));
         }
         orderBuilder.add("username", this.username)
-            .add("agentname", order.getAgent().getName())
+            .add("agentname", order.getPurchasingagent().getPurchasingagentname())
             .add("storename", order.getStore().getStorename())
             .add("communityname", order.getCommunity().getCommunityname())
             .add("phonenumber", "15378539280")

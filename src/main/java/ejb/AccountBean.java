@@ -39,13 +39,14 @@ public class AccountBean implements Serializable{
     private static final long serialVersionUID = 7908187125656392847L;
     
     public boolean hasUser(String userName) {
-        User user = request.findUser(userName);
-        return user != null;
+        System.out.println(userName);
+        Integer userid = request.searchUserId(userName);
+        return userid != null;
     }
     
     public boolean rightPassword(String userName, String password) {
         User user = request.findUser(userName);
-        return user.getUsername().equals(userName) && user.getPassword().equals(password);
+        return user.getPassword().equals(password);
     }
     
     public Integer searchUserId(String username) {
@@ -62,7 +63,8 @@ public class AccountBean implements Serializable{
     }
     
     public boolean legalUsername(String username) {
-        return (!hasUser(username)) && username.length() > 4 && username.length() < 21;
+        // (!hasUser(username)) &&
+        return  username.length() > 4 && username.length() < 21;
     }
     
     public void createUser(String username, String password) {
