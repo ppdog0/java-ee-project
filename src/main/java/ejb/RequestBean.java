@@ -280,7 +280,7 @@ public class RequestBean {
         try {
             User user = em.find(User.class, userId);
             return (Health) em.createNamedQuery("findHealthByUserId")
-                    .setParameter("user", user)
+                    .setParameter("id", user.getId())
                     .getSingleResult();
         } catch (Exception e) {
 

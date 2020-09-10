@@ -11,7 +11,7 @@ import java.util.Date;
         @NamedQuery(
                 name = "findHealthByUserId",
                 query = "select c FROM Health c " +
-                        "WHERE c.user = :user "
+                        "WHERE c.user.id = :id "
         )
 })
 public class Health implements Serializable {
