@@ -43,9 +43,9 @@ public class PostBoardServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
-        JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
+//        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+//        JsonObject object = reader.readObject();
+        Integer comId = 1;
 
         jsonbean.initResponseAsJson(response);
 
@@ -53,7 +53,7 @@ public class PostBoardServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
