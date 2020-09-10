@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.notice;
 
 import ejb.JsonBean;
 import ejb.AccountBean;
+import web.notice.NoticeBoardServlet;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.ejb.EJB;

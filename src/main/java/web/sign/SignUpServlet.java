@@ -1,4 +1,4 @@
-package web;
+package web.sign;
 
 import ejb.JsonBean;
 import ejb.AccountBean;

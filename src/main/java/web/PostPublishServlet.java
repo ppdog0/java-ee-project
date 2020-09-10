@@ -38,7 +38,7 @@ public class PostPublishServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
+        Integer comId = 1;
         Integer userId = object.getInt("userid");
         String title = object.getString("title");
         String details = object.getString("details");
@@ -51,7 +51,7 @@ public class PostPublishServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

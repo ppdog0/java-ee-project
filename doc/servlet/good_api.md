@@ -26,6 +26,14 @@ method: `GET`
 
 <br/>
 
+url:`/notice/publish`
+
+method: `POST`
+
+data: `userid`, `title`, `details`
+
+<br/>
+
 url:`/post`
 
 method: `GET`

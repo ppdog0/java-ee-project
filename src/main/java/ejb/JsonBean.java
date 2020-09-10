@@ -140,7 +140,8 @@ public class JsonBean {
                 .add("postid", Integer.toString(pt.getPostid()))
                 .add("title", pt.getTitle())
                 .add("details", pt.getDetails())
-                .add("date", AccountBean.mdyNow());
+                .add("date", AccountBean.mdyNow())
+                .add("username", pt.getUser().getUsername());
 //                .add("username", this.username);
         return postBuilder;
     }

@@ -167,8 +167,15 @@ public class RequestBean {
 
     public void createPost(Integer userId, String title, String text, Integer communityId) {
         try {
-            User user = em.find(User.class, userId);
-            Community community = em.find(Community.class, communityId);
+//            User user = em.find(User.class, userId);
+//            Community community = em.find(Community.class, communityId);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userId)
+                    .getSingleResult();
+
+            Community community = (Community) em.createNamedQuery("findCommunityById")
+                    .setParameter("id", communityId)
+                    .getSingleResult();
             Date date = new Date();
 
             Post post = new Post(user, community, title, text, date);
