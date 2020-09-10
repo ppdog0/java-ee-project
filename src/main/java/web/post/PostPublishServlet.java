@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.post;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
+import web.post.PostBoardServlet;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.ejb.EJB;
@@ -23,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/post/update"})
-public class PostModifyServlet extends HttpServlet {
-
+@WebServlet(urlPatterns = {"/post/publish"})
+public class PostPublishServlet extends HttpServlet {
+    
     @EJB
     private AccountBean account;
     @EJB
@@ -38,13 +40,12 @@ public class PostModifyServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
-        Integer postId = object.getInt("noticeid");
+        Integer comId = 1;
         Integer userId = object.getInt("userid");
         String title = object.getString("title");
         String details = object.getString("details");
-
-        account.updatePost(postId, userId, comId, title, details);
+        
+        this.account.createPost(userId, title, details, comId);
 
         jsonbean.initResponseAsJson(response);
 
@@ -52,7 +53,7 @@ public class PostModifyServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

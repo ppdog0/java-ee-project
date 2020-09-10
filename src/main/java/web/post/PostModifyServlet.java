@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.post;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
+import web.post.PostBoardServlet;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.Set;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,38 +25,32 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "BillModifyServlet")
-public class BillModifyServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/post/update"})
+public class PostModifyServlet extends HttpServlet {
 
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
+    @EJB
+    private PostBoardServlet pbs;
     private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
-
-        //Integer comId = jsonbean.userCommunitiesIds(userId);
-        //String jsonString = jsonbean.generateJsonStringBill(userId, comId);
-
-//        try (PrintWriter out = response.getWriter();) {
-//            out.print(jsonString);
-//        }
-    }
-    
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer billId = object.getInt("billid");
-        Boolean status = object.getBoolean("status");
+        Integer comId = object.getInt("communityid");
+        Integer postId = object.getInt("noticeid");
         Integer userId = object.getInt("userid");
-        
-        account.updateBill(billId, userId, status);
+        String title = object.getString("title");
+        String details = object.getString("details");
+
+        account.updatePost(postId, userId, comId, title, details);
 
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, response);
+        pbs.completeResponse(comId, response);
     }
 
     @Override

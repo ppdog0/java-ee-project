@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.bill;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
@@ -31,7 +31,7 @@ public class BillPublishServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;
 
-    protected void completeResponse(Integer userId, Integer communityId, HttpServletResponse response) throws IOException {
+    public void completeResponse(Integer userId, Integer communityId, HttpServletResponse response) throws IOException {
 
         String jsonString = jsonbean.generateJsonStringBill(userId, communityId);
 
@@ -44,12 +44,13 @@ public class BillPublishServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
+        Integer communityId = 1;
         Integer userId = object.getInt("userid");
-        Integer communityId = object.getInt("communityId");
         String type = object.getString("type");
         String details = object.getString("details");
         Integer price = object.getInt("price");
         Boolean status = object.getBoolean("status");
+        //Boolean status = false;
         
         this.account.createBill(userId, communityId, price, details, type, status);
         
@@ -59,7 +60,7 @@ public class BillPublishServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

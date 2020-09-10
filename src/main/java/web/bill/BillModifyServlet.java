@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.bill;
 
+import ejb.AccountBean;
 import ejb.JsonBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Set;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -24,36 +25,42 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@Stateful
-@WebServlet(urlPatterns = {"/post"})
-public class PostBoardServlet extends HttpServlet {
+@WebServlet(name = "BillModifyServlet")
+public class BillModifyServlet extends HttpServlet {
 
+    @EJB
+    private AccountBean account;
     @EJB
     private JsonBean jsonbean;
     private static final long serialVersionUID = 7903037019848392847L;
 
-    public void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringPost(comId);
+        //Integer comId = jsonbean.userCommunitiesIds(userId);
+        //String jsonString = jsonbean.generateJsonStringBill(userId, comId);
 
-        try (PrintWriter out = response.getWriter();) {
-            out.print(jsonString);
-        }
+//        try (PrintWriter out = response.getWriter();) {
+//            out.print(jsonString);
+//        }
     }
-
+    
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
-//        JsonObject object = reader.readObject();
-        Integer comId = 1;
+        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+        JsonObject object = reader.readObject();
+        Integer billId = object.getInt("billid");
+        Boolean status = object.getBoolean("status");
+        Integer userId = object.getInt("userid");
+        
+        account.updateBill(billId, userId, status);
 
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(comId, response);
+        completeResponse(userId, response);
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
