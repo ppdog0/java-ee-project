@@ -119,6 +119,14 @@ public class AccountBean implements Serializable{
     public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {
         request.updateNotice(noticeid, userId, title, text, communityId);
     }
+
+    public Complaint findComplaint(Integer complaintid) {
+        return request.findComplaint(complaintid);
+    }
+
+    public Notice findNotice(Integer noticeid) {
+        return request.findNotice(noticeid);
+    }
     
     public void updatePost(Integer postId, Integer userId, Integer communityId, String titile, String text) {
         request.updatePost(postId, userId, communityId, titile, text);
@@ -126,6 +134,10 @@ public class AccountBean implements Serializable{
 
     public void createPost(Integer userId, String title, String text, Integer communityId) {
         request.createPost(userId, title, text, communityId);
+    }
+
+    public Post findPost(Integer postid) {
+        return request.findPost(postid);
     }
     
     public List<Complaint> findComplaints(Integer communityid) {

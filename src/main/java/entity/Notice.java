@@ -13,6 +13,12 @@ import java.util.Date;
                 query =
                         "select c FROM Notice c " +
                                 "ORDER BY c.noticeid"
+        ),
+        @NamedQuery(
+                name = "findNotice",
+                query =
+                        "select c FROM Notice c " +
+                                "where c.noticeid = :id"
         )
 })
 public class Notice implements Serializable {

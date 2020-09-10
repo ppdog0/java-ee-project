@@ -195,6 +195,63 @@ public class JsonBean {
         return stWriter.toString();
     }
 
+    public String generateJsonStringComplaintItem(Integer complaintid) {
+        Complaint complaint = account.findComplaint(complaintid);
+
+        JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder complaintAB = Json.createArrayBuilder();
+
+        complaintAB.add(complaintBuilder(complaint));
+
+        communityBuilder.add("complaint", complaintAB);
+
+        JsonObject complaintboardJsonObject = communityBuilder.build();
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+            jsonWriter.writeObject(complaintboardJsonObject);
+        }
+
+        return stWriter.toString();
+    }
+
+    public String generateJsonStringNoticeItem(Integer noticeid) {
+        Notice notice = account.findNotice(noticeid);
+
+        JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder noticeAB = Json.createArrayBuilder();
+
+        noticeAB.add(noticeBuilder(notice));
+
+        communityBuilder.add("notice", noticeAB);
+
+        JsonObject noticeboardJsonObject = communityBuilder.build();
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+            jsonWriter.writeObject(noticeboardJsonObject);
+        }
+
+        return stWriter.toString();
+    }
+
+    public String generateJsonStringPostItem(Integer postid) {
+        Post post = account.findPost(postid);
+
+        JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder postAB = Json.createArrayBuilder();
+
+        postAB.add(postBuilder(post));
+
+        communityBuilder.add("post", postAB);
+
+        JsonObject postboardJsonObject = communityBuilder.build();
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+            jsonWriter.writeObject(postboardJsonObject);
+        }
+
+        return stWriter.toString();
+    }
+
     public String generateJsonStringPost(Integer comId) {
         String comName = account.findCommunityName(comId);
         JsonObjectBuilder communityBuilder = Json.createObjectBuilder();

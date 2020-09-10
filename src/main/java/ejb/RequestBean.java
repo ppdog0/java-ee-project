@@ -159,7 +159,9 @@ public class RequestBean {
     }
     public Notice findNotice(Integer noticeid) {
         try {
-            Notice notice = em.find(Notice.class, noticeid);
+            Notice notice = (Notice) em.createNamedQuery("findNotice")
+                    .setParameter("id", noticeid)
+                    .getSingleResult();
 
             return notice;
         } catch (Exception e) {
@@ -222,7 +224,9 @@ public class RequestBean {
     }
     public Post findPost(Integer postid) {
         try {
-            Post post = em.find(Post.class, postid);
+            Post post = (Post) em.createNamedQuery("findPostById")
+                    .setParameter("id", postid)
+                    .getSingleResult();
             return post;
         } catch (Exception e) {
 
@@ -310,84 +314,6 @@ public class RequestBean {
         return null;
     }
 
-//    public void createStore(String storename, String phonenumber) {
-//        try {
-//            Store store = new Store(storename,phonenumber);
-//
-//            em.persist(store);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-//    public void updateStore(Integer storeId, String storename, String phonenumber) {
-//        try {
-//            Store store = em.find(Store.class, storeId);
-//            store.setStorename(storename);
-//            store.setPhonenumber(phonenumber);
-//
-//            em.merge(store);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-//
-//    public void createPurchasingAgent(String purchasingagentname, String phonenumber) {
-//        try {
-//            PurchasingAgent purchasingAgent = new PurchasingAgent(purchasingagentname,phonenumber);
-//
-//            em.persist(purchasingAgent);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-//    public void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
-//        try {
-//            Store purchasingAgent = em.find(Store.class, purchasingAgentId);
-//            purchasingAgent.setStorename(purchasingagentname);
-//            purchasingAgent.setPhonenumber(phonenumber);
-//
-//            em.merge(purchasingAgent);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-
-//    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
-//        try {
-//            User user = em.find(User.class, userId);
-//            Community community = em.find(Community.class, communityId);
-//            Store store = em.find(Store.class, storeId);
-//            PurchasingAgent purchasingAgent = em.find(PurchasingAgent.class, purchasingAgentId);
-//            Date date = new Date();
-//            Order order=new Order(date,details,status,community,user,store,purchasingAgent);
-//
-//            em.persist(order);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-//    public void updateOrder(Integer orderId,String details ,String status) {
-//        try {
-//            Order order=em.find(Order.class,orderId);
-//            order.setDetails(details);
-//            order.setStatus(status);
-//
-//            em.merge(order);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-//    public List<Order> findOrders(Integer userId) {
-//        try {
-//            return (List<Order>) em.createNamedQuery("findAllOrders")
-//                    .setParameter("id", userId)
-//                    .getSingleResult();
-//        } catch (Exception e) {
-//
-//        }
-//        return null;
-//    }
-
     public Integer searchCommunityId(String communityname) {
         try {
             return (Integer) em.createNamedQuery("findCommunityByName")
@@ -438,6 +364,17 @@ public class RequestBean {
         try {
             return (List<Complaint>) em.createNamedQuery("findAllComplaint")
                     .getResultList();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public Complaint findComplaint(Integer complaintid) {
+        try {
+            return (Complaint) em.createNamedQuery("findComplaint")
+                    .setParameter("id", complaintid)
+                    .getSingleResult();
         } catch (Exception e) {
 
         }
