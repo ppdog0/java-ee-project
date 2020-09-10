@@ -42,9 +42,9 @@ public class ComplaintBoardServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
-        JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
+//        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+//        JsonObject object = reader.readObject();
+        Integer comId = 1;
 
         jsonbean.initResponseAsJson(response);
 

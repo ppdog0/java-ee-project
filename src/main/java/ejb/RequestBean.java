@@ -410,7 +410,6 @@ public class RequestBean {
     public List<Complaint> findComplaints(Integer communityid) {
         try {
             return (List<Complaint>) em.createNamedQuery("findAllComplaint")
-                    .setParameter("id", communityid)
                     .getResultList();
         } catch (Exception e) {
 
