@@ -31,7 +31,7 @@ public class ComplaintBoardServlet extends HttpServlet {
     private JsonBean jsonbean;
     private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+    public void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
 
         String jsonString = jsonbean.generateJsonStringComplaint(comId);
 
