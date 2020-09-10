@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.health;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
@@ -25,16 +25,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/health/create"})
-public class HealthPublishServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/health"})
+public class HealthViewServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
 
-    protected void completeResponse(Integer healthid, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringHealth(healthid);
+        String jsonString = jsonbean.generateJsonStringHealth(userId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -46,19 +46,14 @@ public class HealthPublishServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer userId = object.getInt("userid");
-        String status = object.getString("status");
-        String temperature = object.getString("temperature");
-        String position = object.getString("position");
-        
-        Integer healthid = this.account.createHealth(userId, status, position, Float.valueOf(temperature));
-        
+
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(healthid, response);
+        completeResponse(userId, response);
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

@@ -280,7 +280,7 @@ public class RequestBean {
         }
         return null;
     }
-    public void updateHealth(Integer healthId, String status, float temperature, String curr_position) {
+    public Integer updateHealth(Integer healthId, String status, float temperature, String curr_position) {
         try {
             //Health health = em.find(Health.class, healthId);
             Health health = (Health) em.createNamedQuery("findHealthById")
@@ -290,10 +290,13 @@ public class RequestBean {
             health.setPosition(curr_position);
             health.setTemperature(temperature);
 
-            em.merge(health);
+            em.persist(health);
+
+            return health.getHealthid();
         } catch (Exception e) {
 
         }
+        return null;
     }
     public Health findUserHealth(Integer healthid) {
         try {

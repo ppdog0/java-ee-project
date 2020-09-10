@@ -144,8 +144,8 @@ public class AccountBean implements Serializable{
         return request.findUserHealth(healthid);
     }
     
-    public void updateHealth(Integer healthId, String status, Float temperature, String curr_position) {
-        this.request.updateHealth(healthId, status, temperature, curr_position);
+    public Integer updateHealth(Integer healthId, String status, Float temperature, String curr_position) {
+        return this.request.updateHealth(healthId, status, temperature, curr_position);
     }
     
     public void createBill(Integer userId, Integer communityId, Integer price, String title, String type, Boolean status) {
