@@ -6,8 +6,13 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "health")
+@Table(name = "Health")
 @NamedQueries({
+        @NamedQuery(
+                name = "findHealthById",
+                query = "select c FROM Health c " +
+                        "WHERE c.healthid = :id "
+        ),
         @NamedQuery(
                 name = "findHealthByUserId",
                 query = "select c FROM Health c " +
@@ -26,6 +31,7 @@ public class Health implements Serializable {
     private float temperature;
     private Date date;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userid", nullable = false)
     private User user;
 
 

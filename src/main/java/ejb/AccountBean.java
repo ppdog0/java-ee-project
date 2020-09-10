@@ -136,12 +136,12 @@ public class AccountBean implements Serializable{
         request.createComplaint(userid, communityid, title, details);
     }
 
-    public void createHealth(Integer userId, String status, String position, float temperature) {
-        request.createHealth(userId, status, position, temperature);
+    public Integer createHealth(Integer userId, String status, String position, float temperature) {
+        return request.createHealth(userId, status, position, temperature);
     }
     
-    public Health findUserHealth(Integer userId) {
-        return request.findUserHealth(userId);
+    public Health findUserHealth(Integer healthid) {
+        return request.findUserHealth(healthid);
     }
     
     public void updateHealth(Integer healthId, String status, Float temperature, String curr_position) {

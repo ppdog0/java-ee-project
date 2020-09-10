@@ -32,9 +32,9 @@ public class HealthPublishServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;
 
-    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer healthid, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringHealth(userId);
+        String jsonString = jsonbean.generateJsonStringHealth(healthid);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -50,15 +50,15 @@ public class HealthPublishServlet extends HttpServlet {
         String temperature = object.getString("temperature");
         String position = object.getString("position");
         
-        this.account.createHealth(userId, status, position, Float.valueOf(temperature));
+        Integer healthid = this.account.createHealth(userId, status, position, Float.valueOf(temperature));
         
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, response);
+        completeResponse(healthid, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

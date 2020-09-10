@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.json.Json;
@@ -31,7 +33,9 @@ public class JsonBean {
 
     @EJB
     private AccountBean account;
-    private String username;
+    // private String username;
+
+    private static final Logger logger = Logger.getLogger("java.ejb.JsonBean");
 
     public void initResponseAsJson(HttpServletResponse response) {
         response.setContentType("application/json");
@@ -236,18 +240,20 @@ public class JsonBean {
         return stWriter.toString();
     }
 
-    public String generateJsonStringHealth(Integer userId) {
-        String userName = account.searchUserName(userId);
-        Health health = account.findUserHealth(userId);
+    public String generateJsonStringHealth(Integer healthid) {
+        Health health = account.findUserHealth(healthid);
+
+        //logger.log(Level.INFO, "find health {0}--{1}", new Object[]{health.getHealthid(), health.getUser().getUsername()});
 
         JsonObjectBuilder healthBuilder = Json.createObjectBuilder();
 
         healthBuilder.add("healthid", health.getHealthid())
-                .add("username", userName)
+                .add("username", health.getUser().getUsername())
                 .add("status", health.getStatus())
                 .add("temperature", health.getTemperature())
                 .add("position", health.getPosition())
-                .add("date", account.mdyNow());
+                .add("date", AccountBean.mdyNow());
+
 
         JsonObject healthJsonObject = healthBuilder.build();
         StringWriter stWriter = new StringWriter();

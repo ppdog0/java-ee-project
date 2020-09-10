@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "bill")
+@Table(name = "Bill")
 @NamedQueries({
         @NamedQuery(
                 name = "findBillById",

@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.complaint;
 
-import ejb.AccountBean;
 import ejb.JsonBean;
+import ejb.AccountBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -23,35 +25,42 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/complaint/publish"})
-public class ComplaintPublishServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/community"})
+public class CommunityServlet extends HttpServlet {
 
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
-    @EJB
-    private ComplaintBoardServlet cbs;
     private static final long serialVersionUID = 7903037019848392847L;
+
+    private static final Logger logger = Logger.getLogger("java.ejb.CommunityServlet");
+
+    private void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+
+        String jsonString = jsonbean.generateJsonStringCommunity(comId);
+
+        try (PrintWriter out = response.getWriter();) {
+            out.print(jsonString);
+        }
+    }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
-        JsonObject object = reader.readObject();
-        Integer comId = 1;
-        Integer userId = object.getInt("userid");
-        String title = object.getString("title");
-        String details = object.getString("details");
 
-        this.account.createComplaint(userId, comId, title, details);
-
+        // JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+        // JsonObject object = reader.readObject();
+        // String str = object.getString("communityid");
+        //Integer comId = comId = object.getInt("communityid");
         jsonbean.initResponseAsJson(response);
 
-        cbs.completeResponse(comId, response);
+        Integer comId = 1;
+
+        completeResponse(comId, response);
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

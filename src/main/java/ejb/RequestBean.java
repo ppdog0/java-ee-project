@@ -61,7 +61,10 @@ public class RequestBean {
     }
     public String searchUserName(Integer userid) {
         try {
-            User user = em.find(User.class, userid);
+            // User user = em.find(User.class, userid);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userid)
+                    .getSingleResult();
             return user.getUsername();
         } catch (Exception e) {
 
@@ -264,20 +267,25 @@ public class RequestBean {
         return null;
     }
 
-    public void createHealth(Integer userId, String status, String position, float temperature) {
+    public Integer createHealth(Integer userId, String status, String position, float temperature) {
         try {
             User user = em.find(User.class, userId);
             Date date = new Date();
             Health health = new Health(user, status, position, temperature,date);
 
             em.persist(health);
+            return health.getHealthid();
         } catch (Exception e) {
 
         }
+        return null;
     }
     public void updateHealth(Integer healthId, String status, float temperature, String curr_position) {
         try {
-            Health health = em.find(Health.class, healthId);
+            //Health health = em.find(Health.class, healthId);
+            Health health = (Health) em.createNamedQuery("findHealthById")
+                    .setParameter("id",healthId)
+                    .getSingleResult();
             health.setStatus(status);
             health.setPosition(curr_position);
             health.setTemperature(temperature);
@@ -287,12 +295,12 @@ public class RequestBean {
 
         }
     }
-    public Health findUserHealth(Integer userId) {
+    public Health findUserHealth(Integer healthid) {
         try {
-            User user = em.find(User.class, userId);
-            return (Health) em.createNamedQuery("findHealthByUserId")
-                    .setParameter("id", user.getId())
+            Health health = (Health) em.createNamedQuery("findHealthById")
+                    .setParameter("id", healthid)
                     .getSingleResult();
+            return health;
         } catch (Exception e) {
 
         }
