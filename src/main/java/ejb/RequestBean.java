@@ -245,7 +245,7 @@ public class RequestBean {
     public List<Bill> findBills(Integer communityId, Integer userId) {
         try {
             return (List<Bill>) em.createNamedQuery("findBillById")
-                    .setParameter("id", userId).setParameter("cid", communityId)
+                    .setParameter("id", userId)
                     .getResultList();
         } catch (Exception e) {
 

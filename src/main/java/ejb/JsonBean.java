@@ -150,17 +150,16 @@ public class JsonBean {
                 .add("postid", Integer.toString(cp.getComplaintid()))
                 .add("title", cp.getTitle())
                 .add("details", cp.getDetails())
-                .add("date", AccountBean.mdyNow())
-                .add("username", this.username);
+                .add("date", AccountBean.mdyNow());
+               //.add("username", this.username);
         return complaintBuilder;
     }
 
     public JsonObjectBuilder billBuilder(Bill bill) {
         JsonObjectBuilder billBuilder = Json.createObjectBuilder()
                 .add("billid", Integer.toString(bill.getBillid()))
-                .add("username", this.username)
-                .add("type", bill.getType())
-                .add("details", bill.getTitle())
+                .add("title", bill.getTitle())
+                .add("details", bill.getDetails())
                 .add("price", bill.getPrice())
                 .add("status", bill.getSatus())
                 .add("date", AccountBean.mdyNow());
@@ -276,25 +275,25 @@ public class JsonBean {
         return stWriter.toString();
     }
 
-    public String generateJsonStringBill(Integer userId, Set<Integer> comIds) {
-
-        JsonArrayBuilder billAB = Json.createArrayBuilder();
-        comIds.forEach(comId -> {
-            List<Bill> bills = account.findBills(comId, userId);
-
-            bills.forEach(bill -> {
-                billAB.add(billBuilder(bill));
-            });
-
-        });
-
-        JsonArray billJsonArray = billAB.build();
-        StringWriter stWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeArray(billJsonArray);
-        }
-        return stWriter.toString();
-    }
+//    public String generateJsonStringBill(Integer userId, Set<Integer> comIds) {
+//
+//        JsonArrayBuilder billAB = Json.createArrayBuilder();
+//        comIds.forEach(comId -> {
+//            List<Bill> bills = account.findBills(comId, userId);
+//
+//            bills.forEach(bill -> {
+//                billAB.add(billBuilder(bill));
+//            });
+//
+//        });
+//
+//        JsonArray billJsonArray = billAB.build();
+//        StringWriter stWriter = new StringWriter();
+//        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+//            jsonWriter.writeArray(billJsonArray);
+//        }
+//        return stWriter.toString();
+//    }
 
 //    public String generateJsonStringOrder(Integer userId, Integer communityId) {
 //        List<Order> orders = account.findOrders(userId);

@@ -36,12 +36,12 @@ public class BillModifyServlet extends HttpServlet {
 
     protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        Set<Integer> comIds = jsonbean.userCommunitiesIds(userId);
-        String jsonString = jsonbean.generateJsonStringBill(userId, comIds);
+        //Integer comId = jsonbean.userCommunitiesIds(userId);
+        //String jsonString = jsonbean.generateJsonStringBill(userId, comId);
 
-        try (PrintWriter out = response.getWriter();) {
-            out.print(jsonString);
-        }
+//        try (PrintWriter out = response.getWriter();) {
+//            out.print(jsonString);
+//        }
     }
     
     private void processRequest(HttpServletRequest request, HttpServletResponse response)

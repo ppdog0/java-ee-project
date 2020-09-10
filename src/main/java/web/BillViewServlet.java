@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "BillPublishServlet")
+@WebServlet(urlPatterns = "/bill")
 public class BillViewServlet extends HttpServlet {
     
     @EJB
@@ -33,8 +33,9 @@ public class BillViewServlet extends HttpServlet {
 
     protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        Set<Integer> comIds = jsonbean.userCommunitiesIds(userId);
-        String jsonString = jsonbean.generateJsonStringBill(userId, comIds);
+        // Set<Integer> comIds = jsonbean.userCommunitiesIds(userId);
+        Integer comId = 1;
+        String jsonString = jsonbean.generateJsonStringBill(userId, comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -45,7 +46,8 @@ public class BillViewServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer userId = object.getInt("userid"); 
+        Integer userId = object.getInt("userid");
+        //Integer userId = 2;
         
         jsonbean.initResponseAsJson(response);
 
@@ -53,7 +55,7 @@ public class BillViewServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
