@@ -130,8 +130,8 @@ public class JsonBean {
                 .add("noticeid", Integer.toString(nt.getNoticeid()))
                 .add("title", nt.getTitle())
                 .add("details", nt.getDetails())
-                .add("date", AccountBean.mdyNow())
-                .add("username", this.username);
+                .add("date", AccountBean.mdyNow());
+//                .add("username", this.username);
         return noticeBuilder;
     }
 
@@ -140,8 +140,8 @@ public class JsonBean {
                 .add("postid", Integer.toString(pt.getPostid()))
                 .add("title", pt.getTitle())
                 .add("details", pt.getDetails())
-                .add("date", AccountBean.mdyNow())
-                .add("username", this.username);
+                .add("date", AccountBean.mdyNow());
+//                .add("username", this.username);
         return postBuilder;
     }
 
