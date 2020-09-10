@@ -6,12 +6,20 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Community")
-@NamedQuery(
-        name="findCommunityByName",
-        query=
-        "SELECT u.id FROM Community u " +
-        "WHERE u.communityname = :name "
-)
+@NamedQueries({
+        @NamedQuery(
+                name="findCommunityByName",
+                query=
+                        "SELECT u.id FROM Community u " +
+                                "WHERE u.communityname = :name "
+        ),
+        @NamedQuery(
+                name="findCommunityById",
+                query=
+                        "SELECT u FROM Community u " +
+                                "WHERE u.id = :id "
+        )
+})
 public class Community implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     @Id

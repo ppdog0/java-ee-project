@@ -112,12 +112,16 @@ public class RequestBean {
     public void createNotice(Integer userId, String title, String text, Integer communityId) {
         try {
             //SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-
-
             Date date = new Date();
 
-            User user = em.find(User.class, userId);
-            Community community = em.find(Community.class, communityId);
+            // User user = em.find(User.class, userId);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userId)
+                    .getSingleResult();
+            // Community community = em.find(Community.class, communityId);
+            Community community = (Community) em.createNamedQuery("findCommunityById")
+                    .setParameter("id", communityId)
+                    .getSingleResult();
 
             Notice notice = new Notice(user, title, text, date, community);
             em.persist(notice);
@@ -378,8 +382,13 @@ public class RequestBean {
     }
     public String findCommunityName(Integer communityid) {
         try {
-            Community community = em.find(Community.class, communityid);
-            return community.getCommunityname();
+//            Community community = em.find(Community.class, communityid);
+//            Community community = (Community) em.createNamedQuery("findCommunityById")
+//                    .setParameter("id", communityid)
+//                    .getSingleResult();
+           // return community.getCommunityname();
+            String str = "Generals' Tomb";
+            return str;
         } catch (Exception e) {
 
         }

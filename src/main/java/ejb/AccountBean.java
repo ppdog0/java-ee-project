@@ -113,7 +113,7 @@ public class AccountBean implements Serializable{
     }
     
     public void createNotice(Integer userId, String title, String text, Integer communityId) {
-        createNotice(userId, title, text, communityId);
+        request.createNotice(userId, title, text, communityId);
     }
     
     public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {
