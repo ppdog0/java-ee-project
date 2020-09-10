@@ -197,16 +197,16 @@ public class JsonBean {
         JsonArrayBuilder postAB = Json.createArrayBuilder();
 
         List<Post> posts = account.findAllPosts(comId);
-        for (int i = 0; i < posts.size(); i++) {
-            postAB.add(postBuilder(posts.get(i)));
-        }
-//        posts.forEach(pt -> {
-//            postAB.add(postBuilder(pt));
-//        });
+//        for (int i = 0; i < posts.size(); i++) {
+//            postAB.add(postBuilder(posts.get(i)));
+//        }
+        posts.forEach(pt -> {
+            postAB.add(postBuilder(pt));
+        });
 
         communityBuilder.add("communityname", comName)
-                .add("communityid", comId)
                 .add("post", postAB);
+                     // .add("communityid", comId)
 
         JsonObject postboardJsonObject = communityBuilder.build();
         StringWriter stWriter = new StringWriter();
