@@ -25,7 +25,7 @@
 <persistence-unit name="myapp">
   <description>This is a short text describing my persistence unit.</description>
 <!--  <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
-  <jta-data-source>community</jta-data-source>
+  <jta-data-source>jdbc/community</jta-data-source>
   <properties>
     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
     <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/community" />

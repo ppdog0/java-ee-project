@@ -322,6 +322,7 @@ public class JsonBean {
     }
 
     public String generateJsonStringBill(Integer userId, Integer comId) {
+        
         List<Bill> bills = account.findBills(comId, userId);
 
         JsonArrayBuilder billAB = Json.createArrayBuilder();
