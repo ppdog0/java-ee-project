@@ -125,10 +125,10 @@ public class RequestBean {
             throw new EJBException(e.getMessage());
         }
     }
-    public List<Notice> findAllNotice(String communityId) {
+    public List<Notice> findAllNotice() {
         try {
             return (List<Notice>) em.createNamedQuery("findAllNotice")
-                    .getSingleResult();
+                    .getResultList();
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
@@ -197,10 +197,10 @@ public class RequestBean {
         } catch (Exception e) {
         }
     }
-    public List<Post> findAllPosts(Integer communityId) {
+    public List<Post> findAllPosts() {
         try {
             return (List<Post>) em.createNamedQuery("findAllPost")
-                    .getSingleResult();
+                    .getResultList();
         } catch (Exception e) {
 
         }

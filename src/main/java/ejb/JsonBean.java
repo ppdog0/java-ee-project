@@ -107,7 +107,7 @@ public class JsonBean {
         JsonArrayBuilder noticeAB = Json.createArrayBuilder();
         JsonArrayBuilder postAB = Json.createArrayBuilder();
 
-        List<Notice> notices = account.findAllNotice(Integer.toString(comId));
+        List<Notice> notices = account.findAllNotice(comId);
         notices.forEach(nt -> {
             noticeAB.add(noticeBuilder(nt));
         });
@@ -173,7 +173,7 @@ public class JsonBean {
         JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
         JsonArrayBuilder noticeAB = Json.createArrayBuilder();
 
-        List<Notice> notices = account.findAllNotice(Integer.toString(comId));
+        List<Notice> notices = account.findAllNotice(comId);
         notices.forEach(nt -> {
             noticeAB.add(noticeBuilder(nt));
         });

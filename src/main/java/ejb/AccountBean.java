@@ -90,12 +90,12 @@ public class AccountBean implements Serializable{
         this.currentUserid = userid;
     }
     
-    public List<Notice> findAllNotice(String communityId) {
-        return request.findAllNotice(communityId);
+    public List<Notice> findAllNotice(Integer communityId) {
+        return request.findAllNotice();
     }
     
     public List<Post> findAllPosts(Integer communityId) {
-        return request.findAllPosts(communityId);
+        return request.findAllPosts();
     }
     
     public static String mdyNow() {

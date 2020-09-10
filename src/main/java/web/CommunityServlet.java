@@ -48,19 +48,19 @@ public class CommunityServlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
-        JsonObject object = reader.readObject();
-        String str = object.getString("communityid");
+        // JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+        // JsonObject object = reader.readObject();
+        // String str = object.getString("communityid");
         //Integer comId = comId = object.getInt("communityid");
         jsonbean.initResponseAsJson(response);
 
-        Integer comId = Integer.valueOf(str);
+        Integer comId = 1;
 
         completeResponse(comId, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
