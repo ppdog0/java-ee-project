@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package web;
+package web.notice;
 
 import ejb.JsonBean;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -19,21 +11,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
-/**
- *
- * @author Gwan
- */
-@Stateful
-@WebServlet(urlPatterns = {"/complaint"})
-public class ComplaintBoardServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/notice/id")
+public class NoticeItemServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;
-    private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
+    public void completeResponse(Integer noticeid, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringComplaint(comId);
+        String jsonString = jsonbean.generateJsonStringNoticeItem(noticeid);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -44,15 +33,16 @@ public class ComplaintBoardServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
+        Integer comId = 1;
+        Integer noticeid = object.getInt("noticeid");
 
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(comId, response);
+        completeResponse(noticeid, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

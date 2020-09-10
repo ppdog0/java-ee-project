@@ -6,20 +6,25 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "notice")
+@Table(name = "Notice")
 @NamedQueries({
         @NamedQuery(
                 name = "findAllNotice",
                 query =
                         "select c FROM Notice c " +
                                 "ORDER BY c.noticeid"
+        ),
+        @NamedQuery(
+                name = "findNotice",
+                query =
+                        "select c FROM Notice c " +
+                                "where c.noticeid = :id"
         )
 })
 public class Notice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     @Column(name = "noticeid")
     private Integer noticeid;
 

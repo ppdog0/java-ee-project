@@ -18,15 +18,11 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @NamedQueries({
         @NamedQuery(
                 name = "findUserById",
-                query =
-                        "SELECT u FROM User u " +
-                                "WHERE u.id = :id "
+                query = "SELECT u FROM User u WHERE u.id = :id "
         ),
         @NamedQuery(
                 name = "findUserByName",
-                query =
-                        "select u FROM User u " +
-                                "WHERE u.username = :name"
+                query = "select u FROM User u WHERE u.username = :name"
         )
 })
 public class User implements Serializable {
@@ -56,9 +52,6 @@ public class User implements Serializable {
 
     @OneToOne(targetEntity=Health.class,mappedBy = "user")
     private Health health;
-
-    @OneToMany(targetEntity=Order.class,mappedBy = "user")
-    private Set<Order> orders;
 
     public User() {
     }

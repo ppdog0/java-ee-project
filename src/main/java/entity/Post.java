@@ -6,13 +6,19 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "post")
+@Table(name = "Post")
 @NamedQueries({
         @NamedQuery(
                 name = "findAllPost",
                 query =
                         "select c FROM Post c " +
                                 "ORDER BY c.postid"
+        ),
+        @NamedQuery(
+                name = "findPostById",
+                query =
+                        "select c FROM Post c " +
+                                "where c.postid = :id"
         )
 })
 public class Post implements Serializable {

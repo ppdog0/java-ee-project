@@ -6,12 +6,12 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "bill")
+@Table(name = "Bill")
 @NamedQueries({
         @NamedQuery(
                 name = "findBillById",
                 query = "select c FROM Bill c " +
-                                "where c.user.id = :id and c.community.id = :cid"
+                                "where c.user.id = :id"
         )
 })
 public class Bill implements Serializable {
@@ -21,7 +21,7 @@ public class Bill implements Serializable {
     @Column(name = "billid")
     private Integer billid;
     private float price;
-    private String type;
+//    private String type;
     private Boolean status;
     private String title;
     private String details;
@@ -69,13 +69,13 @@ public class Bill implements Serializable {
         this.title = title;
     }
 
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+//    public String getType() {
+//        return this.type;
+//    }
+//
+//    public void setType(String type) {
+//        this.type = type;
+//    }
 
     public Boolean getSatus() {
         return this.status;

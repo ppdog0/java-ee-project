@@ -6,6 +6,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -27,18 +28,32 @@ public class RequestBean {
                     username);
             logger.log(Level.INFO, "Created user {0}--{1}", new Object[]{username, password});
             em.persist(user);
-            logger.log(Level.INFO, "Persisted user {0}--{1}", new Object[]{username, password});
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
     }
     public User findUser(String username) {
-        User user;
         try {
             Integer userid = searchUserId(username);
-            user = em.find(User.class, userid);
-
+            //user = em.find(User.class, userid);
+            User user = (User) em.createNamedQuery("findUserByName")
+                    .setParameter("name", username)
+                    .getSingleResult();
+            logger.log(Level.INFO, "find user {0}--{1}", new Object[]{user.getUsername(), user.getPassword()});
             return user;
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    public String searchUserPassword(String username) {
+        try {
+            User user = (User) em.createNamedQuery("findUserByName")
+                    .setParameter("name", username)
+                    .getSingleResult();
+            String password = user.getPassword();
+            logger.log(Level.INFO, "search user password {0}", new Object[]{password});
+            return password;
         } catch (Exception e) {
 
         }
@@ -46,7 +61,10 @@ public class RequestBean {
     }
     public String searchUserName(Integer userid) {
         try {
-            User user = em.find(User.class, userid);
+            // User user = em.find(User.class, userid);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userid)
+                    .getSingleResult();
             return user.getUsername();
         } catch (Exception e) {
 
@@ -55,12 +73,16 @@ public class RequestBean {
     }
     public Integer searchUserId(String username) {
         try {
-            logger.log(Level.INFO, "find user {0}", new Object[]{username});
+            //logger.log(Level.INFO, "search user id {0}", new Object[]{username});
+
             User user = (User) em.createNamedQuery("findUserByName")
                     .setParameter("name", username)
                     .getSingleResult();
-            return user.getId();
+//            logger.log(Level.INFO, "search user id {0}--{1}", new Object[]{user.getUsername(), user.getPassword()});
+            Integer userId = user.getId();
+            return userId;
         }catch (Exception ex) {
+            logger.log(Level.WARNING, ex.toString());
             throw new EJBException(ex.getMessage());
         }
     }
@@ -93,12 +115,16 @@ public class RequestBean {
     public void createNotice(Integer userId, String title, String text, Integer communityId) {
         try {
             //SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-
-
             Date date = new Date();
 
-            User user = em.find(User.class, userId);
-            Community community = em.find(Community.class, communityId);
+            // User user = em.find(User.class, userId);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userId)
+                    .getSingleResult();
+            // Community community = em.find(Community.class, communityId);
+            Community community = (Community) em.createNamedQuery("findCommunityById")
+                    .setParameter("id", communityId)
+                    .getSingleResult();
 
             Notice notice = new Notice(user, title, text, date, community);
             em.persist(notice);
@@ -106,10 +132,10 @@ public class RequestBean {
             throw new EJBException(e.getMessage());
         }
     }
-    public List<Notice> findAllNotice(String communityId) {
+    public List<Notice> findAllNotice() {
         try {
             return (List<Notice>) em.createNamedQuery("findAllNotice")
-                    .getSingleResult();
+                    .getResultList();
         } catch (Exception ex) {
             throw new EJBException(ex.getMessage());
         }
@@ -133,7 +159,9 @@ public class RequestBean {
     }
     public Notice findNotice(Integer noticeid) {
         try {
-            Notice notice = em.find(Notice.class, noticeid);
+            Notice notice = (Notice) em.createNamedQuery("findNotice")
+                    .setParameter("id", noticeid)
+                    .getSingleResult();
 
             return notice;
         } catch (Exception e) {
@@ -144,8 +172,15 @@ public class RequestBean {
 
     public void createPost(Integer userId, String title, String text, Integer communityId) {
         try {
-            User user = em.find(User.class, userId);
-            Community community = em.find(Community.class, communityId);
+//            User user = em.find(User.class, userId);
+//            Community community = em.find(Community.class, communityId);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userId)
+                    .getSingleResult();
+
+            Community community = (Community) em.createNamedQuery("findCommunityById")
+                    .setParameter("id", communityId)
+                    .getSingleResult();
             Date date = new Date();
 
             Post post = new Post(user, community, title, text, date);
@@ -178,10 +213,10 @@ public class RequestBean {
         } catch (Exception e) {
         }
     }
-    public List<Post> findAllPosts(Integer communityId) {
+    public List<Post> findAllPosts() {
         try {
             return (List<Post>) em.createNamedQuery("findAllPost")
-                    .getSingleResult();
+                    .getResultList();
         } catch (Exception e) {
 
         }
@@ -189,7 +224,9 @@ public class RequestBean {
     }
     public Post findPost(Integer postid) {
         try {
-            Post post = em.find(Post.class, postid);
+            Post post = (Post) em.createNamedQuery("findPostById")
+                    .setParameter("id", postid)
+                    .getSingleResult();
             return post;
         } catch (Exception e) {
 
@@ -226,7 +263,7 @@ public class RequestBean {
     public List<Bill> findBills(Integer communityId, Integer userId) {
         try {
             return (List<Bill>) em.createNamedQuery("findBillById")
-                    .setParameter("id", userId).setParameter("cid", communityId)
+                    .setParameter("id", userId)
                     .getResultList();
         } catch (Exception e) {
 
@@ -234,113 +271,43 @@ public class RequestBean {
         return null;
     }
 
-    public void createHealth(Integer userId, String status, String position, float temperature) {
+    public Integer createHealth(Integer userId, String status, String position, float temperature) {
         try {
             User user = em.find(User.class, userId);
             Date date = new Date();
             Health health = new Health(user, status, position, temperature,date);
 
             em.persist(health);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updateHealth(Integer healthId, String status, float temperature, String curr_position) {
-        try {
-            Health health = em.find(Health.class, healthId);
-            health.setStatus(status);
-            health.setPosition(curr_position);
-            health.setTemperature(temperature);
-
-            em.merge(health);
-        } catch (Exception e) {
-
-        }
-    }
-    public Health findUserHealth(Integer userId) {
-        try {
-            User user = em.find(User.class, userId);
-            return (Health) em.createNamedQuery("findHealthByUserId")
-                    .setParameter("user", user)
-                    .getSingleResult();
+            return health.getHealthid();
         } catch (Exception e) {
 
         }
         return null;
     }
-
-    public void createStore(String storename, String phonenumber) {
+    public Integer updateHealth(Integer healthId, String status, float temperature, String curr_position) {
         try {
-            Store store = new Store(storename,phonenumber);
-
-            em.persist(store);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updateStore(Integer storeId, String storename, String phonenumber) {
-        try {
-            Store store = em.find(Store.class, storeId);
-            store.setStorename(storename);
-            store.setPhonenumber(phonenumber);
-
-            em.merge(store);
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void createPurchasingAgent(String purchasingagentname, String phonenumber) {
-        try {
-            PurchasingAgent purchasingAgent = new PurchasingAgent(purchasingagentname,phonenumber);
-
-            em.persist(purchasingAgent);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updatePurchasingAgent(Integer purchasingAgentId, String purchasingagentname, String phonenumber) {
-        try {
-            Store purchasingAgent = em.find(Store.class, purchasingAgentId);
-            purchasingAgent.setStorename(purchasingagentname);
-            purchasingAgent.setPhonenumber(phonenumber);
-
-            em.merge(purchasingAgent);
-        } catch (Exception e) {
-
-        }
-    }
-
-    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
-        try {
-            User user = em.find(User.class, userId);
-            Community community = em.find(Community.class, communityId);
-            Store store = em.find(Store.class, storeId);
-            PurchasingAgent purchasingAgent = em.find(PurchasingAgent.class, purchasingAgentId);
-            Date date = new Date();
-            Order order=new Order(date,details,status,community,user,store,purchasingAgent);
-
-            em.persist(order);
-        } catch (Exception e) {
-
-        }
-    }
-    public void updateOrder(Integer orderId,String details ,String status) {
-        try {
-            Order order=em.find(Order.class,orderId);
-            order.setDetails(details);
-            order.setStatus(status);
-
-            em.merge(order);
-        } catch (Exception e) {
-
-        }
-    }
-    public List<Order> findOrders(Integer userId) {
-        try {
-            return (List<Order>) em.createNamedQuery("findAllOrders")
-                    .setParameter("id", userId)
+            //Health health = em.find(Health.class, healthId);
+            Health health = (Health) em.createNamedQuery("findHealthById")
+                    .setParameter("id",healthId)
                     .getSingleResult();
+            health.setStatus(status);
+            health.setPosition(curr_position);
+            health.setTemperature(temperature);
+
+            em.persist(health);
+
+            return health.getHealthid();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    public Health findUserHealth(Integer healthid) {
+        try {
+            Health health = (Health) em.createNamedQuery("findHealthById")
+                    .setParameter("id", healthid)
+                    .getSingleResult();
+            return health;
         } catch (Exception e) {
 
         }
@@ -359,8 +326,13 @@ public class RequestBean {
     }
     public String findCommunityName(Integer communityid) {
         try {
-            Community community = em.find(Community.class, communityid);
-            return community.getCommunityname();
+//            Community community = em.find(Community.class, communityid);
+//            Community community = (Community) em.createNamedQuery("findCommunityById")
+//                    .setParameter("id", communityid)
+//                    .getSingleResult();
+           // return community.getCommunityname();
+            String str = "Generals' Tomb";
+            return str;
         } catch (Exception e) {
 
         }
@@ -391,8 +363,18 @@ public class RequestBean {
     public List<Complaint> findComplaints(Integer communityid) {
         try {
             return (List<Complaint>) em.createNamedQuery("findAllComplaint")
-                    .setParameter("id", communityid)
                     .getResultList();
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    public Complaint findComplaint(Integer complaintid) {
+        try {
+            return (Complaint) em.createNamedQuery("findComplaint")
+                    .setParameter("id", complaintid)
+                    .getSingleResult();
         } catch (Exception e) {
 
         }

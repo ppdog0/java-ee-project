@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.complaint;
 
-import ejb.AccountBean;
 import ejb.JsonBean;
-import entity.Health;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -25,40 +24,35 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/health/create"})
-public class HealthPublishServlet extends HttpServlet {
-    @EJB
-    private AccountBean account;
+@Stateful
+@WebServlet(urlPatterns = {"/complaint"})
+public class ComplaintBoardServlet extends HttpServlet {
     @EJB
     private JsonBean jsonbean;
+    private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
+    public void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringHealth(userId);
+        String jsonString = jsonbean.generateJsonStringComplaint(comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
         }
     }
-    
+
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
-        JsonObject object = reader.readObject();
-        Integer userId = object.getInt("userid");
-        String status = object.getString("status");
-        String temperature = object.getString("temperature");
-        String position = object.getString("position");
-        
-        this.account.createHealth(userId, status, position, Float.valueOf(temperature));
-        
+//        JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
+//        JsonObject object = reader.readObject();
+        Integer comId = 1;
+
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, response);
+        completeResponse(comId, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -19,8 +21,19 @@ public class ConfigBean {
     @EJB
     private RequestBean request;
 
+    private static final Logger logger = Logger.getLogger("java.ejb.ConfigBean");
+
     @PostConstruct
     public void createData() {
+        // 社区
+        List<String> communitiesInfo = new ArrayList();
+        communitiesInfo.add("Generals' Tomb");
+        //communitiesInfo.add("Princesses' Tomb");
+        //communitiesInfo.add("3rd Floor");
+        communitiesInfo.forEach(c -> {
+            request.createCommunity(c);
+        });
+
         // 账户与密码
         Map<String, String> userInfo = new HashMap();
         List<User> users = new ArrayList();
@@ -30,15 +43,6 @@ public class ConfigBean {
         userInfo.keySet().forEach(u -> {
             request.createUser(userInfo.get(u), u);
             users.add(request.findUser(u));
-        });
-        
-        // 社区
-        List<String> communitiesInfo = new ArrayList();
-        communitiesInfo.add("Generals' Tomb");
-        communitiesInfo.add("Princesses' Tomb");
-        communitiesInfo.add("3rd Floor");
-        communitiesInfo.forEach(c -> {
-            request.createCommunity(c);
         });
         
         // 通知

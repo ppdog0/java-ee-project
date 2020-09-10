@@ -6,13 +6,19 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "complaint")
+@Table(name = "Complaint")
 @NamedQueries({
         @NamedQuery(
                 name = "findAllComplaint",
                 query =
-                        "select c FROM Post c " +
-                                "where c.community.id = :id"
+                        "select c FROM Complaint c " +
+                                "order by c.complaintid"
+        ),
+        @NamedQuery(
+                name = "findComplaint",
+                query =
+                        "select c FROM Complaint c " +
+                                "where c.complaintid = :id"
         )
 })
 public class Complaint implements Serializable {

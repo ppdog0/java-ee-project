@@ -1,11 +1,16 @@
-package web;
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package web.bill;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -16,26 +21,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/health/update"})
-public class HealthUpdateServlet extends HttpServlet {
-    @EJB
-    private AccountBean account;
+@WebServlet(urlPatterns = "/bill")
+public class BillViewServlet extends HttpServlet {
+    
     @EJB
     private JsonBean jsonbean;
 
     protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringHealth(userId);
+        // Set<Integer> comIds = jsonbean.userCommunitiesIds(userId);
+        Integer comId = 1;
+        String jsonString = jsonbean.generateJsonStringBill(userId, comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -47,11 +47,7 @@ public class HealthUpdateServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer userId = object.getInt("userid");
-        String status = object.getString("status");
-        String temperature = object.getString("temperature");
-        String position = object.getString("position");
-        
-        this.account.updateHealth(userId, status, Float.valueOf(temperature), position);
+        //Integer userId = 2;
         
         jsonbean.initResponseAsJson(response);
 

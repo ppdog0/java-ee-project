@@ -10,12 +10,10 @@
 
 package ejb;
 
-import ejb.RequestBean;
 import entity.Bill;
 import entity.Complaint;
 import entity.Health;
 import entity.Notice;
-import entity.Order;
 import entity.Post;
 import entity.User;
 import java.io.Serializable;
@@ -26,8 +24,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.annotation.FacesConfig;
-import javax.inject.Named;
 
 @Stateful
 @SessionScoped
@@ -39,14 +35,17 @@ public class AccountBean implements Serializable{
     private static final long serialVersionUID = 7908187125656392847L;
     
     public boolean hasUser(String userName) {
-        System.out.println(userName);
+        // System.out.println(userName);
         Integer userid = request.searchUserId(userName);
         return userid != null;
     }
     
     public boolean rightPassword(String userName, String password) {
-        User user = request.findUser(userName);
-        return user.getPassword().equals(password);
+        Integer userid = searchUserId(userName);
+        User user = findUser(userName);
+        String t_passsword = user.getPassword();
+//        Integer userid = request.searchUserId(userName);
+        return t_passsword.equals(password);
     }
     
     public Integer searchUserId(String username) {
@@ -91,12 +90,12 @@ public class AccountBean implements Serializable{
         this.currentUserid = userid;
     }
     
-    public List<Notice> findAllNotice(String communityId) {
-        return request.findAllNotice(communityId);
+    public List<Notice> findAllNotice(Integer communityId) {
+        return request.findAllNotice();
     }
     
     public List<Post> findAllPosts(Integer communityId) {
-        return request.findAllPosts(communityId);
+        return request.findAllPosts();
     }
     
     public static String mdyNow() {
@@ -114,11 +113,19 @@ public class AccountBean implements Serializable{
     }
     
     public void createNotice(Integer userId, String title, String text, Integer communityId) {
-        createNotice(userId, title, text, communityId);
+        request.createNotice(userId, title, text, communityId);
     }
     
     public void updateNotice(Integer noticeid, Integer userId, String title, String text, Integer communityId) {
         request.updateNotice(noticeid, userId, title, text, communityId);
+    }
+
+    public Complaint findComplaint(Integer complaintid) {
+        return request.findComplaint(complaintid);
+    }
+
+    public Notice findNotice(Integer noticeid) {
+        return request.findNotice(noticeid);
     }
     
     public void updatePost(Integer postId, Integer userId, Integer communityId, String titile, String text) {
@@ -127,6 +134,10 @@ public class AccountBean implements Serializable{
 
     public void createPost(Integer userId, String title, String text, Integer communityId) {
         request.createPost(userId, title, text, communityId);
+    }
+
+    public Post findPost(Integer postid) {
+        return request.findPost(postid);
     }
     
     public List<Complaint> findComplaints(Integer communityid) {
@@ -137,16 +148,16 @@ public class AccountBean implements Serializable{
         request.createComplaint(userid, communityid, title, details);
     }
 
-    public void createHealth(Integer userId, String status, String position, float temperature) {
-        request.createHealth(userId, status, position, temperature);
+    public Integer createHealth(Integer userId, String status, String position, float temperature) {
+        return request.createHealth(userId, status, position, temperature);
     }
     
-    public Health findUserHealth(Integer userId) {
-        return request.findUserHealth(userId);
+    public Health findUserHealth(Integer healthid) {
+        return request.findUserHealth(healthid);
     }
     
-    public void updateHealth(Integer healthId, String status, Float temperature, String curr_position) {
-        this.request.updateHealth(healthId, status, temperature, curr_position);
+    public Integer updateHealth(Integer healthId, String status, Float temperature, String curr_position) {
+        return this.request.updateHealth(healthId, status, temperature, curr_position);
     }
     
     public void createBill(Integer userId, Integer communityId, Integer price, String title, String type, Boolean status) {
@@ -161,17 +172,17 @@ public class AccountBean implements Serializable{
         request.updateBill(billId, userId, status);
     }
     
-    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
-        request.createOrder(userId, communityId, storeId, purchasingAgentId, details, status);
-    }
-    
-    public List<Order> findOrders(Integer userId) {
-        return request.findOrders(userId);
-    }
-    
-    public Order findOrder(Integer orderId) {
-        List<Order> orders = findOrders(getCurrentUserid());
-        Order result = orders.stream().filter(o -> o.getOrderid().equals(orderId)).findFirst().orElse(null);
-        return result;
-    }
+//    public void createOrder(Integer userId,Integer communityId, Integer storeId, Integer purchasingAgentId,String details ,String status) {
+//        request.createOrder(userId, communityId, storeId, purchasingAgentId, details, status);
+//    }
+//
+//    public List<Order> findOrders(Integer userId) {
+//        return request.findOrders(userId);
+//    }
+//
+//    public Order findOrder(Integer orderId) {
+//        List<Order> orders = findOrders(getCurrentUserid());
+//        Order result = orders.stream().filter(o -> o.getOrderid().equals(orderId)).findFirst().orElse(null);
+//        return result;
+//    }
 }

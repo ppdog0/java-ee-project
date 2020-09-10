@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.health;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
+import entity.Health;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -24,16 +25,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet
-public class OrderPublishServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/health"})
+public class HealthViewServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
 
-    protected void completeResponse(Integer userId, Integer communityId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringOrder(userId, communityId);
+        String jsonString = jsonbean.generateJsonStringHealth(userId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -45,17 +46,10 @@ public class OrderPublishServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer userId = object.getInt("userid");
-        Integer agentId = object.getInt("agentId");
-        Integer storeId = object.getInt("storeId");
-        Integer comId = object.getInt("communityId");
-        String good = object.getString("good");
-        String status = Boolean.toString(object.getBoolean("status"));
-        
-        this.account.createOrder(userId, comId, storeId, agentId, good, status);
-        
+
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, comId, response);
+        completeResponse(userId, response);
     }
 
     @Override

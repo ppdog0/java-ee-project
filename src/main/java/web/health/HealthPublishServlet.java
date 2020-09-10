@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.health;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
+import entity.Health;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Set;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,19 +25,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(name = "BillModifyServlet")
-public class BillModifyServlet extends HttpServlet {
-
+@WebServlet(urlPatterns = {"/health/create"})
+public class HealthPublishServlet extends HttpServlet {
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
-    private static final long serialVersionUID = 7903037019848392847L;
 
-    protected void completeResponse(Integer userId, HttpServletResponse response) throws IOException {
+    protected void completeResponse(Integer healthid, HttpServletResponse response) throws IOException {
 
-        Set<Integer> comIds = jsonbean.userCommunitiesIds(userId);
-        String jsonString = jsonbean.generateJsonStringBill(userId, comIds);
+        String jsonString = jsonbean.generateJsonStringHealth(healthid);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);
@@ -48,19 +45,20 @@ public class BillModifyServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer billId = object.getInt("billid");
-        Boolean status = object.getBoolean("status");
         Integer userId = object.getInt("userid");
+        String status = object.getString("status");
+        String temperature = object.getString("temperature");
+        String position = object.getString("position");
         
-        account.updateBill(billId, userId, status);
-
+        Integer healthid = this.account.createHealth(userId, status, position, Float.valueOf(temperature));
+        
         jsonbean.initResponseAsJson(response);
 
-        completeResponse(userId, response);
+        completeResponse(healthid, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.post;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
+import web.post.PostBoardServlet;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.ejb.EJB;
@@ -23,15 +25,15 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/complaint/publish"})
-public class ComplaintPublishServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/post/update"})
+public class PostModifyServlet extends HttpServlet {
 
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
     @EJB
-    private ComplaintBoardServlet cbs;
+    private PostBoardServlet pbs;
     private static final long serialVersionUID = 7903037019848392847L;
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,15 +41,16 @@ public class ComplaintPublishServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer comId = object.getInt("communityid");
+        Integer postId = object.getInt("noticeid");
         Integer userId = object.getInt("userid");
         String title = object.getString("title");
         String details = object.getString("details");
 
-        this.account.createComplaint(userId, comId, title, details);
+        account.updatePost(postId, userId, comId, title, details);
 
         jsonbean.initResponseAsJson(response);
 
-        cbs.completeResponse(comId, response);
+        pbs.completeResponse(comId, response);
     }
 
     @Override

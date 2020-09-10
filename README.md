@@ -124,6 +124,8 @@ java-ee-project:
 
 [API文档](doc/servlet/java_API.md)
 
+[连通的api](doc/servlet/good_api.md)
+
 ##### 项目配置
 
 `web.xml web`应用配置

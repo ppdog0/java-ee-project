@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web;
+package web.complaint;
 
 import ejb.AccountBean;
 import ejb.JsonBean;
+import web.complaint.ComplaintBoardServlet;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.ejb.EJB;
@@ -23,35 +25,35 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Gwan
  */
-@WebServlet(urlPatterns = {"/post/publish"})
-public class PostPublishServlet extends HttpServlet {
-    
+@WebServlet(urlPatterns = {"/complaint/publish"})
+public class ComplaintPublishServlet extends HttpServlet {
+
     @EJB
     private AccountBean account;
     @EJB
     private JsonBean jsonbean;
     @EJB
-    private PostBoardServlet pbs;
+    private ComplaintBoardServlet cbs;
     private static final long serialVersionUID = 7903037019848392847L;
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
-        Integer comId = object.getInt("communityid");
+        Integer comId = 1;
         Integer userId = object.getInt("userid");
         String title = object.getString("title");
         String details = object.getString("details");
-        
-        this.account.createPost(userId, title, details, comId);
+
+        this.account.createComplaint(userId, comId, title, details);
 
         jsonbean.initResponseAsJson(response);
 
-        pbs.completeResponse(comId, response);
+        cbs.completeResponse(comId, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

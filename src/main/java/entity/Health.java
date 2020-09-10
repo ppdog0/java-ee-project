@@ -6,12 +6,17 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "health")
+@Table(name = "Health")
 @NamedQueries({
+        @NamedQuery(
+                name = "findHealthById",
+                query = "select c FROM Health c " +
+                        "WHERE c.healthid = :id "
+        ),
         @NamedQuery(
                 name = "findHealthByUserId",
                 query = "select c FROM Health c " +
-                        "WHERE c.user = :user "
+                        "WHERE c.user.id = :id "
         )
 })
 public class Health implements Serializable {
@@ -26,10 +31,10 @@ public class Health implements Serializable {
     private float temperature;
     private Date date;
     @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userid", nullable = false)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "communityid", nullable = false)
-    private Community community;
+
+
 
 
     public Health() {
@@ -85,14 +90,6 @@ public class Health implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Community getCommunity() {
-        return this.community;
-    }
-
-    public void setUser(Community community) {
-        this.community = community;
     }
 
     public String getStatus() {

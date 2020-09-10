@@ -5,15 +5,15 @@ import entity.Community;
 import entity.Complaint;
 import entity.Health;
 import entity.Notice;
-import entity.Order;
 import entity.Post;
 import entity.User;
 import java.io.StringWriter;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.json.Json;
@@ -33,7 +33,9 @@ public class JsonBean {
 
     @EJB
     private AccountBean account;
-    private String username;
+    // private String username;
+
+    private static final Logger logger = Logger.getLogger("java.ejb.JsonBean");
 
     public void initResponseAsJson(HttpServletResponse response) {
         response.setContentType("application/json");
@@ -89,45 +91,37 @@ public class JsonBean {
     }
 
     // 调用方：CommunityServlet
-    public String generateJsonStringCommunity() {
+    public String generateJsonStringCommunity(Integer comId) {
         // 1. Collect all communities.
-        User user = account.findUser(account.getCurrentUsername());
-        this.username = user.getUsername();
-        Set<Community> communities = userCommunities(user);
+        // User user = account.findUser(account.getCurrentUsername());
+        // this.username = user.getUsername();
 
-        // 2. Iterate every communities.
-        JsonArrayBuilder communitiesBuilder = Json.createArrayBuilder();
-        communities.forEach((Community com) -> {
-            communitiesBuilder.add(communityBuilder(com));
-        });
-
-        JsonArray array = communitiesBuilder.build();
+        JsonObject cbObject = communityBuilder(comId).build();
         StringWriter stWriter = new StringWriter();
         try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeArray(array);
+            jsonWriter.writeObject(cbObject);
         }
 
         return stWriter.toString();
     }
     
 
-    public JsonObjectBuilder communityBuilder(Community com) {
+    public JsonObjectBuilder communityBuilder(Integer comId) {
         JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
         JsonArrayBuilder noticeAB = Json.createArrayBuilder();
         JsonArrayBuilder postAB = Json.createArrayBuilder();
 
-        List<Notice> notices = account.findAllNotice(Integer.toString(com.getId()));
+        List<Notice> notices = account.findAllNotice(comId);
         notices.forEach(nt -> {
             noticeAB.add(noticeBuilder(nt));
         });
 
-        List<Post> posts = account.findAllPosts(com.getId());
+        List<Post> posts = account.findAllPosts(comId);
         posts.forEach(pt -> {
             postAB.add(postBuilder(pt));
         });
 
-        communityBuilder.add("communityname", com.getCommunityname())
-                .add("communityid", Integer.toString(com.getId()))
+        communityBuilder.add("communityname", account.findCommunityName(comId))
                 .add("notice", noticeAB)
                 .add("post", postAB);
 
@@ -140,8 +134,8 @@ public class JsonBean {
                 .add("noticeid", Integer.toString(nt.getNoticeid()))
                 .add("title", nt.getTitle())
                 .add("details", nt.getDetails())
-                .add("date", AccountBean.mdyNow())
-                .add("username", this.username);
+                .add("date", AccountBean.mdyNow());
+//                .add("username", this.username);
         return noticeBuilder;
     }
 
@@ -151,7 +145,8 @@ public class JsonBean {
                 .add("title", pt.getTitle())
                 .add("details", pt.getDetails())
                 .add("date", AccountBean.mdyNow())
-                .add("username", this.username);
+                .add("username", pt.getUser().getUsername());
+//                .add("username", this.username);
         return postBuilder;
     }
 
@@ -160,36 +155,20 @@ public class JsonBean {
                 .add("postid", Integer.toString(cp.getComplaintid()))
                 .add("title", cp.getTitle())
                 .add("details", cp.getDetails())
-                .add("date", AccountBean.mdyNow())
-                .add("username", this.username);
+                .add("date", AccountBean.mdyNow());
+               //.add("username", this.username);
         return complaintBuilder;
     }
 
     public JsonObjectBuilder billBuilder(Bill bill) {
         JsonObjectBuilder billBuilder = Json.createObjectBuilder()
                 .add("billid", Integer.toString(bill.getBillid()))
-                .add("username", this.username)
-                .add("type", bill.getType())
-                .add("details", bill.getTitle())
+                .add("title", bill.getTitle())
+                .add("details", bill.getDetails())
                 .add("price", bill.getPrice())
                 .add("status", bill.getSatus())
                 .add("date", AccountBean.mdyNow());
         return billBuilder;
-    }
-    
-    public JsonObjectBuilder orderBuilder(Order order, Boolean returnOrderId) {
-        JsonObjectBuilder orderBuilder = Json.createObjectBuilder();
-        if (returnOrderId) {
-            orderBuilder.add("orderid", Integer.toString(order.getOrderid()));
-        }
-        orderBuilder.add("username", this.username)
-            .add("agentname", order.getPurchasingagent().getPurchasingagentname())
-            .add("storename", order.getStore().getStorename())
-            .add("communityname", order.getCommunity().getCommunityname())
-            .add("phonenumber", "15378539280")
-            .add("price", 60)
-            .add("date", AccountBean.mdyNow());
-        return orderBuilder;
     }
 
     // 调用方：NoticeBoardServlet, NoticeModifyServlet
@@ -198,7 +177,7 @@ public class JsonBean {
         JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
         JsonArrayBuilder noticeAB = Json.createArrayBuilder();
 
-        List<Notice> notices = account.findAllNotice(Integer.toString(comId));
+        List<Notice> notices = account.findAllNotice(comId);
         notices.forEach(nt -> {
             noticeAB.add(noticeBuilder(nt));
         });
@@ -206,6 +185,63 @@ public class JsonBean {
         communityBuilder.add("communityname", comName)
                 .add("communityid", comId)
                 .add("notice", noticeAB);
+
+        JsonObject postboardJsonObject = communityBuilder.build();
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+            jsonWriter.writeObject(postboardJsonObject);
+        }
+
+        return stWriter.toString();
+    }
+
+    public String generateJsonStringComplaintItem(Integer complaintid) {
+        Complaint complaint = account.findComplaint(complaintid);
+
+        JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder complaintAB = Json.createArrayBuilder();
+
+        complaintAB.add(complaintBuilder(complaint));
+
+        communityBuilder.add("complaint", complaintAB);
+
+        JsonObject complaintboardJsonObject = communityBuilder.build();
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+            jsonWriter.writeObject(complaintboardJsonObject);
+        }
+
+        return stWriter.toString();
+    }
+
+    public String generateJsonStringNoticeItem(Integer noticeid) {
+        Notice notice = account.findNotice(noticeid);
+
+        JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder noticeAB = Json.createArrayBuilder();
+
+        noticeAB.add(noticeBuilder(notice));
+
+        communityBuilder.add("notice", noticeAB);
+
+        JsonObject noticeboardJsonObject = communityBuilder.build();
+        StringWriter stWriter = new StringWriter();
+        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+            jsonWriter.writeObject(noticeboardJsonObject);
+        }
+
+        return stWriter.toString();
+    }
+
+    public String generateJsonStringPostItem(Integer postid) {
+        Post post = account.findPost(postid);
+
+        JsonObjectBuilder communityBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder postAB = Json.createArrayBuilder();
+
+        postAB.add(postBuilder(post));
+
+        communityBuilder.add("post", postAB);
 
         JsonObject postboardJsonObject = communityBuilder.build();
         StringWriter stWriter = new StringWriter();
@@ -227,7 +263,6 @@ public class JsonBean {
         });
 
         communityBuilder.add("communityname", comName)
-                .add("communityid", comId)
                 .add("post", postAB);
 
         JsonObject postboardJsonObject = communityBuilder.build();
@@ -262,18 +297,20 @@ public class JsonBean {
         return stWriter.toString();
     }
 
-    public String generateJsonStringHealth(Integer userId) {
-        String userName = account.searchUserName(userId);
-        Health health = account.findUserHealth(userId);
+    public String generateJsonStringHealth(Integer healthid) {
+        Health health = account.findUserHealth(healthid);
+
+        //logger.log(Level.INFO, "find health {0}--{1}", new Object[]{health.getHealthid(), health.getUser().getUsername()});
 
         JsonObjectBuilder healthBuilder = Json.createObjectBuilder();
 
         healthBuilder.add("healthid", health.getHealthid())
-                .add("username", userName)
+                .add("username", health.getUser().getUsername())
                 .add("status", health.getStatus())
                 .add("temperature", health.getTemperature())
                 .add("position", health.getPosition())
-                .add("date", account.mdyNow());
+                .add("date", AccountBean.mdyNow());
+
 
         JsonObject healthJsonObject = healthBuilder.build();
         StringWriter stWriter = new StringWriter();
@@ -302,53 +339,42 @@ public class JsonBean {
         return stWriter.toString();
     }
 
-    public String generateJsonStringBill(Integer userId, Set<Integer> comIds) {
+//    public String generateJsonStringBill(Integer userId, Set<Integer> comIds) {
+//
+//        JsonArrayBuilder billAB = Json.createArrayBuilder();
+//        comIds.forEach(comId -> {
+//            List<Bill> bills = account.findBills(comId, userId);
+//
+//            bills.forEach(bill -> {
+//                billAB.add(billBuilder(bill));
+//            });
+//
+//        });
+//
+//        JsonArray billJsonArray = billAB.build();
+//        StringWriter stWriter = new StringWriter();
+//        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+//            jsonWriter.writeArray(billJsonArray);
+//        }
+//        return stWriter.toString();
+//    }
 
-        JsonArrayBuilder billAB = Json.createArrayBuilder();
-        comIds.forEach(comId -> {
-            List<Bill> bills = account.findBills(comId, userId);
+//    public String generateJsonStringOrder(Integer userId, Integer communityId) {
+//        List<Order> orders = account.findOrders(userId);
+//
+//        JsonArrayBuilder orderAB = Json.createArrayBuilder();
+//
+//        orders.forEach(order -> {
+//            orderAB.add(orderBuilder(order, true));
+//        });
+//
+//        JsonArray orderJsonArray = orderAB.build();
+//        StringWriter stWriter = new StringWriter();
+//        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
+//            jsonWriter.writeArray(orderJsonArray);
+//        }
+//
+//        return stWriter.toString();
+//    }
 
-            bills.forEach(bill -> {
-                billAB.add(billBuilder(bill));
-            });
-
-        });
-
-        JsonArray billJsonArray = billAB.build();
-        StringWriter stWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeArray(billJsonArray);
-        }
-        return stWriter.toString();
-    }
-
-    public String generateJsonStringOrder(Integer userId, Integer communityId) {
-        List<Order> orders = account.findOrders(userId);
-
-        JsonArrayBuilder orderAB = Json.createArrayBuilder();
-
-        orders.forEach(order -> {
-            orderAB.add(orderBuilder(order, true));
-        });
-
-        JsonArray orderJsonArray = orderAB.build();
-        StringWriter stWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeArray(orderJsonArray);
-        }
-
-        return stWriter.toString();
-    }
-    
-    public String generateJsonStringOrder(Integer orderId) {
-
-        Order order = account.findOrder(orderId);
-        JsonObject orderJsonObject = orderBuilder(order, false).build();
-        StringWriter stWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stWriter);) {
-            jsonWriter.writeObject(orderJsonObject);
-        }
-
-        return stWriter.toString();
-    }
 }
