@@ -152,7 +152,7 @@ public class JsonBean {
 
     public JsonObjectBuilder complaintBuilder(Complaint cp) {
         JsonObjectBuilder complaintBuilder = Json.createObjectBuilder()
-                .add("postid", Integer.toString(cp.getComplaintid()))
+                .add("complaintid", Integer.toString(cp.getComplaintid()))
                 .add("title", cp.getTitle())
                 .add("details", cp.getDetails())
                 .add("date", AccountBean.mdyNow());
@@ -322,6 +322,7 @@ public class JsonBean {
     }
 
     public String generateJsonStringBill(Integer userId, Integer comId) {
+        
         List<Bill> bills = account.findBills(comId, userId);
 
         JsonArrayBuilder billAB = Json.createArrayBuilder();

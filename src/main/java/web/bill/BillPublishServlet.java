@@ -49,8 +49,8 @@ public class BillPublishServlet extends HttpServlet {
         String type = object.getString("type");
         String details = object.getString("details");
         Integer price = object.getInt("price");
-        Boolean status = object.getBoolean("status");
-        //Boolean status = false;
+        //Boolean status = object.getBoolean("status");
+        Boolean status = false;
         
         this.account.createBill(userId, communityId, price, details, type, status);
         

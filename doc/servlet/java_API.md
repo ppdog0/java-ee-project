@@ -107,7 +107,7 @@
 ```
 // 发送数据
 {
-	"userid": 1
+	"communityid": 1
 }
 
 // 返回数据
@@ -115,9 +115,8 @@
     // 社区1
 	{
 		"communityname": "云社区",
-		"communityid": "1",
 		"notice": 
-		{
+		[
     		//公告1
 			{
     			"postid": 1,
@@ -134,9 +133,9 @@
 				"data": "09/08/2020",
 				"username": "pp"
 			}
-		}
+		],
 		"post": 
-		{
+		[
             // 帖子1
 			{ 
 	           	"noticeid": 1,
@@ -153,7 +152,7 @@
 				"data": "09/08/2020",
 				"username": "pp"
 			}
-		}
+		]
 	},
 	//社区2
 	{
@@ -431,7 +430,7 @@
 // 发送数据
 {
     "communityid": 1,
-    "postid": 2,
+    "postid": 2,	// 无
     "userid": 3,
     "title": "example",
     "details": "example",
