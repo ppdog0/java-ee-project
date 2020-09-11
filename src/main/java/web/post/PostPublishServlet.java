@@ -41,7 +41,7 @@ public class PostPublishServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer comId = 1;
-        Integer userId = object.getInt("userid");
+        Integer userId = Integer.parseInt(object.getString("userid"));
         String title = object.getString("title");
         String details = object.getString("details");
         

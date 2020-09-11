@@ -34,7 +34,7 @@ public class PostItemServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer comId = 1;
-        Integer postid = object.getInt("postid");
+        Integer postid = Integer.valueOf(object.getString("postid"));
 
         jsonbean.initResponseAsJson(response);
 

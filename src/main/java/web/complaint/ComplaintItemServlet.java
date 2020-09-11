@@ -34,7 +34,7 @@ public class ComplaintItemServlet extends HttpServlet {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
         Integer comId = 1;
-        Integer complaintid = object.getInt("complaintid");
+        Integer complaintid = Integer.valueOf(object.getString("complaintid"));
 
         jsonbean.initResponseAsJson(response);
 

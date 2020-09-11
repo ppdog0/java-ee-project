@@ -76,6 +76,20 @@ public class ConfigBean {
                     16550, "0202年物业费", "Property", false);
         });
 
+        Map<String, String> complaintsInfo = new HashMap();
+        complaintsInfo.put("楼上为什么天天螺狮粉？", "考虑过饥肠辘辘楼下的感受。");
+        complaintsInfo.put("为什么Github还不死？", "张学友提交了*800\n赵薇提交了*1000\n张国荣提交了*666\n王家卫提交了*233\n任正非提交了*1Merge");
+        complaintsInfo.put("没人比我们更懂", "干最重的活，睡最少的觉，堆最臭的山，填最多的坑！");
+        User[] userArray = new User[users.size()];
+        userArray = users.toArray(userArray);
+        User u = userArray[0];
+        complaintsInfo.keySet().forEach(c -> {
+            request.createComplaint(u.getId(), request.searchCommunityId(communitiesInfo.get(0)), c, complaintsInfo.get(c));
+        });
+
+//        request.createComplaint(2, 0, "世上和尚这么多", "我决定出家");
+//        request.createComplaint(2, 0, "为甚恶魔", "我要崩了");
+//        request.createComplaint(2, 0, "爱你一万年，楼上倒垃圾那位", "f***");
     }
 
     @PreDestroy

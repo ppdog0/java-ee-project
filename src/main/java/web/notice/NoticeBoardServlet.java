@@ -35,7 +35,7 @@ public class NoticeBoardServlet extends HttpServlet {
 
     public void completeResponse(Integer comId, HttpServletResponse response) throws IOException {
 
-        String jsonString = jsonbean.generateJsonStringPost(comId);
+        String jsonString = jsonbean.generateJsonStringNotice(comId);
 
         try (PrintWriter out = response.getWriter();) {
             out.print(jsonString);

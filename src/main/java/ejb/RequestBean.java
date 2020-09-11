@@ -351,8 +351,14 @@ public class RequestBean {
     public void createComplaint(Integer userid, Integer communityid, String title, String details) {
         try {
             Date date = new Date();
-            User user = em.find(User.class, userid);
-            Community community = em.find(Community.class, communityid);
+            // User user = em.find(User.class, userid);
+            User user = (User) em.createNamedQuery("findUserById")
+                    .setParameter("id", userid)
+                    .getSingleResult();
+            // Community community = em.find(Community.class, communityid);
+            Community community = (Community) em.createNamedQuery("findCommunityById")
+                    .setParameter("id", communityid)
+                    .getSingleResult();
 
             Complaint complaint = new Complaint(user, community, title, details, date);
             em.persist(complaint);
@@ -369,6 +375,7 @@ public class RequestBean {
         }
         return null;
     }
+
 
     public Complaint findComplaint(Integer complaintid) {
         try {

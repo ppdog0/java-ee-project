@@ -46,9 +46,22 @@ public class BillViewServlet extends HttpServlet {
             throws ServletException, IOException {
         JsonReader reader = Json.createReader(new InputStreamReader(request.getInputStream()));
         JsonObject object = reader.readObject();
+        //Integer userId = Integer.valueOf(object.getString("userid"));
         Integer userId = object.getInt("userid");
+
         //Integer userId = 2;
         
+        jsonbean.initResponseAsJson(response);
+
+        completeResponse(userId, response);
+    }
+
+    private void processGetRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("userid"));
+
+        //Integer userId = 2;
+
         jsonbean.initResponseAsJson(response);
 
         completeResponse(userId, response);
@@ -58,5 +71,11 @@ public class BillViewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processGetRequest(request, response);
     }
 }
