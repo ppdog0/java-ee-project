@@ -115,9 +115,8 @@
 
                     $.ajax({
                         async: false,
-
                         //改url
-                        url: 'http://localhost:8080/javaee/user/register',
+                        url: 'http://localhost:8080/java_ee-1.0/user/login',
 
                         type: 'POST',
                         contentType: 'application/json',
@@ -131,9 +130,9 @@
                             // setCookie(username,obj.userid,2);
                             //setCookie(flag,obj.admin,2);
                             //document.cookie="userid=123454574";
-                            // msg = JSON.parse(msg)
                             console.log(msg)
                             if (msg.status == "success") {
+                                console.log("apple");
                             
                             //将拿到的username和adin保存到cookie用于之后主页的用户显示
                                 setCookie("username", msg.userid, 2);
@@ -153,7 +152,7 @@
                         error: function (msg) {
                             //console.log(msg);
                             window.alert("网络错误");
-                            window.location.reload();
+                            // window.location.reload();
                         }
                     });
                 });

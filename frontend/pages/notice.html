@@ -59,14 +59,14 @@
 
       table.render({
         elem: '#test'
-        , url: 'http://localhost:8080/javaee/notice'
+        , url: 'http://localhost:8080/java_ee-1.0/notice'
         , parseData: function (res) { //res 即为原始返回的数据
+        console.log(res);
           return {
             "code": 0, //解析接口状态
             "msg": "", //解析提示文本
             "count": res.notice.length, //解析数据长度
             "data": res.notice //解析数据列表
-      
           };
         }
         , cols: [[
@@ -89,7 +89,7 @@
         setCookie("details", data.details, 2);
         console.log(data);
 
-        window.location.href = './detailspage.html';
+        window.location.href = './noticeItem.html';
         layer.alert(JSON.stringify(data), {
 
           title: '当前行数据：'

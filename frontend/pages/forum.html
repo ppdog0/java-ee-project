@@ -32,12 +32,26 @@
   <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
   <script>
+    function getCookie(c_name) {
+      if (document.cookie.length > 0) {
+        c_start = document.cookie.indexOf(c_name + "=")
+        if (c_start != -1) {
+          c_start = c_start + c_name.length + 1
+          c_end = document.cookie.indexOf(";", c_start)
+          if (c_end == -1)
+            c_end = document.cookie.length
+          return unescape(document.cookie.substring(c_start, c_end))
+        }
+      }
+      return ""
+    }
+
     layui.use("table", function () {
       var table = layui.table;
 
       table.render({
         elem: "#class",
-        url: "http://localhost:8080/javaee/post",
+        url: "http://localhost:8080/java_ee-1.0/post",
         toolbar: "#toolbarDemo", //开启头部工具栏，并为其绑定左侧模板
         defaultToolbar: [
           "filter",
@@ -54,7 +68,7 @@
                 }
         ,cols: [
           [
-            { field: 'title', title: '全部帖子', minWidth: 150,style: "color:steelblue;font-weight:bold;font-family:宋体" }
+            { field: 'title', title: '全部帖子', minWidth: 150 }
             , { field: 'username', title: '发帖人', width: 200, sort: true }
             , { field: 'date', title: '日期', width: 200, sort: true }
           ],
@@ -80,7 +94,7 @@
         // console.log(this);
 
         // console.log(data);  
-        window.location.href = './detailspage.html';
+        window.location.href = './postItem.html';
 
         // layer.alert(JSON.stringify(data), {
 

@@ -57,7 +57,7 @@
                 </div>
             </div>
 
-        <!--多少单元，门牌号-->
+            <!--多少单元，门牌号-->
             <div class="layui-form-item" style="margin-top:10px">
 
                 <div class="layui-inline">
@@ -74,11 +74,11 @@
                 </div>
             </div>
 
-        <!--立即提交-->
+            <!--立即提交-->
             <div class="layui-form-item" style="text-align: center">
                 <div>
                     <button type="input" class="layui-btn" lay-submit="" lay-filter="demo">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
                 </div>
             </div>
     </form>
@@ -94,9 +94,30 @@
             , laydate = layui.laydate;
         //监听提交
         form.on('submit(demo)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/java_ee-1.0/complaint/publish",
+                async: false, //不要让它异步提交
+                data: JSON.stringify({ userid: getCookie("username"), details: data.field.details, title: data.field.title }),
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    layer.alert("添加成功", { icon: 1 }, function () {
+                        layer.close(layer.index);
+                        window.parent.location.reload(); //重新加载父页面，进行数据刷新
+                    })
+                },
+                error: function (data) {
+                    console.log(data);
+
+                    layer.alert("修改失败" + data.responseText, {
+                        icon: 2,
+
+                    });
+                },
+            });
+
             return false;
         });
     });

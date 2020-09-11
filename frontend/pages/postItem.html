@@ -72,22 +72,21 @@
 
             $.ajax({
                 async: false,
-                url: 'http://localhost:8080/javaee/post/id',
+                url: 'http://localhost:8080/java_ee-1.0/post/id',
 
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
 
-                success: function (msg_json) {
-                    console.log(msg_json);
-                    msg_undecode = decodeURIComponent(msg_json);
+                success: function (msg) {
+                    console.log(msg);
+                    msg_undecode = decodeURIComponent(msg);
 
-                    msg = JSON.parse(msg_undecode);
                     console.log(msg_undecode);
-                    document.getElementById('title').innerHTML = msg.post.title;
-                    document.getElementById('user').innerHTML = msg.post.username;
-                    document.getElementById('date').innerHTML = msg.post.date;
-                    document.getElementById('content').innerHTML = msg.post.details;
+                    document.getElementById('title').innerHTML = msg.post[0].title;
+                    document.getElementById('user').innerHTML = msg.post[0].username;
+                    document.getElementById('date').innerHTML = msg.post[0].date;
+                    document.getElementById('content').innerHTML = msg.post[0].details;
                 },
                 error: function (msg) {
                     console.log(msg);

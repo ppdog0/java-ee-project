@@ -22,9 +22,9 @@
     <table class="layui-hide" id="class" lay-filter="class"></table>
 
     <script type="text/html" id="toolbarDemo">
-      <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="addOne">添加</button>
-      </div>
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="addOne">添加</button>
+        </div>
     </script>
 
 
@@ -32,44 +32,62 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
     <script>
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
         layui.use("table", function () {
             var table = layui.table;
 
             table.render({
 
                 elem: "#class",
-                url: "http://localhost:8080/javaee/complaint",
+                url: "http://localhost:8080/java_ee-1.0/complaint",
                 toolbar: "#toolbarDemo", //开启头部工具栏，并为其绑定左侧模板
                 defaultToolbar: [
                     "filter",
                 ],
                 title: "用户数据表",
                 parseData: function (res) { //res 即为原始返回的数据
+                    console.log("sdsdsdsdsds");
+                    console.log(res);
                     return {
                         "code": 0, //解析接口状态
                         "msg": "", //解析提示文本
                         "count": res.complaint.length, //解析数据长度
                         "data": res.complaint //解析数据列表
                     };
-                }
-                , cols: [
-                    [
-                        { field: 'title', title: '全部投诉', minWidth: 150,style: "color:steelblue;font-weight:bold;font-family:宋体" }
-                        , { field: 'date', title: '日期', width: 200, sort: true }
-                    ],
+                },
+                cols: [
+                    [{
+                        field: 'title',
+                        title: '全部投诉',
+                        minWidth: 150
+                    }, {
+                        field: 'date',
+                        title: '日期',
+                        width: 200,
+                        sort: true
+                    }],
                 ],
                 page: true,
             });
 
             table.on('row(class)', function (obj) {
                 var data = obj.data;
+                console
 
                 //这里的页面是跳转到每行对应的页面
-                console.log(this);
-
+                //console.log(this);
+                console.log('ssssssssssssssssssss')
                 console.log(data);
 
-                window.location.href = './detailspage.html';
+                setCookie("complaintid", data.postid, 2);
+
+                window.location.href = './complaintItem.html';
 
 
                 layer.alert(JSON.stringify(data), {
@@ -100,7 +118,8 @@
                             content: "complainItem.html",
                             success: function (layero, index) {
                                 var body = layer.getChildFrame("body", index);
-                                var iframeWin = window[layero.find("iframe")[0]["name"]]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                                var iframeWin = window[layero.find("iframe")[0][
+                                "name"]]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
                             },
                         });
                         break;

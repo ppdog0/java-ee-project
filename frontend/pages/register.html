@@ -78,14 +78,13 @@
 
                     $.ajax({
                         async: false,
-                        url: 'http://localhost:8080/hello2/register',
+                        url: 'http://localhost:8080/java_ee-1.0/user/register',
                         type: 'POST',
                         contentType: 'application/json',
                         data: JSON.stringify(data),
 
                         success: function (msg) {
                             console.log(msg);
-                            msg =JSON.parse(msg);
                     
                             if (msg.status == "success") {
                     
@@ -94,12 +93,12 @@
 
                             } else {
                                 window.alert("注册失败");
-                                window.location.reload();
+                                // window.location.reload();
                             }
                         },
                         error: function (msg) {
                             window.alert("网络错误");
-                            window.location.reload();
+                            // window.location.reload();
                         }
                     });
                 });
